@@ -34,7 +34,7 @@
     this.hoverEdge = null;
     this.build();
     this.wire();
-    this.scheduleDraw();
+    this.draw(); // 즉시 1차 렌더 — 백그라운드 탭에서는 rAF가 지연되거나 실행되지 않는다
   }
 
   ArchDiagram.prototype.build = function () {
@@ -168,7 +168,16 @@
   ArchDiagram.prototype.scheduleDraw = function () {
     var self = this;
     if (this._raf) cancelAnimationFrame(this._raf);
-    this._raf = requestAnimationFrame(function () { self.draw(); });
+    if (this._timer) clearTimeout(this._timer);
+    this._raf = requestAnimationFrame(function () {
+      clearTimeout(self._timer);
+      self.draw();
+    });
+    // 백그라운드 탭 등 rAF가 멈춘 환경에서도 타임아웃으로 렌더를 보장한다
+    this._timer = setTimeout(function () {
+      cancelAnimationFrame(self._raf);
+      self.draw();
+    }, 150);
   };
 
   ArchDiagram.prototype.apply = function () {
