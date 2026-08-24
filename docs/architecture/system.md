@@ -8,24 +8,22 @@ nav_order: 3
 
 논리 서비스 구조와 실행 인프라의 결합 — 동기 UI/API · 비동기 AI 사진 처리 · 데이터/스토리지를 한 장에 겹쳐 그린 다이어그램입니다. Application(논리)과 Infrastructure(물리)의 중간 계층입니다.
 
-[원본 크기로 보기]({{ site.baseurl }}/assets/img/architecture/system.png){: .btn .btn-outline .fs-3 }
+<div class="wes-arch" data-arch="system" markdown="0">
+  <noscript><a href="{{ site.baseurl }}/assets/img/architecture/system.png">JavaScript가 꺼져 있습니다 — 정적 PNG로 보기</a></noscript>
+</div>
 
-![System Architecture]({{ site.baseurl }}/assets/img/architecture/system.png){: .arch-diagram }
+[drawio 원본 PNG로 보기]({{ site.baseurl }}/assets/img/architecture/system.png){: .fs-3 }
 
 ## 읽는 법
 
-- **클라이언트** — 웹 브라우저 4종: 사진작가 / 부부(각자 계정) / 게스트(URL+토큰+닉네임) / 방문자
-- **엣지** — CloudFront(CDN) → Route 53 → WAF → ALB, OAuth는 카카오·구글·네이버 IdP에 위임
-- **Application Backend** — EC2 위 모듈형 단일 앱. 인증·권한 / 스튜디오·갤러리 / 사진·폴더 / 셀렉 / 협업·반응 / 알림 / 앨범·목업(논리) / 보정 요청(논리) 8개 논리 서비스
-- **데이터** — S3(원본 + 표시용 파생본) / RDS PostgreSQL
-- **비동기 AI 파이프라인** — `PhotoUploaded`, `AISelectionRequested` 이벤트로 트리거되는 워크플로와 실패 재처리(DLQ)
-- **Observability** — 메트릭 · 로그 · 대시보드
-
-핵심 경로 두 개가 화살표 라벨로 표시되어 있습니다: **"Presigned URL로 사진 직접 업로드"** (이미지 바이트가 앱을 우회) 와 비동기 이벤트 점선 (AI 처리가 요청-응답 밖에서 일어남).
+- 왼쪽부터 **클라이언트 → 엣지·전송 → 애플리케이션·컴퓨트 → 데이터·저장 → 관측**의 5개 레인입니다.
+- **노드에 마우스를 올리면** 그 구성요소와 직접 연결된 것들만 남고 나머지는 흐려집니다. 예를 들어 **S3**에 올려 보면 이미지 바이트를 실제로 만지는 주체가 브라우저(presigned 직접 업로드·열람)와 Lambda embedder뿐이라는 것 — 이 시스템의 핵심 원칙 — 이 한눈에 보입니다.
+- 실선은 동기 요청, 파선은 비동기, 회색은 데이터/스토리지 I/O입니다 (하단 범례 참고).
+- 점선 테두리에 **예정** 배지가 붙은 노드(CloudFront, Step Functions + Batch, SQS, Grafana)는 목표 설계에만 있고 아직 구현되지 않은 부분입니다.
 
 ## 목표 설계와 현재 구현의 차이
 
-이 다이어그램은 **목표 시스템 설계**입니다. 2026-08 현재 실제 배포된 상태([Infrastructure](infrastructure.md))와는 세 가지가 다릅니다.
+**예정** 배지가 붙은 항목들이 왜 아직 없는지 — 간극의 배경입니다. 현재 실제 배포 상태는 [Infrastructure](infrastructure.md)에서 확인할 수 있습니다.
 
 | 다이어그램 (목표) | 현재 구현 | 배경 |
 |:---|:---|:---|
@@ -34,6 +32,6 @@ nav_order: 3
 | Prometheus + Loki + Grafana | **Loki 로그 수집까지 구축** (Grafana Alloy 사이드카) | 모니터링 서버 구축은 Linear 백로그 프로젝트로 대기 중 |
 
 {: .note }
-목표와 현재의 간극을 다이어그램 수정 대신 문서로 관리하는 이유: 이 간극이 곧 로드맵이기 때문입니다.
+목표와 현재를 다이어그램 하나에 함께 그려 두는 이유: **예정 배지가 곧 로드맵**이기 때문입니다. 구현되면 배지만 떼면 됩니다.
 
 다음 줌 → [Infrastructure — AWS 토폴로지](infrastructure.md)

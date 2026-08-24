@@ -34,6 +34,15 @@ nav_order: 6
 - **`.nojekyll` 파일 생성 금지**: 빌드 자체가 꺼진다.
 - **공개 저장소**: 운영 실값(시크릿 경로, DB 계정, 버킷명 등)은 적지 않는다. "무엇을 왜"만 기록한다.
 
+## 인터랙티브 다이어그램
+
+System · Infrastructure 페이지의 다이어그램은 이미지가 아니라 데이터 기반 HTML이다.
+
+- 데이터: `assets/js/arch-data.js` — 레인 / 그룹 / 노드 / 엣지를 선언하면 렌더러가 그린다. 노드·엣지 추가는 이 파일만 고치면 된다 (`status: 'planned'`면 점선 + 예정 배지).
+- 렌더러: `assets/js/arch-diagram.js` — 배치·엣지 곡선·호버/클릭 고정 강조를 담당. 다이어그램 내용을 바꿀 때는 건드릴 필요 없다.
+- 페이지에는 `<div class="wes-arch" data-arch="<이름>"></div>` 한 줄만 넣는다.
+- mermaid 플로우차트에도 같은 호버 강조가 자동 적용된다 (렌더러가 `code.language-mermaid`를 감지).
+
 ## 다이어그램 원본
 
 아키텍처 다이어그램 원본(.drawio)은 `WES-PM`과 `WES-Infra` 저장소에 있다. 수정 후 재내보내기:

@@ -6,11 +6,13 @@ nav_order: 4
 
 # Infrastructure Architecture — AWS 토폴로지
 
-실제로 배포되어 있는 AWS 리소스 구성입니다. 원본 다이어그램은 인프라 코드와 함께 `WES-Infra` 저장소에서 관리되며(2026-08-13 기준), 서비스 요청 경로와 배포·설정·state 흐름이 색으로 구분되어 있습니다.
+실제로 배포되어 있는 AWS 리소스 구성입니다. **노드에 마우스를 올리면 연결된 리소스만 강조됩니다** — 예를 들어 **EC2**에 올리면 요청 경로(ALB·RDS)와 배포 경로(SSM·GHCR), 설정 로드(Parameter Store)가 함께 드러나고, **GitHub Actions**에 올리면 키 없는 배포 경로(OIDC → IAM Role → SSM Run Command)만 남습니다.
 
-[원본 크기로 보기]({{ site.baseurl }}/assets/img/architecture/infrastructure.png){: .btn .btn-outline .fs-3 }
+<div class="wes-arch" data-arch="infrastructure" markdown="0">
+  <noscript><a href="{{ site.baseurl }}/assets/img/architecture/infrastructure.png">JavaScript가 꺼져 있습니다 — 정적 PNG로 보기</a></noscript>
+</div>
 
-![Infrastructure Architecture]({{ site.baseurl }}/assets/img/architecture/infrastructure.png){: .arch-diagram }
+점선 상자는 서브넷 경계입니다 — DB Subnet에는 인터넷 경로가 없고, Lambda가 S3 게이트웨이 엔드포인트로만 원본을 읽습니다. drawio 원본(2026-08-13, `WES-Infra` 저장소에서 인프라 코드와 함께 관리)은 [정적 PNG]({{ site.baseurl }}/assets/img/architecture/infrastructure.png)로 볼 수 있습니다.
 
 ## 구성 요약
 
