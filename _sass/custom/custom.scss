@@ -293,3 +293,98 @@ blockquote {
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// drawio SVG 인터랙티브 뷰어 (.drawio-arch) — assets/js/drawio-view.js가 렌더
+// 원본 drawio 렌더링을 그대로 임베드하고 호버/클릭 강조 + 팬/줌만 입힌다.
+// ---------------------------------------------------------------------------
+
+.drawio-arch {
+  margin: 1.5rem 0;
+
+  &__hint {
+    font-size: 0.72rem !important;
+    color: #737373;
+    margin: 0 0 0.5rem;
+  }
+
+  &__viewport {
+    position: relative;
+    overflow: hidden;
+    height: 620px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+
+    &.is-panning {
+      cursor: grabbing;
+    }
+  }
+
+  &--full &__viewport {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
+  &__stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+
+    svg {
+      display: block;
+    }
+  }
+
+  // 셀 강조/흐림 — 장식 셀(dv-static: 제목·범례·레인 프레임)은 건드리지 않는다
+  [data-cell-id] {
+    transition: opacity 0.22s ease;
+  }
+
+  [data-cell-id]:not(.dv-static) {
+    cursor: pointer;
+  }
+
+  &.is-peek [data-cell-id]:not(.dv-on):not(.dv-static) {
+    opacity: 0.4;
+  }
+
+  &.is-focus [data-cell-id]:not(.dv-on):not(.dv-static) {
+    opacity: 0.13;
+  }
+
+  .dv-sel {
+    filter: drop-shadow(0 0 4px rgba(189, 82, 139, 0.8));
+  }
+
+  &__hud {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+
+    button {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #d4d4d4;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #262626;
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+
+      &:hover {
+        border-color: #BD528B;
+        color: #A64077;
+      }
+    }
+  }
+}
