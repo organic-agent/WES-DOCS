@@ -29,10 +29,18 @@ h1, .fs-9, .fs-8 {
   margin: 0.5rem 0 1rem;
 }
 
-// mermaid 다이어그램 중앙 정렬 + 여백
-.mermaid {
+// mermaid 다이어그램 — just-the-docs는 code.language-mermaid 안에 SVG를 렌더한다
+code.language-mermaid {
   display: flex;
   justify-content: center;
+  padding: 0.75rem 0;
+  background: #ffffff;
+}
+
+pre:has(> code.language-mermaid) {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
   margin: 1.25rem 0;
 }
 
