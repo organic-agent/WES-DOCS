@@ -19,9 +19,11 @@ nav_order: 1
 | 테스트 | JUnit 5 + Testcontainers (실제 PostgreSQL로 통합 테스트) |
 | 설정 | 시크릿과 인프라 파생 값은 시작 시 AWS Parameter Store에서 로드 |
 
+---
+
 ## 도메인 단위 수직 슬라이스
 
-패키지는 기술 레이어가 아니라 **도메인**으로 나뉩니다. 13개 도메인 + 횡단 관심사(`global`/`security`)이고, 각 도메인이 자기 controller · service · domain · repository · dto를 소유합니다.
+패키지는 기술 레이어가 아니라 **도메인**으로 나눈다. 13개 도메인 + 횡단 관심사(`global`/`security`)이고, 각 도메인이 자기 controller · service · domain · repository · dto를 소유한다.
 
 | 도메인 | 책임 |
 |:---|:---|
@@ -39,11 +41,13 @@ nav_order: 1
 | `trash` | 사진·갤러리 소프트 삭제(휴지통), 복원, 만료 purge |
 | `global` / `security` | BaseEntity·예외·페이징 / JWT 필터 체인 |
 
-`embedding`부터 `trash`까지 여섯은 전부 사진에 *관한* 도메인이지만 `photo`의 하위 패키지가 아닙니다 — 합치면 `photo`가 모든 것이 떨어지는 패키지가 되기 때문입니다. 같은 이유로 **최상위 `infrastructure` 패키지도 없습니다.** 외부 시스템 어댑터는 그것을 쓰는 도메인 안에 삽니다. → [ADR-005](../decisions/adr-005-monolith-vertical-slice.md)
+`embedding`부터 `trash`까지 여섯은 전부 사진에 관한 도메인이지만 `photo`의 하위 패키지가 아니다 — 합치면 `photo`가 모든 것이 떨어지는 패키지가 되기 때문이다. 같은 이유로 최상위 `infrastructure` 패키지도 없다. 외부 시스템 어댑터는 그것을 쓰는 도메인 안에 둔다. → [ADR-005](../decisions/adr-005-monolith-vertical-slice.md)
+
+---
 
 ## 도메인 의존 개요
 
-도메인 사이의 실제 참조 관계입니다 (소스에서 자동 추출, 화살표 라벨은 참조 클래스 쌍의 수). **도메인 노드에 마우스를 올리면 그 도메인과 직접 의존 관계인 것들만 강조됩니다** — 예를 들어 `photo`에 올려 보면 사진을 참조하는 도메인이 얼마나 많은지 바로 보입니다.
+도메인 사이의 실제 참조 관계다 (소스에서 자동 추출, 화살표 라벨은 참조 클래스 쌍의 수). **도메인 노드에 마우스를 올리면 직접 의존 관계인 것만 강조된다** — `photo`에 올리면 사진을 참조하는 도메인이 몇 개인지 바로 보인다.
 
 ```mermaid
 flowchart LR
@@ -92,9 +96,11 @@ flowchart LR
     user -->|2| auth
 ```
 
+---
+
 ## 레이어 흐름
 
-모든 도메인이 같은 레이어 흐름을 따릅니다.
+모든 도메인이 같은 레이어 흐름을 따른다.
 
 ```mermaid
 flowchart LR
@@ -106,8 +112,10 @@ flowchart LR
     Repository --> Domain["Domain 엔티티"]
 ```
 
-## 컨벤션이 코드로 관리된다
+---
 
-레이어별 컨벤션(컨트롤러·서비스·도메인·리포지토리·DTO·테스트 등)은 저장소의 `.claude/rules/` 아래 12개 규칙 문서로 관리됩니다. 파일 경로 매칭으로 해당 파일 작업 시 자동 적용되는 구조라, 사람과 AI 도구가 같은 규칙을 봅니다.
+## 컨벤션을 코드로 관리한다
 
-전체 클래스 구조(305개 클래스)는 소스에서 자동 추출한 도메인별 Mermaid 클래스 다이어그램으로 `WES-Server` 저장소의 `docs/architecture.md`(2,200줄)에 정리되어 있습니다. 이 문서에는 규모 문제로 발췌만 실었습니다 — 클러스터링 관련 발췌는 [AI 파이프라인](ai-pipeline.md)에 있습니다.
+레이어별 컨벤션(컨트롤러·서비스·도메인·리포지토리·DTO·테스트 등)은 저장소의 `.claude/rules/` 아래 12개 규칙 문서로 관리한다. 파일 경로 매칭으로 해당 파일 작업 시 자동 적용되는 구조라서 사람과 AI 도구가 같은 규칙을 본다.
+
+전체 클래스 구조(305개 클래스)는 소스에서 자동 추출한 도메인별 Mermaid 클래스 다이어그램으로 `WES-Server` 저장소의 `docs/architecture.md`(2,200줄)에 정리되어 있다. mermaid 렌더 한계(`maxTextSize`) 때문에 이 문서에는 발췌만 싣는다 — 클러스터링 관련 발췌는 [AI 파이프라인](ai-pipeline.md)에 있다.

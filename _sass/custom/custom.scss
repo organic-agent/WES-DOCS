@@ -58,6 +58,93 @@ blockquote {
 }
 
 // ---------------------------------------------------------------------------
+// 레이아웃 — 와이드 화면에서 just-the-docs 기본값은 [사이드바+본문] 블록을 가운데
+// 정렬하고 사이드바를 늘려 링크를 오른쪽 정렬한다. 사이드바를 창 왼쪽에 고정하고
+// 본문을 그 옆에 붙여, 오른쪽 남는 공간을 페이지 TOC가 쓴다.
+// ---------------------------------------------------------------------------
+
+@media (min-width: 66.5rem) {
+  .side-bar {
+    width: 16.5rem;
+    min-width: 16.5rem;
+  }
+
+  .main {
+    margin-left: 16.5rem;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 오른쪽 페이지 내비게이터 (.page-toc) — assets/js/page-toc.js가 생성
+// 사이드바(16.5rem) + 본문(50rem) 오른쪽의 남는 공간에 고정 표시.
+// 공간이 부족한 화면(84rem 미만)에서는 숨긴다.
+// ---------------------------------------------------------------------------
+
+.page-toc {
+  display: none;
+  position: fixed;
+  top: 5.5rem;
+  left: 68.5rem;
+  width: calc(100vw - 70rem);
+  max-width: 15rem;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  z-index: 1;
+
+  @media (min-width: 84rem) {
+    display: block;
+  }
+
+  &__title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    margin: 0 0 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid #e5e5e5;
+  }
+
+  &__item {
+    margin: 0;
+
+    a {
+      display: block;
+      padding: 0.22rem 0 0.22rem 0.75rem;
+      margin-left: -2px;
+      border-left: 2px solid transparent;
+      color: #737373;
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        color: #A64077;
+      }
+
+      &.is-active {
+        color: #A64077;
+        font-weight: 600;
+        border-left-color: #BD528B;
+      }
+    }
+
+    &--h3 a {
+      padding-left: 1.5rem;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // drawio SVG 인터랙티브 뷰어 (.drawio-arch) — assets/js/drawio-view.js가 렌더
 // 원본 drawio 렌더링을 그대로 임베드하고 호버/클릭 강조 + 팬/줌만 입힌다.
 // ---------------------------------------------------------------------------

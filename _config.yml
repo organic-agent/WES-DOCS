@@ -65,7 +65,7 @@ nav_external_links:
   - title: easyselect.kr
     url: https://easyselect.kr
 
-footer_content: "© 2026 EasySelect — 이 문서는 md 파일 추가만으로 자동 배포됩니다."
+footer_content: "© 2026 EasySelect — 이 문서는 md 파일 추가만으로 자동 배포된다."
 
 exclude:
   - README.md

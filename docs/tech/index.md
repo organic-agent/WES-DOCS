@@ -15,9 +15,11 @@ has_children: true
 | AI | Python Lambda (ECR 컨테이너) · DINOv2 768차원 임베딩 · pgvector 코사인 유사도 · Union-Find 클러스터링 | `organic-agent-server` (embedder) |
 | 인프라 | Terraform · AWS (VPC / EC2 / RDS / ALB / S3 / Lambda) · GitHub Actions OIDC + SSM Run Command | `organic-agent-infra` |
 
+---
+
 ## 관통하는 원칙
 
-**이미지 바이트는 앱 서버를 지나지 않습니다.** 서버는 presigned URL만 발급하고, 브라우저가 S3에 직접 업로드·다운로드합니다. 이미지를 실제로 여는 곳은 임베딩 Lambda 한 곳뿐이고, 그래서 임베딩·미리보기 파생본·EXIF 추출이 전부 그 한 번의 열림에 얹혀 있습니다. 이 원칙이 각 영역에서 어떻게 구현되는지가 이 섹션의 큰 줄기입니다.
+**이미지 바이트는 앱 서버를 지나지 않는다.** 서버는 presigned URL만 발급하고, 브라우저가 S3에 직접 업로드·다운로드한다. 이미지를 실제로 여는 곳은 임베딩 Lambda 한 곳뿐이므로 임베딩·미리보기 파생본·EXIF 추출을 전부 그 한 번의 열림에 얹었다. 이 원칙이 각 영역에서 어떻게 구현되는지가 이 섹션의 줄기다.
 
 | 페이지 | 내용 |
 |:---|:---|

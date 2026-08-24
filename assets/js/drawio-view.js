@@ -32,7 +32,7 @@
     }).catch(function (err) {
       root.classList.add('drawio-arch--error');
       var p = el('p', 'drawio-arch__hint', root);
-      p.textContent = '다이어그램을 불러오지 못했습니다 (' + err.message + '). 아래 정적 PNG 링크를 이용해 주세요.';
+      p.textContent = '다이어그램 로드 실패 (' + err.message + ') — 아래 정적 PNG 링크로 볼 것';
     });
   }
 
