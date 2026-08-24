@@ -1,0 +1,27 @@
+// WES 브랜드 컬러 스킴
+// 색상 원천: WES-Web tokens/global.json (rose 액센트 + gray 뉴트럴)
+// just-the-docs 로드 순서상 이 파일의 변수 재할당이 테마 전 모듈에 적용된다.
+// 이 파일 안에서 @import 금지 (테마가 자동으로 import한다).
+
+$body-font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$mono-font-family: "SF Mono", "Menlo", "D2Coding", Consolas, Monaco, monospace;
+
+// 액센트 — rose
+$link-color: #A64077;                  // rose.600
+$btn-primary-color: #BD528B;           // rose.500
+
+// 뉴트럴 — gray
+$body-heading-color: #171717;          // gray.900
+$body-text-color: #262626;             // gray.800
+$nav-child-link-color: #525252;        // gray.600
+
+// 표면
+$sidebar-color: #fbf7f9;               // rose 틴트 오프화이트
+$search-background-color: #ffffff;
+$table-background-color: #ffffff;
+$code-background-color: #f7f4f6;
+$feedback-color: #f3ebf0;
+
+// 보더
+$border-color: #e5e5e5;                // gray.200
+$search-result-preview-color: #737373; // gray.500

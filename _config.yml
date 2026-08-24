@@ -1,0 +1,74 @@
+# WES-DOCS — GitHub Pages 네이티브 Jekyll 빌드 설정
+# 로컬 빌드 없이 main 브랜치에 push하면 자동으로 빌드·배포된다.
+# 빌드 성공 여부는 repo의 Actions 탭 "pages build and deployment"에서 확인.
+
+title: WES · EasySelect
+description: 웨딩 사진 셀렉 서비스 WES(Wedding Easy Select) 개발 문서 — 배경, 제품, 아키텍처, 기술 구현, 스프린트 기록
+lang: ko
+url: "https://organic-agent.github.io"
+baseurl: "/WES-DOCS"
+
+# GitHub Pages 네이티브 빌드는 gem 테마(theme:)를 허용하지 않는다. 반드시 remote_theme.
+# 태그 핀 필수 — main 추적 시 테마 breaking change로 어느 날 빌드가 깨질 수 있다.
+remote_theme: just-the-docs/just-the-docs@v0.12.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-include-cache   # just-the-docs 런타임 의존성 (Pages whitelist 포함)
+
+color_scheme: wes          # _sass/color_schemes/wes.scss
+
+# 모든 페이지에 테마 기본 레이아웃 적용 (front matter에서 생략 가능하게)
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+search_enabled: true       # lunr.js — 한국어 형태소 분석은 없지만 제목·헤딩 위주로 잘 걸린다
+search:
+  heading_level: 3
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  rel_url: true
+  button: false
+
+# 이 키가 존재해야 mermaid가 활성화된다 (클라이언트 사이드, jsDelivr 로드)
+mermaid:
+  version: "10.9.1"
+
+# 콜아웃은 정의가 없으면 {: .note } 문법이 렌더되지 않는다
+callouts_level: quiet
+callouts:
+  note:
+    title: 참고
+    color: blue
+  warning:
+    title: 주의
+    color: yellow
+  decision:
+    title: 결정
+    color: purple
+  highlight:
+    title: 하이라이트
+    color: green
+
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "맨 위로"
+
+aux_links:
+  GitHub: "https://github.com/organic-agent/WES-DOCS"
+
+nav_external_links:
+  - title: easyselect.kr
+    url: https://easyselect.kr
+
+footer_content: "© 2026 WES · Wedding Easy Select — 이 문서는 md 파일 추가만으로 자동 배포됩니다."
+
+exclude:
+  - README.md
+  - vendor
+  - Gemfile
+  - Gemfile.lock

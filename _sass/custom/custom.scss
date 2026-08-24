@@ -1,0 +1,50 @@
+// WES-DOCS 세부 커스텀 — 변수 오버라이드(color_schemes/wes.scss)로 안 되는 것만 여기에
+
+// 제목에 세리프 포인트 (WES-Web과 동일한 Noto Serif KR)
+h1, .fs-9, .fs-8 {
+  font-family: "Noto Serif KR", "Noto Sans KR", serif;
+  letter-spacing: -0.01em;
+}
+
+// 아키텍처 다이어그램 이미지 — 흰 배경 위 카드 스타일, 클릭해서 원본 보기 전제
+.arch-diagram {
+  display: block;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 1px 3px rgba(23, 23, 23, 0.06);
+}
+
+// PoC 차트 SVG
+.poc-chart {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+// mermaid 다이어그램 중앙 정렬 + 여백
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+// 표 안 줄바꿈 여유 (긴 한국어 정책 문장 대응)
+td {
+  line-height: 1.55;
+}
+
+// 인용(발췌) — 소스 문서 인용 시 rose 톤
+blockquote {
+  border-left: 3px solid #E48DB7; // rose.400
+  color: #525252;
+  margin-left: 0;
+  padding-left: 1rem;
+}
