@@ -50,7 +50,9 @@
     var canvas = el('div', 'wes-arch__canvas', scroll);
     canvas.style.gridTemplateColumns = 'repeat(' + d.lanes.length + ', minmax(150px, 1fr))';
     if (d.minWidth) canvas.style.minWidth = d.minWidth + 'px';
+    if (d.align === 'top') this.root.classList.add('wes-arch--top'); // 여정형 다이어그램은 위 정렬
     this.canvas = canvas;
+    this.groupIds = {};
 
     this.svg = svgEl('svg', { 'class': 'wes-arch__svg', 'aria-hidden': 'true' }, canvas);
     var defs = svgEl('defs', {}, this.svg);
@@ -70,6 +72,9 @@
       groups.forEach(function (g) {
         var gEl = el('div', 'wes-arch__group', laneEl);
         el('div', 'wes-arch__group-title', gEl).textContent = g.title;
+        gEl.setAttribute('data-node', g.id);
+        self.nodeEls[g.id] = gEl;      // 그룹도 엣지 endpoint가 될 수 있다 (예: 모놀리스 전체 → DB)
+        self.groupIds[g.id] = true;    // 단, 세로 엣지 경로 판정에서 장애물로 치지 않는다
         d.nodes.filter(function (n) { return n.lane === lane.id && n.group === g.id; })
           .forEach(function (n) { self.buildNode(n, gEl); });
       });
@@ -141,17 +146,37 @@
     this.svg.setAttribute('height', h);
     this.svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
 
+    var rects = {};
+    Object.keys(this.nodeEls).forEach(function (id) { rects[id] = self.rect(self.nodeEls[id]); });
+
+    // 두 노드 사이 세로 통로(topY~bottomY, L~R)에 다른 노드가 있는지 — 있으면 직결 대신 우회 아크
+    function corridorClear(topY, bottomY, L, R, skipA, skipB) {
+      return Object.keys(rects).every(function (id) {
+        if (id === skipA || id === skipB || self.groupIds[id]) return true;
+        var r = rects[id];
+        return !(r.l < R && r.r > L && r.b > topY + 2 && r.t < bottomY - 2);
+      });
+    }
+
     this.edgeRecs.forEach(function (rec) {
-      var s = self.nodeEls[rec.data.from], t = self.nodeEls[rec.data.to];
-      if (!s || !t) return;
-      var a = self.rect(s), b = self.rect(t), d;
+      var fromId = rec.data.from, toId = rec.data.to;
+      if (!self.nodeEls[fromId] || !self.nodeEls[toId]) return;
+      var a = rects[fromId], b = rects[toId], d;
       if (b.l >= a.r - 4) {                       // 정방향 (왼쪽 → 오른쪽)
         var k1 = Math.max((b.l - a.r) / 2, 32);
         d = 'M ' + a.r + ' ' + a.cy + ' C ' + (a.r + k1) + ' ' + a.cy + ', ' + (b.l - k1) + ' ' + b.cy + ', ' + b.l + ' ' + b.cy;
       } else if (a.l >= b.r - 4) {                // 역방향 (오른쪽 → 왼쪽)
         var k2 = Math.max((a.l - b.r) / 2, 32);
         d = 'M ' + a.l + ' ' + a.cy + ' C ' + (a.l - k2) + ' ' + a.cy + ', ' + (b.r + k2) + ' ' + b.cy + ', ' + b.r + ' ' + b.cy;
-      } else {                                     // 같은 레인 → 오른쪽으로 볼록한 곡선
+      } else if (b.t >= a.b - 4 &&                // 같은 레인, 아래 방향 — 통로가 비어 있으면 세로 직결
+        corridorClear(a.b, b.t, Math.min(a.cx, b.cx) - 20, Math.max(a.cx, b.cx) + 20, fromId, toId)) {
+        var kd = Math.max((b.t - a.b) / 2, 12);
+        d = 'M ' + a.cx + ' ' + a.b + ' C ' + a.cx + ' ' + (a.b + kd) + ', ' + b.cx + ' ' + (b.t - kd) + ', ' + b.cx + ' ' + b.t;
+      } else if (a.t >= b.b - 4 &&                // 같은 레인, 위 방향
+        corridorClear(b.b, a.t, Math.min(a.cx, b.cx) - 20, Math.max(a.cx, b.cx) + 20, fromId, toId)) {
+        var ku = Math.max((a.t - b.b) / 2, 12);
+        d = 'M ' + a.cx + ' ' + a.t + ' C ' + a.cx + ' ' + (a.t - ku) + ', ' + b.cx + ' ' + (b.b + ku) + ', ' + b.cx + ' ' + b.b;
+      } else {                                     // 같은 레인, 사이에 노드 있음 → 오른쪽으로 볼록한 곡선
         var bulge = Math.max(a.r, b.r) + 30;
         d = 'M ' + a.r + ' ' + a.cy + ' C ' + bulge + ' ' + a.cy + ', ' + bulge + ' ' + b.cy + ', ' + b.r + ' ' + b.cy;
       }
@@ -200,7 +225,8 @@
       var e = self.nodeEls[id];
       e.classList.toggle('is-focus', !focusEdge && id === activeId);
       e.classList.toggle('is-related', !!hasFocus && !!related[id] && id !== activeId);
-      e.classList.toggle('is-dim', !!hasFocus && !related[id]);
+      // 그룹 컨테이너는 흐리게 하지 않는다 — 컨테이너 opacity가 내부의 related 노드까지 죽인다
+      e.classList.toggle('is-dim', !!hasFocus && !related[id] && !self.groupIds[id]);
       e.setAttribute('aria-pressed', id === self.pinId ? 'true' : 'false');
     });
     this.edgeRecs.forEach(function (rec) {

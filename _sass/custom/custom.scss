@@ -130,6 +130,27 @@ blockquote {
     letter-spacing: 0.03em;
   }
 
+  // 그룹이 엣지 endpoint일 때의 강조 (컨테이너라 흐림 처리는 하지 않는다)
+  &__group {
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+    &.is-related {
+      border-color: #E48DB7;
+      border-style: solid;
+    }
+
+    &.is-focus {
+      border-color: #BD528B;
+      border-style: solid;
+      box-shadow: 0 2px 10px rgba(189, 82, 139, 0.18);
+    }
+  }
+
+  // 여정형(위→아래 흐름) 다이어그램은 레인을 위 정렬
+  &--top &__lane {
+    justify-content: flex-start;
+  }
+
   &__node {
     position: relative;
     background: #ffffff;
@@ -165,6 +186,8 @@ blockquote {
     &--app    { border-left-color: #171717; }
     &--data   { border-left-color: #A64077; }
     &--obs    { border-left-color: #16a34a; }
+    &--ui     { border-left-color: #E48DB7; } // 화면(UI) 노드
+    &--engine { border-left-color: #737373; } // 비동기 워커 · 엔진 · 상태
 
     &.is-planned {
       border-style: dashed;
