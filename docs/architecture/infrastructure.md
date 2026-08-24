@@ -6,13 +6,18 @@ nav_order: 4
 
 # Infrastructure Architecture — AWS 토폴로지
 
-실제로 배포되어 있는 AWS 리소스 구성입니다. **노드에 마우스를 올리면 연결된 리소스만 강조됩니다** — 예를 들어 **EC2**에 올리면 요청 경로(ALB·RDS)와 배포 경로(SSM·GHCR), 설정 로드(Parameter Store)가 함께 드러나고, **GitHub Actions**에 올리면 키 없는 배포 경로(OIDC → IAM Role → SSM Run Command)만 남습니다.
+실제로 배포되어 있는 AWS 리소스 구성입니다 — **draw.io 원본 렌더링 그대로**이고(2026-08-13, `WES-Infra` 저장소에서 인프라 코드와 함께 관리), 서비스 요청 ①~⑧ 경로와 DNS·설정·배포·state 흐름이 원본의 색 범례로 구분되어 있습니다.
 
-<div class="wes-arch" data-arch="infrastructure" markdown="0">
+**리소스에 마우스를 올리면 연결된 것만 강조됩니다** (아이콘과 라벨 어느 쪽이든) — **EC2**에 올리면 요청 경로(ALB·RDS)와 설정 로드(Parameter Store), 배포 경로(SSM Run Command)가 함께 드러나고, **GitHub Actions**에 올리면 키 없는 배포 경로(OIDC → IAM 배포 롤 → Run Command)만 남습니다. 클릭하면 고정, 드래그 이동 · 휠 줌.
+
+<div class="drawio-arch"
+     data-svg="{{ '/assets/diagrams/interactive/infrastructure.svg' | relative_url }}?v={{ site.github.build_revision }}"
+     data-map="{{ '/assets/diagrams/interactive/infrastructure.map.json' | relative_url }}?v={{ site.github.build_revision }}" markdown="0">
   <noscript><a href="{{ site.baseurl }}/assets/img/architecture/infrastructure.png">JavaScript가 꺼져 있습니다 — 정적 PNG로 보기</a></noscript>
 </div>
 
-점선 상자는 서브넷 경계입니다 — DB Subnet에는 인터넷 경로가 없고, Lambda가 S3 게이트웨이 엔드포인트로만 원본을 읽습니다. drawio 원본(2026-08-13, `WES-Infra` 저장소에서 인프라 코드와 함께 관리)은 [정적 PNG]({{ site.baseurl }}/assets/img/architecture/infrastructure.png)로 볼 수 있습니다.
+[전체 화면으로 보기]({{ site.baseurl }}/diagrams/infrastructure.html){: .btn .btn-outline .fs-3 .mr-2 }
+[정적 PNG]({{ site.baseurl }}/assets/img/architecture/infrastructure.png){: .fs-3 }
 
 ## 구성 요약
 

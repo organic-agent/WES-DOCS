@@ -34,9 +34,9 @@ nav_order: 6
 - **`.nojekyll` 파일 생성 금지**: 빌드 자체가 꺼진다.
 - **공개 저장소**: 운영 실값(시크릿 경로, DB 계정, 버킷명 등)은 적지 않는다. "무엇을 왜"만 기록한다.
 
-## 인터랙티브 다이어그램 — 두 가지 방식
+## 인터랙티브 다이어그램
 
-**① drawio 원본 임베드 방식** (Information · Application) — draw.io가 렌더한 SVG를 그대로 임베드하고 호버/클릭 강조 + 팬/줌만 얹는다. 원본 모습이 100% 유지된다.
+아키텍처 4장(Information · Application · System · Infrastructure)은 **draw.io가 렌더한 SVG를 그대로 임베드**하고 호버/클릭 강조 + 팬/줌만 얹는다. 원본 모습이 100% 유지된다.
 
 drawio 원본을 수정했다면 두 명령으로 재생성한다:
 
@@ -48,12 +48,10 @@ python3 scripts/drawio-map.py <원본>.drawio assets/diagrams/interactive/<이�
 ```
 
 - 뷰어: `assets/js/drawio-view.js` (`.drawio-arch[data-svg][data-map]`를 자동 초기화)
-- 맵 스크립트가 호버 단위를 계산한다 — 컨테이너 안 불릿은 컨테이너로 상속, 보이지 않는 경유점은 병합, 제목·범례는 장식 취급
-- 전체 화면 페이지: `diagrams/<이름>.html`
+- 맵 스크립트가 호버 단위를 계산한다 — 컨테이너 안 불릿은 컨테이너로 상속, 보이지 않는 경유점(12px 이하 무라벨 점)은 병합, 아이콘 옆 텍스트 라벨은 근접 페어링(20px 이내)으로 아이콘에 붙이고, 제목·범례는 장식 취급
+- 문서 페이지 임베드는 `<div class="drawio-arch" data-svg=... data-map=...>`, 전체 화면 페이지는 `diagrams/<이름>.html`
 
-**② 데이터 기반 HTML 방식** (System · Infrastructure) — 레인/노드/엣지를 `assets/js/arch-data.js`에 선언하면 `assets/js/arch-diagram.js`가 그린다. 원본과 다른 재구성(예: "예정" 배지, 브랜드 스타일)이 필요할 때 쓴다. 페이지에는 `<div class="wes-arch" data-arch="<이름>"></div>` 한 줄.
-
-mermaid 플로우차트에도 같은 호버 강조가 자동 적용된다 (`code.language-mermaid` 감지).
+mermaid 플로우차트에는 `assets/js/mermaid-hover.js`가 같은 호버 강조를 자동 적용한다 (`code.language-mermaid` 감지).
 
 ## 다이어그램 원본
 
