@@ -2,8 +2,8 @@
 # 로컬 빌드 없이 main 브랜치에 push하면 자동으로 빌드·배포된다.
 # 빌드 성공 여부는 repo의 Actions 탭 "pages build and deployment"에서 확인.
 
-title: WES · EasySelect
-description: 웨딩 사진 셀렉 서비스 WES(Wedding Easy Select) 개발 문서 — 배경, 제품, 아키텍처, 기술 구현, 스프린트 기록
+title: EasySelect
+description: 웨딩 사진 셀렉 서비스 EasySelect 개발 문서 — 배경, 제품, 아키텍처, 기술 구현, 스프린트 기록
 lang: ko
 url: "https://organic-agent.github.io"
 baseurl: "/WES-DOCS"
@@ -65,7 +65,7 @@ nav_external_links:
   - title: easyselect.kr
     url: https://easyselect.kr
 
-footer_content: "© 2026 WES · Wedding Easy Select — 이 문서는 md 파일 추가만으로 자동 배포됩니다."
+footer_content: "© 2026 EasySelect — 이 문서는 md 파일 추가만으로 자동 배포됩니다."
 
 exclude:
   - README.md

@@ -1,6 +1,6 @@
 # WES-DOCS
 
-WES(Wedding Easy Select) 프로젝트 문서 사이트.
+EasySelect(웨딩 사진 셀렉 서비스) 프로젝트 문서 사이트.
 
 **사이트: <https://organic-agent.github.io/WES-DOCS/>**
 

@@ -5,7 +5,7 @@ nav_order: 1
 permalink: /
 ---
 
-# WES · Wedding Easy Select
+# EasySelect
 {: .fs-9 }
 
 수천 장의 웨딩 원본 사진에서, 부부가 지치지 않고 최종 사진을 고르게 하는 셀렉 플랫폼.
