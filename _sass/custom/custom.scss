@@ -69,9 +69,17 @@ blockquote {
     min-width: 16.5rem;
   }
 
-  // 테마의 원 규칙이 .side-bar+.main 복합 셀렉터이므로 같은 특이도로 덮는다
+  // 테마의 원 규칙이 .side-bar+.main 복합 셀렉터이므로 같은 특이도로 덮는다.
+  // 본문은 사이드바 오른쪽 남은 공간의 중앙에 둔다.
   .side-bar + .main {
-    margin-left: 16.5rem;
+    margin-left: calc(16.5rem + max(0px, (100vw - 66.5rem) / 2));
+  }
+}
+
+// TOC가 보이는 폭부터는 [본문 50rem + 간격 2rem + TOC 15rem] 쌍을 중앙에 둔다
+@media (min-width: 84rem) {
+  .side-bar + .main {
+    margin-left: calc(16.5rem + max(0px, (100vw - 83.5rem) / 2));
   }
 }
 
@@ -85,9 +93,9 @@ blockquote {
   display: none;
   position: fixed;
   top: 5.5rem;
-  left: 68.5rem;
-  width: calc(100vw - 70rem);
-  max-width: 15rem;
+  // 본문 중앙 정렬 수식과 같은 오프셋으로 본문 오른쪽 2rem 지점에 붙는다
+  left: calc(68.5rem + (100vw - 83.5rem) / 2);
+  width: 15rem;
   max-height: calc(100vh - 8rem);
   overflow-y: auto;
   font-size: 0.72rem;
