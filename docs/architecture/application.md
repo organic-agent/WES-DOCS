@@ -8,6 +8,9 @@ nav_order: 2
 
 Information Architecture를 애플리케이션 책임 구조로 번역한 **기술 중립(technology-neutral) 모듈 아키텍처**다. 어떤 프레임워크로 만들지 정하기 전에, 무엇이 무엇을 책임지는지부터 그렸다.
 
+{: .warning }
+2026-08 역사적 스냅샷이다. 현재 도메인과 API 경계는 [백엔드](../tech/server.md), [프론트엔드](../tech/web.md), [기능별 ERD](../data-model/index.md)를 따른다.
+
 <div class="drawio-arch"
      data-svg="{{ '/assets/diagrams/interactive/application.svg' | relative_url }}?v={{ site.github.build_revision }}"
      data-map="{{ '/assets/diagrams/interactive/application.map.json' | relative_url }}?v={{ site.github.build_revision }}" markdown="0">

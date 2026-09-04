@@ -13,6 +13,9 @@ nav_order: 5
 
 ## 맥락
 
+{: .note }
+모놀리스와 수직 슬라이스 원칙은 유지한다. 아래 도메인 수와 `embedding`·`cluster`·`folder` 예시는 2026-08 기록이며 현재 패키지 목록은 [백엔드](../tech/server.md)를 따른다.
+
 Application Architecture에는 9개의 논리 모듈이 있다. 3인 팀 · 단일 EC2 환경에서 이것을 몇 개의 배포 단위로 나눌지 정해야 했다.
 
 ## 결정
