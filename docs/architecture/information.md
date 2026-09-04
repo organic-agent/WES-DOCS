@@ -8,6 +8,9 @@ nav_order: 1
 
 역할별 화면·정보 구조와 사용자 여정이다. 4단계 줌의 첫 번째 — 가장 UX에 가까운 다이어그램이다.
 
+{: .warning }
+2026-08 역사적 스냅샷이다. 전역 역할·유사도 스택·앨범 흐름은 현재 계약이 아니다. 현행 여정은 [사용자 흐름](../product/flows.md)과 [데이터 모델](../data-model/index.md)을 따른다.
+
 <div class="drawio-arch"
      data-svg="{{ '/assets/diagrams/interactive/information.svg' | relative_url }}?v={{ site.github.build_revision }}"
      data-map="{{ '/assets/diagrams/interactive/information.map.json' | relative_url }}?v={{ site.github.build_revision }}" markdown="0">
@@ -27,4 +30,4 @@ nav_order: 1
 - 부부 여정 : 사진 탐색 → 유사 사진 스택(5틱 슬라이더) → 폴더 고정 → 직접/AI 셀렉 → 앨범 목업 → 최종 제출. `선택 앨범`에 올리면 셀렉의 모든 갈래가 이 화면에서 시작하는 것이 보인다.
 - 게스트 여정 : 진입점이 로그인이 아니라 부부의 `링크 발급`이다.
 
-세부 상태 체인의 정책은 [사용자 흐름](../product/flows.md)과 같다.
+아래 설명은 그림을 읽기 위한 당시 용어다. 현재 정책은 [사용자 흐름](../product/flows.md)을 기준으로 한다.

@@ -6,7 +6,10 @@ nav_order: 4
 
 # Infrastructure Architecture — AWS 토폴로지
 
-실제로 배포되어 있는 AWS 리소스 구성이다 — **draw.io 원본 렌더링 그대로**이고(2026-08-13, `WES-Infra` 저장소에서 인프라 코드와 함께 관리), 서비스 요청 ①-⑧ 경로와 DNS·설정·배포·state 흐름이 원본의 색 범례로 구분되어 있다.
+2026-08-13 당시 배포 구성을 그린 자료다. **draw.io 원본 렌더링 그대로**이고 `WES-Infra` 저장소에서 관리한다. 서비스 요청 ①-⑧ 경로와 DNS·설정·배포·state 흐름이 원본의 색 범례로 구분되어 있다.
+
+{: .warning }
+그림은 2026-08 역사적 스냅샷이다. 현재 저장소는 10개 Terraform 모듈과 별도 Tailnet 관리자 경계를 사용한다. 현행 구성은 [인프라와 배포](../tech/infra.md)를 따른다.
 
 리소스에 마우스를 올리면 연결된 것만 강조된다 (아이콘과 라벨 어느 쪽이든). `EC2`에 올리면 요청 경로(ALB·RDS)와 설정 로드(Parameter Store), 배포 경로(SSM Run Command)가 함께 드러나고, `GitHub Actions`에 올리면 키 없는 배포 경로(OIDC → IAM 배포 롤 → Run Command)만 남는다. 클릭하면 고정, 드래그 이동 · 휠 줌.
 

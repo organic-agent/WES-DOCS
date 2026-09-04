@@ -23,78 +23,58 @@ nav_order: 1
 
 ## 도메인 단위 수직 슬라이스
 
-패키지는 기술 레이어가 아니라 **도메인**으로 나눈다. 13개 도메인 + 횡단 관심사(`global`/`security`)이고, 각 도메인이 자기 controller · service · domain · repository · dto를 소유한다.
+패키지는 기술 레이어가 아니라 도메인으로 나눈다. 현재 최상위 패키지는 다음 책임을 가진다.
 
 | 도메인 | 책임 |
 |:---|:---|
-| `auth` | OAuth2 로그인, JWT 발급·재발급·로그아웃 |
-| `user` | 사용자 계정, 역할(작가·부부) |
-| `studio` | 작가 스튜디오, 슬러그 URL 정규화 |
-| `gallery` | 갤러리, 초대 링크, 멤버, 상태 전환, 접근 정책, Mock 갤러리 온보딩 |
-| `photo` | 원본 사진 — presigned 발급 → 직접 업로드 → 완료 통지, EXIF 메타, 별점 |
-| `embedding` | 갤러리 단위 Lambda 비동기 호출 |
-| `cluster` | pgvector 유사도 쌍 → Union-Find 연결 요소로 유사 사진 묶기 |
-| `folder` | 폴더 그룹(부모) → 폴더(자식) 2단계 앨범 구조 |
-| `selection` | 부부의 최종 선택 앨범, 최대 선택 장수 |
-| `retouch` | 보정 요청 — 회차(Round) 단위 일괄 제출 |
-| `collab` | 게스트 협업 세션 — 계정 없는 링크, 좋아요·댓글 |
-| `trash` | 사진·갤러리 소프트 삭제(휴지통), 복원, 만료 purge |
-| `global` / `security` | BaseEntity·예외·페이징 / JWT 필터 체인 |
+| `auth`, `user` | OAuth2/JWT 인증과 전역 역할 없는 사용자 계정 |
+| `workspace`, `studio` | PERSONAL/STUDIO 작업공간, 다중 구성원과 OWNER 수명주기 |
+| `gallery`, `photo` | 작업공간 소유 갤러리, 초대, 상태와 presigned 사진 업로드 |
+| `analysis`, `category` | 외부 AI 작업 계약과 컨셉·세부·사진 배정 |
+| `selection`, `recommendation` | 갤러리 생성 시 생기는 셀렉, 별점과 추천 초안 |
+| `collab` | 사용자·게스트 통합 참여자, 댓글과 좋아요 |
+| `retouch` | 고객 요청과 스튜디오 결과 처리 |
+| `notification`, `trash` | 사용자 알림, 논리 삭제·복원·purge |
+| `admin` | 별도 관리자 인증·감사·멱등 작업·휴지통·재처리 |
+| `global`, `security` | 공통 예외·페이징과 공개 JWT 필터 체인 |
 
-`embedding`부터 `trash`까지 여섯은 전부 사진에 관한 도메인이지만 `photo`의 하위 패키지가 아니다 — 합치면 `photo`가 모든 것이 떨어지는 패키지가 되기 때문이다. 같은 이유로 최상위 `infrastructure` 패키지도 없다. 외부 시스템 어댑터는 그것을 쓰는 도메인 안에 둔다. → [ADR-005](../decisions/adr-005-monolith-vertical-slice.md)
-
----
+`cluster`, `embedding`, 앨범 `folder` 도메인은 현재 서버 계약에 없다. 모델 실행은 외부 AI 워커가 담당한다. → [ADR-009](../decisions/adr-009-gallery-category-model.md), [ADR-010](../decisions/adr-010-external-ai-worker.md)
 
 ## 도메인 의존 개요
 
-도메인 사이의 실제 참조 관계다 (소스에서 자동 추출, 화살표 라벨은 참조 클래스 쌍의 수). **도메인 노드에 마우스를 올리면 직접 의존 관계인 것만 강조된다** — `photo`에 올리면 사진을 참조하는 도메인이 몇 개인지 바로 보인다.
-
 ```mermaid
 flowchart LR
-    subgraph acct["계정"]
-        user
-        auth
-        studio
-    end
-    subgraph origin["갤러리·원본"]
-        gallery
-        photo
-        embedding
-        cluster
-    end
-    subgraph select["셀렉·협업"]
-        folder
-        selection
-        retouch
-        collab
-    end
-    trash
-    auth -->|1| gallery
-    auth -->|3| user
-    cluster -->|1| gallery
-    cluster -->|2| photo
-    collab -->|2| folder
-    collab -->|4| gallery
-    collab -->|6| photo
-    embedding -->|1| gallery
-    embedding -->|1| photo
-    folder -->|2| gallery
-    folder -->|7| photo
-    gallery -->|4| photo
-    gallery -->|3| studio
-    gallery -->|2| user
-    photo -->|2| gallery
-    retouch -->|2| gallery
-    retouch -->|8| photo
-    selection -->|2| gallery
-    selection -->|4| photo
-    selection -->|1| retouch
-    studio -->|1| user
-    trash -->|1| gallery
-    trash -->|4| photo
-    trash -->|1| studio
-    user -->|2| auth
+    U[user] --> W[workspace]
+    W --> S[studio]
+    W --> G[gallery]
+    G --> P[photo]
+    P --> A[analysis]
+    G --> C[category]
+    G --> SEL[selection]
+    SEL --> REC[recommendation]
+    G --> COL[collab]
+    G --> R[retouch]
+    G --> N[notification]
+    ADM[admin] --> G
+    ADM --> P
+    ADM --> SEL
+    ADM --> COL
+    ADM --> R
 ```
+
+## 마이그레이션과 계약
+
+- `V1`은 운영 기준선이다. 수정하거나 초기화하지 않는다.
+- `V2`는 앨범 폴더·템플릿을 제거했다.
+- `V3`과 `V4`는 분석 결과와 작업 단계를 분리했다.
+- `V5`는 작업공간 소유권, 카테고리·셀렉 메타데이터와 통합 협업 참여자를 확장했다.
+- `V6`는 복합 FK와 NOT NULL을 확정하고 레거시 협업·앨범 계약을 제거했다.
+
+Flyway가 스키마를 소유하고 Hibernate `validate`가 코드와 스키마의 차이를 배포 전에 막는다. 현재 전체 ERD는 [데이터 모델](../data-model/index.md)에 있다.
+
+## 공개 API와 관리자 API
+
+공개 제품 API는 `/api/v1` 아래에 둔다. 관리자 API는 `/internal/admin/v1` 아래에서 별도 관리자 세션·감사 정책을 적용하고 공개 ALB에 노출하지 않는다. BackOffice 최고 관리자는 조회 전용이 아니라 허용된 변경·복원·재처리를 수행한다.
 
 ---
 
@@ -118,4 +98,4 @@ flowchart LR
 
 레이어별 컨벤션(컨트롤러·서비스·도메인·리포지토리·DTO·테스트 등)은 저장소의 `.claude/rules/` 아래 12개 규칙 문서로 관리한다. 파일 경로 매칭으로 해당 파일 작업 시 자동 적용되는 구조라서 사람과 AI 도구가 같은 규칙을 본다.
 
-전체 클래스 구조(305개 클래스)는 소스에서 자동 추출한 도메인별 Mermaid 클래스 다이어그램으로 `WES-Server` 저장소의 `docs/architecture.md`(2,200줄)에 정리되어 있다. mermaid 렌더 한계(`maxTextSize`) 때문에 이 문서에는 발췌만 싣는다 — 클러스터링 관련 발췌는 [AI 파이프라인](ai-pipeline.md)에 있다.
+세부 테이블·키·권한과 상태 전이는 [기능별 데이터 모델](../data-model/index.md)을 기준으로 관리한다. 소스 클래스 수처럼 쉽게 변하는 수치는 문서 계약으로 고정하지 않는다.

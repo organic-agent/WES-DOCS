@@ -8,6 +8,9 @@ nav_order: 3
 
 논리 서비스 구조와 실행 인프라의 결합 — 동기 UI/API · 비동기 AI 사진 처리 · 데이터/스토리지를 한 장에 겹쳐 그린 다이어그램이다. Application(논리)과 Infrastructure(물리)의 중간 계층이다.
 
+{: .warning }
+2026-08 목표 설계 스냅샷이다. 현재 AI 모델은 외부 워커 저장소에서 실행하며 공개 API와 관리자 API를 분리한다. 현행 경계는 [AI 파이프라인](../tech/ai-pipeline.md)과 [ADR-011](../decisions/adr-011-private-admin-network.md)을 따른다.
+
 <div class="drawio-arch"
      data-svg="{{ '/assets/diagrams/interactive/system.svg' | relative_url }}?v={{ site.github.build_revision }}"
      data-map="{{ '/assets/diagrams/interactive/system.map.json' | relative_url }}?v={{ site.github.build_revision }}" markdown="0">
@@ -29,15 +32,15 @@ nav_order: 3
 
 ## 목표 설계와 현재 구현의 차이
 
-이 다이어그램은 **목표 시스템 설계**를 그린 원본이다. 2026-08 현재 실제 배포 상태([Infrastructure](infrastructure.md))와 다른 부분은 다이어그램을 고치는 대신 여기서 관리한다 — 이 간극이 곧 로드맵이다.
+이 다이어그램은 2026-08의 목표 시스템 설계다. 현재 구현과 다른 부분은 역사적 간극으로 읽는다.
 
 | 다이어그램 (목표) | 현재 구현 | 배경 |
 |:---|:---|:---|
-| Step Functions + AWS Batch(GPU) AI 워크플로 | **갤러리 단위 Lambda 1회 비동기 호출** | MVP 규모에서는 워크플로 오케스트레이션 없이 단일 잡으로 충분하다 → [ADR-007](../decisions/adr-007-embedder-single-job.md) |
+| Step Functions + AWS Batch(GPU) AI 워크플로 | **외부 AI 워커 저장소와 서버 작업 계약** | 제품 서버와 모델 런타임을 분리한다 → [ADR-010](../decisions/adr-010-external-ai-worker.md) |
 | CloudFront + WAF 엣지 (웹 UI 서빙 포함) | API는 ALB 직결 · **웹 UI는 Vercel 배포** (CDN 미도입) | 파생본 로딩의 남은 병목이 네트워크라는 것을 측정으로 확인했고, CDN은 그때 함께 도입한다 → [PoC](../tech/poc.md) |
 | Prometheus + Loki + Grafana | **Loki 로그 수집까지 구축** (Grafana Alloy 사이드카) | 모니터링 서버 구축은 Linear 백로그 프로젝트로 대기 중 |
 
 {: .note }
-목표 다이어그램은 원본 그대로 두고 간극은 이 표로 관리한다. 항목이 구현되면 표에서 행을 지운다.
+목표 다이어그램은 역사적 원본으로 보존한다. 현행 구조는 [데이터 모델](../data-model/index.md)에서 갱신한다.
 
 다음 줌 → [Infrastructure — AWS 토폴로지](infrastructure.md)

@@ -1,0 +1,23 @@
+name: docs-check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+      - name: Validate front matter, links, and Mermaid fences
+        run: ruby scripts/validate-docs.rb
+      - name: Build Jekyll site
+        run: bundle exec jekyll build --trace

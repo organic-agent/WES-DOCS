@@ -8,6 +8,9 @@ nav_order: 2
 
 EasySelect의 AI 방향은 개발 초기에 한 번 크게 바꿨다. 이 페이지는 그 전환의 기록이다.
 
+{: .warning }
+2026-08의 역사 기록이다. 유사도 스택·Union-Find·5단계 슬라이더는 이후 제거했고, 현재는 편집 가능한 갤러리 카테고리를 사용한다. 현행 결정은 [ADR-009](../decisions/adr-009-gallery-category-model.md)를 따른다.
+
 ## 처음 설계 — 컨셉별 자동 카테고리
 
 초기 정보 구조(IA)에서 AI의 역할은 사진을 컨셉별 카테고리로 자동 분류하는 것이었다. 업로드된 사진을 AI가 "야외", "드레스", "스냅" 같은 분류로 나눠주면 부부가 카테고리 필터로 탐색하는 구조다.
@@ -62,4 +65,4 @@ EasySelect의 AI 방향은 개발 초기에 한 번 크게 바꿨다. 이 페이
 
 이후 모든 AI 기능 — 유사 사진 스택, [AI 1차 셀렉](../product/concepts.md), [photoselect 모듈](../sprints/index.md) — 은 이 경계 안에서 설계한다. 유사도 클러스터링의 기술 구현은 [AI 파이프라인](../tech/ai-pipeline.md)에, 결정의 상세는 [ADR-003](../decisions/adr-003-category-to-similarity.md)에 있다.
 
-전환 이후의 현행 IA는 [아키텍처 — Information](../architecture/information.md)에서 볼 수 있다.
+이후 구조까지 포함한 현재 모델은 [사진·AI 분석·카테고리 ERD](../data-model/photo-ai-category.md)에서 볼 수 있다.

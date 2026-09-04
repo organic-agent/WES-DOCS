@@ -25,6 +25,27 @@ nav_order: 6
 
 3. commit & push. 끝. 사이드바 내비게이션에 자동으로 나타난다.
 
+## 검증
+
+PR은 front matter, 내부 링크, Mermaid 코드 펜스와 Jekyll 빌드를 검사한다. 로컬에서는 다음 명령을 사용한다.
+
+```bash
+ruby scripts/validate-docs.rb
+bundle exec jekyll build --trace
+```
+
+WES-Server 체크아웃과 함께 실행하면 기능별 ERD의 테이블이 Flyway V1→최신 마이그레이션 결과에 존재하는지, 제거한 앨범·게스트 테이블이 남지 않았는지 대조한다.
+
+```bash
+ruby scripts/validate-docs.rb --server ../WES-Server
+```
+
+실행 중인 서버에서 받은 OpenAPI JSON이 있으면 문서에 적은 절대 API 경로도 함께 대조한다.
+
+```bash
+ruby scripts/validate-docs.rb --server ../WES-Server --openapi /tmp/openapi.json
+```
+
 ## 집필 규칙
 
 - **Liquid 충돌 주의**: 본문·코드 블록에 `{{ }}` 또는 `{% %}`가 들어가면 Jekyll이 템플릿으로 해석해 빌드가 깨지거나 내용이 사라진다. 해당 구간을 `{% raw %} … {% endraw %}`로 감싼다.

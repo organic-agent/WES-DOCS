@@ -1,30 +1,34 @@
 ---
 title: 기술 구현
-nav_order: 5
+nav_order: 6
 has_children: true
 ---
 
 # 기술 구현
 
-## 스택 한눈에
+제품 API, 사용자 웹, 관리자 운영, AI 실행과 인프라는 책임과 배포 경계를 나눈다.
 
-| 영역 | 스택 | 저장소 |
+| 영역 | 구현 | 저장소 |
 |:---|:---|:---|
-| 백엔드 | Kotlin 2.3 · Spring Boot 4.1 (Servlet MVC) · JPA + Flyway · PostgreSQL + pgvector · Spring Security + OAuth2 + JWT | `organic-agent-server` |
-| 프론트엔드 | Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS 4 · style-dictionary 디자인 토큰 · Vercel | `organic-agent-web` |
-| AI | Python Lambda (ECR 컨테이너) · DINOv2 768차원 임베딩 · pgvector 코사인 유사도 · Union-Find 클러스터링 | `organic-agent-server` (embedder) |
-| 인프라 | Terraform · AWS (VPC / EC2 / RDS / ALB / S3 / Lambda) · GitHub Actions OIDC + SSM Run Command | `organic-agent-infra` |
-
----
+| 공개·관리자 API | Kotlin/JVM 21, Spring Boot, JPA, Flyway, PostgreSQL, Spring Security | `WES-Server` |
+| 사용자 웹 | Next.js App Router, React, TypeScript, Tailwind CSS, Vercel | `WES-Web` |
+| 관리자 UI | Next.js, 별도 관리자 세션, 내부 관리자 API | `WES-BackOffice` |
+| AI 실행 | 분석·분류·추천 워커. 서버가 소유한 작업 계약을 소비 | 외부 AI 워커 저장소 |
+| 인프라 | Terraform 10개 모듈, AWS, GitHub Actions OIDC, SSM, Tailscale | `WES-Infra` |
 
 ## 관통하는 원칙
 
-**이미지 바이트는 앱 서버를 지나지 않는다.** 서버는 presigned URL만 발급하고, 브라우저가 S3에 직접 업로드·다운로드한다. 이미지를 실제로 여는 곳은 임베딩 Lambda 한 곳뿐이므로 임베딩·미리보기 파생본·EXIF 추출을 전부 그 한 번의 열림에 얹었다. 이 원칙이 각 영역에서 어떻게 구현되는지가 이 섹션의 줄기다.
+- 이미지 바이트는 앱 서버를 지나지 않는다.
+- Flyway가 스키마를 소유하고 Hibernate는 `validate`만 한다.
+- 모든 갤러리 하위 참조는 DB 제약으로 같은 갤러리에 묶는다.
+- 공개 `/api/v1`과 내부 `/internal/admin/v1`은 인증과 네트워크 경계를 분리한다.
+- 모델 런타임은 제품 서버 저장소에 포함하지 않는다.
 
 | 페이지 | 내용 |
 |:---|:---|
-| [백엔드 — Kotlin/Spring](server.md) | 13개 도메인 수직 슬라이스, 레이어 규칙, 컨벤션 체계 |
-| [프론트엔드 — Next.js](web.md) | 역할별 라우트, 디자인 토큰 파이프라인, 인증·업로드 실연동 |
-| [AI 파이프라인](ai-pipeline.md) | 업로드 → 임베딩 → 클러스터링 전체 흐름과 설계 원칙 |
-| [인프라와 배포](infra.md) | Terraform 모듈, keyless 배포, 운영 중 겪은 사건들 |
-| [PoC — 설계를 결정한 두 실험](poc.md) | 업로드 방식과 이미지 로딩 전략을 정한 측정 기록 |
+| [백엔드](server.md) | V1→V6 스키마, 도메인과 공개·관리자 계약 |
+| [프론트엔드](web.md) | 작업공간 중심 라우트와 실제 API 연동 |
+| [AI 파이프라인](ai-pipeline.md) | 제품 서버와 외부 워커의 경계 |
+| [인프라와 배포](infra.md) | 10개 모듈과 비공개 관리자 경로 |
+| [PoC](poc.md) | 초기 업로드·이미지 로딩 실험의 역사 기록 |
+| [데이터 모델](../data-model/index.md) | 전체→세부 ERD와 구현 SHA |

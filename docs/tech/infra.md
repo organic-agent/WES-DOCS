@@ -13,7 +13,7 @@ nav_order: 4
 | 구성 | 내용 |
 |:---|:---|
 | 스택 | `dns`(Route 53 존 — 최초 1회) + 앱 스택(나머지 전부) 분리. 앱을 destroy해도 NS 위임 유지 |
-| 모듈 | network(VPC·서브넷·S3 게이트웨이 엔드포인트) / security(SG) / compute(EC2) / database(RDS) / ingress(ALB·ACM·Route 53) / storage(사진 S3·CORS) / embedding(Lambda·ECR) — 7개 |
+| 모듈 | `admin-access`, `analysis`, `compute`, `database`, `github-actions`, `ingress`, `monitoring`, `network`, `security`, `storage` — 10개 |
 | State | 사전 생성 S3 backend, app/dns 키 분리, S3 native lock |
 | 비밀값 | DB 비밀번호는 write-only 인자(`ephemeral` → `password_wo`)로 전달 → **state에 평문이 남지 않는다** |
 
@@ -35,7 +35,18 @@ flowchart LR
 - 서버 접근은 SSH 대신 **SSM Run Command** — 22번 포트를 열지 않는다.
 - 시크릿은 전부 Parameter Store에 있고 EC2가 부팅 시 읽는다. → [ADR-006](../decisions/adr-006-keyless-deploy.md)
 
-embedder(Lambda)는 앱과 **배포 경로가 다르다.** 앱 CD는 embedder를 건드리지 않고, `terraform apply`도 코드를 내보내지 않는다(`ignore_changes = [image_uri]` — 인프라는 저장소·함수·IAM만 관리). 코드 배포는 전용 스크립트가 이미지 빌드 → ECR 푸시 → 함수 갱신 → 반영 확인까지 수행한다.
+AI 실행 코드는 제품 서버와 **배포 경로가 다르다.** `analysis` 모듈은 외부 워커가 사용할 인프라 경계를 관리하고 모델 코드는 별도 저장소가 배포한다. 제품 API 배포는 AI 모델 릴리스를 암묵적으로 갱신하지 않는다.
+
+## 공개·관리자 네트워크 분리
+
+공개 사용자 요청은 ALB를 거친다. BackOffice와 `/internal/admin/v1`은 공개 ALB에 노출하지 않고 Tailnet의 `tag:wes-admin:443`으로만 제공한다.
+
+- 허용 주체: `autogroup:member`, `autogroup:tagged`
+- 직접 차단: 22, 8080, 8443
+- Tailscale Funnel: 사용하지 않음
+- 관리자 보안 그룹 공개 ingress: 0
+
+정책 배경은 [ADR-011](../decisions/adr-011-private-admin-network.md)에 있다.
 
 ---
 
@@ -46,17 +57,19 @@ embedder(Lambda)는 앱과 **배포 경로가 다르다.** 앱 CD는 embedder를
 ```
 [1] dns 스택 (최초 1회)        — Route 53 존 + NS 위임
 [2] SSM 수동 파라미터 등록      — DB 비밀번호, OAuth, CORS 등
-[3] ECR만 먼저 apply → 이미지 푸시 — Lambda는 빈 ECR 상대로는 만들어지지 않는다
-[4] 앱 스택 terraform apply    — VPC/ALB/EC2/RDS + S3 + Lambda + 배포 롤
-[5] 배포 롤 ARN을 서버 저장소 시크릿에 등록
-[6] 서버 저장소 main 머지       — CD가 빌드 → GHCR → SSM 배포 (Flyway가 스키마 생성)
-[7] 임베딩용 DB 사용자 생성     — photos 테이블이 생긴 뒤 1회 (Terraform이 못 하는 부분)
-[8] 검증                       — 헬스체크 · OAuth · 업로드
+[3] 앱 스택 terraform apply    — network부터 admin-access까지 10개 모듈
+[4] 배포 롤 ARN을 서버 저장소 시크릿에 등록
+[5] 서버 저장소 main 머지       — CD가 빌드 → GHCR → SSM 배포
+[6] Flyway V1→V6와 Hibernate validate 확인
+[7] 외부 AI 워커를 독립 배포하고 작업 계약 확인
+[8] 공개 health · 관리자 401 · Tailnet 443 경계 검증
 ```
 
 ---
 
-## 운영 중 겪은 사건들
+## 역사적 운영 사건
+
+다음 사건은 2026-08 서버 내 embedder를 운용하던 당시 기록이다. 현재 모델 실행 경계는 외부 AI 워커로 이동했다.
 
 {: .warning }
 > **조직 SCP가 RDS IAM 인증을 막다**
@@ -79,3 +92,7 @@ embedder(Lambda)는 앱과 **배포 경로가 다르다.** 앱 CD는 embedder를
 ## 의도된 한계
 
 이 인프라는 **폐기 가능한 테스트 환경**이다 — Single-AZ, 백업·스냅샷·삭제 보호·오토스케일링 없음. 목표 아키텍처와의 간극(CDN, 모니터링 대시보드 등)은 [System 아키텍처의 차이 표](../architecture/system.md#목표-설계와-현재-구현의-차이)에서 관리한다.
+
+## 구현 상태
+
+기준 로컬 구현은 `846eb06`이다. Terraform·Tailscale 정책·draw.io 정적 검증은 통과했다. 기능 Terraform 변경은 없어 별도 apply를 하지 않았고 실제 Tailnet 관리자 화면과 접근 경로의 최종 동일성은 아직 확인하지 않았다.
