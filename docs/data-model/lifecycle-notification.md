@@ -72,7 +72,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `c4c89a7`, BackOffice `9a21cfb`를 기준으로 한다. 수명주기·알림 회귀 테스트는 통과했고 V6·BackOffice 운영 배포는 미확인이다.
+Server `bc8948a`, BackOffice `16b19e8`을 기준으로 한다. 수명주기·알림 회귀 테스트와 운영 배포 검증을 통과했다.
 
 ## 관련 API·ADR
 

@@ -44,4 +44,4 @@ WES-Web은 로컬 목업이 아니라 현재 `/api/v1` 계약을 사용한다.
 
 ## 검증 기준
 
-고정 설치, ESLint, TypeScript 검사와 Next 프로덕션 빌드를 PR CI의 최소 기준으로 둔다. 기준 로컬 구현은 `92babf2`이며 검증은 통과했지만 운영 Vercel 배포 SHA는 아직 확인하지 않았다.
+고정 설치, ESLint, TypeScript 검사와 Next 프로덕션 빌드를 PR CI의 최소 기준으로 둔다. 기준 병합 SHA는 `4438237`이며 PR CI는 통과했고 Vercel 운영 배포를 확인 중이다.

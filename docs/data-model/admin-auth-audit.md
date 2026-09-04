@@ -92,7 +92,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `c4c89a7`, BackOffice `9a21cfb`, Infra `cfbd72e`를 기준으로 한다. 인증·감사·401 경계 테스트와 저장소 정책 검증은 완료했고 실제 Tailnet 운영 경로 검증은 미확인이다.
+Server `bc8948a`, BackOffice `16b19e8`, Infra `cfbd72e`를 기준으로 한다. 인증·감사·401 경계와 Caddy 경유 검증은 완료했고 실제 Tailnet 관리자 화면의 정책 동일성은 인증 세션 부재로 확인하지 못했다.
 
 ## 관련 API·ADR
 

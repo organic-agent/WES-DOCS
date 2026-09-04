@@ -98,7 +98,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `c4c89a7`, Web `92babf2`, BackOffice `9a21cfb`를 기준으로 한다. Server V5 `666c002`는 운영 배포했고 V6·Web·BackOffice는 로컬 구현과 검증을 완료했다.
+Server `bc8948a`, Web `4438237`, BackOffice `16b19e8`을 기준으로 한다. Server V6와 BackOffice는 운영 배포했고 Web은 병합 후 Vercel 배포를 확인 중이다.
 
 ## 관련 API·ADR
 
