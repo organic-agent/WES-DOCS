@@ -92,7 +92,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `d8b0a8d`, BackOffice `9a21cfb`, Infra `846eb06`를 기준으로 한다. 인증·감사·401 경계 테스트와 저장소 정책 검증은 완료했고 실제 운영 경로 검증은 미확인이다.
+Server `c4c89a7`, BackOffice `9a21cfb`, Infra `cfbd72e`를 기준으로 한다. 인증·감사·401 경계 테스트와 저장소 정책 검증은 완료했고 실제 Tailnet 운영 경로 검증은 미확인이다.
 
 ## 관련 API·ADR
 

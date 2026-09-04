@@ -95,4 +95,4 @@ AI 실행 코드는 제품 서버와 **배포 경로가 다르다.** `analysis` 
 
 ## 구현 상태
 
-기준 로컬 구현은 `846eb06`이다. Terraform·Tailscale 정책·draw.io 정적 검증은 통과했다. 기능 Terraform 변경은 없어 별도 apply를 하지 않았고 실제 Tailnet 관리자 화면과 접근 경로의 최종 동일성은 아직 확인하지 않았다.
+기준 병합 SHA는 `cfbd72e`다. Terraform·Tailscale 정책·draw.io 정적 검증과 PR CI는 통과했다. 기능 Terraform 변경은 없어 별도 apply를 하지 않았고 실제 Tailnet 관리자 화면과 접근 경로의 최종 동일성은 인증 세션 부재로 확인하지 못했다.

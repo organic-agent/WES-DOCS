@@ -63,7 +63,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `d8b0a8d`, Web `92babf2`, BackOffice `9a21cfb`를 기준으로 한다. 삭제와 회귀 검증은 완료했고 운영 배포는 미확인이다.
+Server `c4c89a7`, Web `92babf2`, BackOffice `9a21cfb`를 기준으로 한다. 앨범 삭제와 회귀 검증은 완료했고 V6·Web·BackOffice 운영 배포는 미확인이다.
 
 ## 관련 API·ADR
 

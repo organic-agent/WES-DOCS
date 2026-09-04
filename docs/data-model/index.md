@@ -9,7 +9,7 @@ has_children: true
 WES 데이터 모델은 `사용자 → 작업공간 → 갤러리`를 소유권의 줄기로 삼고, 갤러리 아래에서 사진·카테고리·셀렉·협업·보정을 분리한다. 이 페이지는 전체를 보여주고, 하위 문서는 기능별 불변식과 권한을 설명한다.
 
 {: .highlight }
-기준 구현은 Server `d8b0a8d`, Web `92babf2`, BackOffice `9a21cfb`, Infra `846eb06`이다. 로컬 검증은 끝났지만 원격 PR·운영 배포 SHA는 아직 확인하지 못했으므로 `운영 배포 완료`로 표기하지 않는다.
+기준 구현은 Server `c4c89a7`, Web `92babf2`, BackOffice `9a21cfb`, Infra `cfbd72e`다. Server V5 `666c002`와 Infra는 운영 반영·병합했고, V6·Web·BackOffice·DOCS는 로컬 구현과 검증까지만 완료했다.
 
 ## 읽는 순서
 
@@ -67,10 +67,10 @@ erDiagram
 
 | 저장소 | 기준 SHA | 확인 상태 |
 |:---|:---|:---|
-| WES-Server | `d8b0a8d` | Java 21 테스트 537개 통과, Flyway V1→V6 및 Hibernate 검증 통과 |
+| WES-Server | `c4c89a7` | Java 21 테스트 537개 통과, Flyway V1→V6 및 Hibernate 검증 통과. V5 `666c002` 운영 배포 완료 |
 | WES-Web | `92babf2` | lint, TypeScript, Next 프로덕션 빌드 통과 |
 | WES-BackOffice | `9a21cfb` | 테스트 44개, lint, typecheck, Next 빌드 통과 |
-| WES-Infra | `846eb06` | 저장소 정책 정합화 커밋, 기능 Terraform 변경 없음 |
+| WES-Infra | `cfbd72e` | PR #22 병합, CI 통과, 기능 Terraform 변경 없음 |
 | WES-DOCS | 현재 브랜치 | 문서 빌드·링크·Mermaid 검증 후 커밋 예정 |
 
 ## 관련 문서

@@ -83,7 +83,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `d8b0a8d`, Web `92babf2`, BackOffice `9a21cfb`를 기준으로 한다. 자동 생성·작성자·정렬·교차 참조 차단 구현은 완료했고 운영 배포는 미확인이다.
+Server `c4c89a7`, Web `92babf2`, BackOffice `9a21cfb`를 기준으로 한다. 자동 생성·작성자·정렬·교차 참조 차단 구현과 로컬 검증은 완료했고 V6 운영 배포는 미확인이다.
 
 ## 관련 API·ADR
 

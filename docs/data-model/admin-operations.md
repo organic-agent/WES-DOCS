@@ -81,7 +81,7 @@ erDiagram
 
 ## 구현 SHA
 
-Server `d8b0a8d`, BackOffice `9a21cfb`, Infra `846eb06`를 기준으로 한다. 관리자 API 132개 테스트와 BackOffice 44개 테스트·빌드는 통과했고 운영 배포는 미확인이다.
+Server `c4c89a7`, BackOffice `9a21cfb`, Infra `cfbd72e`를 기준으로 한다. 관리자 API 132개 테스트와 BackOffice 44개 테스트·빌드는 통과했고 V6·BackOffice 운영 배포는 미확인이다.
 
 ## 관련 API·ADR
 
