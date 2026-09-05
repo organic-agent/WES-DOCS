@@ -1,0 +1,630 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="wes-ia" name="WES Information Architecture">
+    <mxGraphModel lineJumps="1" grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2700" pageHeight="1500" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n2" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#007FFF);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;Landing Page&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(Public)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="150" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#00FF00);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;Login / OAuth2&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;로그인 · 가입 시 PERSONAL 자동 생성&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="150" x="40" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ivSXPi0oj3hhk4FTLx8k-13" edge="1" parent="1" source="n4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;컨텍스트 선택&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;PERSONAL · STUDIO · 갤러리 멤버&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="150" x="40" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" edge="1" parent="1" source="n2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="n3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" edge="1" parent="1" source="n3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="n4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-9" edge="1" parent="1" source="n7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ivSXPi0oj3hhk4FTLx8k-12" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="lWabUbnWdfYtAeGSgurk-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="995" y="550" />
+              <mxPoint x="335" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#007FFF);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;스튜디오 구성원&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;STUDIO OWNER / MEMBER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="250" y="53" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" edge="1" parent="1" source="n4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-3" edge="1" parent="1" source="n9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="lWabUbnWdfYtAeGSgurk-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-4" edge="1" parent="1" source="n9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="lWabUbnWdfYtAeGSgurk-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;스튜디오 만들기&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;업체명 · 생성자는 OWNER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="460" y="53" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-7" edge="1" parent="1" source="n10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="n11" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="985" y="110" />
+              <mxPoint x="1080" y="110" />
+              <mxPoint x="1080" y="145" />
+              <mxPoint x="765" y="145" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n10" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;스튜디오 생성 완료&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;여러 STUDIO 소속 가능&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="900" y="53" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 목록&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;생성 · 진행 · 완료 · 보관&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="680" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-13" edge="1" parent="1" source="n14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;작업공간 선택&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;PERSONAL 1개 · STUDIO 복수&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="460" y="160" as="geometry" />
+        </mxCell>
+
+
+
+
+
+
+        <mxCell id="n15" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 생성&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;workspaceId · 마감 · 목표 · DRAFT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="900" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" edge="1" parent="1" source="n11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-14" edge="1" parent="1" source="n17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.65;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n24">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="292" />
+              <mxPoint x="880" y="439" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-15" edge="1" parent="1" source="n17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.4;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ivSXPi0oj3hhk4FTLx8k-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890" y="272" />
+              <mxPoint x="890" y="383" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n17" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 페이지&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;필터·정렬 · 초대 · 업로드&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="170" x="680" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;사진 업로드&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;JPEG · PNG · WebP · HEIC/HEIF&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="910" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="n19" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#00FF00);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 구성원 초대&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;GALLERY_MEMBER · 최대 2명&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="910" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="ivSXPi0oj3hhk4FTLx8k-11" edge="1" parent="1" source="n20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ivSXPi0oj3hhk4FTLx8k-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n20" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;AI 카테고리 결과&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;컨셉 · 세부폴더 후보&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1710" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" edge="1" parent="1" source="n17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.15;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="252" />
+              <mxPoint x="900" y="273" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n22" edge="1" parent="1" source="n17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.9;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="n19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="870" y="312" />
+              <mxPoint x="870" y="491.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n23" edge="1" parent="1" source="ia-ai-analysis" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n24" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;최종 선택 결과&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;선택 사진 · 순서 · 제출 상태&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="910" y="416" as="geometry" />
+        </mxCell>
+        <mxCell id="n26" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;선택사진 그리드&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;원본 · 보정본 · 선택 순서&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1110" y="416" as="geometry" />
+        </mxCell>
+        <mxCell id="n28" edge="1" parent="1" source="n24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+
+        <mxCell id="n33" edge="1" parent="1" source="n7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-11" edge="1" parent="1" source="XSyHLkIXPoTIPmkRQskf-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ctdzxgA3xNl83iE8sV56-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n38" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#007FFF);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;개인 소유자 · 갤러리 멤버&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;PERSONAL OWNER / GALLERY_MEMBER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="170" x="250" y="643" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-6" edge="1" parent="1" source="n43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="ctdzxgA3xNl83iE8sV56-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;사진 탐색&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;컨셉 · 세부폴더 · 미분류&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="460" y="655" as="geometry" />
+        </mxCell>
+        <mxCell id="n41" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;사진 라이트박스&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;이전 / 현재 / 다음&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="900" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;직접 셀렉&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;공동 선택 · 해제 · 별점&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="900" y="626" as="geometry" />
+        </mxCell>
+        <mxCell id="n43" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;카테고리 보기&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;ConceptFolder → DetailFolder&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="190" x="680" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="n48" edge="1" parent="1" source="n40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-25" edge="1" parent="1" source="n53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XSyHLkIXPoTIPmkRQskf-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n53" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;협업 셀렉 목록&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;컨셉별 공유 세션&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="460" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="n54" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;협업 셀렉&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;사진 그리드 정렬&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="690" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="n55" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;협업 집계 패널&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;지인 공유 결과&lt;/font&gt;" vertex="1">
+          <mxGeometry height="36" width="140" x="920" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="n56" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;사진 라이트박스&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;반응 확인&lt;/font&gt;" vertex="1">
+          <mxGeometry height="36" width="140" x="920" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="n57" edge="1" parent="1" source="n53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n58" edge="1" parent="1" source="n54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n59" edge="1" parent="1" source="n54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-20" edge="1" parent="1" source="n60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.65;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XSyHLkIXPoTIPmkRQskf-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n60" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;공동 선택사진&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;현재/목표 · 목표 미달 제출 허용&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="460" y="965" as="geometry" />
+        </mxCell>
+        <mxCell id="n61" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;목표 장수 도달&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;추가 차단 · 선택 해제는 가능&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="690" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="n62" edge="1" parent="1" source="n60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-request" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;AI 추천 요청 (선택)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;분석 신호 기반 · 마감 전 요청&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="180" x="460" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-request-open" edge="1" parent="1" source="n60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="ia-ai-select-request">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-status" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;AI 추천 처리 상태&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;서버 Kotlin + Bedrock&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="180" x="690" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-processing" edge="1" parent="1" source="ia-ai-select-request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-ai-select-status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-draft" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;AI 추천 후보&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;수동 선택 보존 · 사용자 수락&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="180" x="920" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-complete" edge="1" parent="1" source="ia-ai-select-status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-ai-select-draft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-select-review" edge="1" parent="1" source="ia-ai-select-draft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ia-ai-select-review-step">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="1130" />
+              <mxPoint x="1020" y="1130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n63" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;verticalAlign=middle;align=center;" value="고객 사이드바" vertex="1">
+          <mxGeometry height="96" width="170" x="460" y="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="n64" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;verticalAlign=middle;align=center;" value="사진" vertex="1">
+          <mxGeometry height="36" width="80" x="680" y="1210" as="geometry" />
+        </mxCell>
+        <mxCell id="n65" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;verticalAlign=middle;align=center;" value="협업 컨셉" vertex="1">
+          <mxGeometry height="36" width="80" x="680" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="n66" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;verticalAlign=middle;align=center;" value="선택사진" vertex="1">
+          <mxGeometry height="36" width="80" x="680" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="n67" edge="1" parent="1" source="n63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.2;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-sidebar-shared-folder" edge="1" parent="1" source="n63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-sidebar-selected-photos" edge="1" parent="1" source="n63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.8;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n68" edge="1" parent="1" source="n38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.15;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="653.5" />
+              <mxPoint x="440" y="678" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n70" edge="1" parent="1" source="n38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n60">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="377.5" y="730" />
+              <mxPoint x="377.5" y="988" />
+              <mxPoint x="440" y="988" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n69" edge="1" parent="1" source="n38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.4;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n53">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="671" />
+              <mxPoint x="430" y="803" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n71" edge="1" parent="1" source="n38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n63">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="730" />
+              <mxPoint x="335" y="1288" />
+              <mxPoint x="440" y="1288" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n72" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#007FFF);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;게스트&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(Guest · 로그인 없음 · 닉네임)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1440" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="n74" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;협업 사진 페이지&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;공유 허용 사진만 노출&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="2080" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="n75" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;verticalAlign=middle;align=center;" value="&lt;b&gt;사진별 좋아요&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;참여자당 1개 · 허용 사진 내 반응&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="2320" y="795" as="geometry" />
+        </mxCell>
+        <mxCell id="n76" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;verticalAlign=middle;align=center;" value="&lt;b&gt;사진별 댓글&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;참여자별 여러 댓글 · 반응 조회&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="2320" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="n77" edge="1" parent="1" source="n72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-guest-token">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n78" edge="1" parent="1" source="n74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n75">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n79" edge="1" parent="1" source="n74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-2" edge="1" parent="1" source="lWabUbnWdfYtAeGSgurk-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="n38" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lWabUbnWdfYtAeGSgurk-3" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#00FF00);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 초대 링크&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;만료 · 폐기 · 남은 사용 횟수 검사&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="210" x="230" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-5" edge="1" parent="1" source="lWabUbnWdfYtAeGSgurk-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" target="n10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lWabUbnWdfYtAeGSgurk-5" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 생성 온보딩&lt;/b&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="680" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-6" edge="1" parent="1" source="lWabUbnWdfYtAeGSgurk-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" target="n10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lWabUbnWdfYtAeGSgurk-6" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;건너뛰기&lt;/b&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="680" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="ivSXPi0oj3hhk4FTLx8k-8" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;대시보드&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;셀렉현황&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="910" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ivSXPi0oj3hhk4FTLx8k-10" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;카테고리 생성 요청&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;INITIAL 전체 · INCREMENTAL 신규&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="1910" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-19" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;마감 · 제출 상태 확인&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;선택 편집 잠금 · 관리자 제출 철회&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="690" y="965" as="geometry" />
+        </mxCell>
+
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-21" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;작업공간 OWNER 알림&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;제출 알림 저장 · 결과 확인&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="200" x="1650" y="1220" as="geometry" />
+        </mxCell>
+
+
+
+
+
+
+        <mxCell id="XSyHLkIXPoTIPmkRQskf-24" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;협업 세션 만들기&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;컨셉당 1개 · 현재 소속 사진 공유&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="690" y="844" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-7" edge="1" parent="1" source="ctdzxgA3xNl83iE8sV56-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.2;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-8" edge="1" parent="1" source="ctdzxgA3xNl83iE8sV56-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-9" edge="1" parent="1" source="ctdzxgA3xNl83iE8sV56-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.8;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ctdzxgA3xNl83iE8sV56-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-2" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;사진 그리드 보기&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;사진 그리드 정렬&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="690" y="626" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-3" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;비교 셀렉&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;유사 사진 나란히 비교 · 선택&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="900" y="686" as="geometry" />
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-12" edge="1" parent="1" source="ctdzxgA3xNl83iE8sV56-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n72">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="903" />
+              <mxPoint x="1420" y="903" />
+              <mxPoint x="1420" y="843" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ctdzxgA3xNl83iE8sV56-10" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=light-dark(#000000,#00FF00);strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;링크 발급&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;공유 URL + 토큰 · 7일 · 즉시 폐기 가능&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="920" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-open" edge="1" parent="1" source="n11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="n17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-created-open" edge="1" parent="1" source="n15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="n17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="183" />
+              <mxPoint x="1090" y="225" />
+              <mxPoint x="807.5" y="225" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-upload-processing" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;업로드 처리 중&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Presigned PUT로 S3 직접 전송&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1110" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-success" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;업로드 완료 확인&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;브라우저 → API completeUpload&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1310" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-failure" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;업로드 실패&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;재시도 · 실패 상태 확인&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1310" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-analysis" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;AI 분석 요청 · 상태&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;명시적 요청 · FULL / NAMING&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1510" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-start" edge="1" parent="1" source="n18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-upload-processing">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-succeeded" edge="1" parent="1" source="ia-upload-processing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-upload-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-failed" edge="1" parent="1" source="ia-upload-processing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-upload-failure">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-retry" edge="1" parent="1" source="ia-upload-failure" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="n18" value="재시도">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1395" y="370" />
+              <mxPoint x="1100" y="370" />
+              <mxPoint x="1100" y="310" />
+              <mxPoint x="995" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-analysis-queued" edge="1" parent="1" source="ia-upload-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-ai-analysis" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-guest-token" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;접속 토큰 입력&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;7일 유효 · 폐기된 토큰 차단&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="1640" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-guest-token-valid" edge="1" parent="1" source="ia-guest-token" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-guest-nickname">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-draft-state" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;공개 상태: DRAFT&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;작성 중 · 비공개&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="180" x="1120" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-open-state" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;공개 상태: OPEN&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;멤버 접근 · 셀렉 마감일은 별도&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="180" x="1330" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-close-state" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;공개 상태: CLOSED&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;공개 종료 · 필요 시 재공개&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="1540" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-created-draft" edge="1" parent="1" source="n15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-gallery-draft-state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-publish" edge="1" parent="1" source="ia-gallery-draft-state" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-gallery-open-state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-gallery-close" edge="1" parent="1" source="ia-gallery-open-state" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-gallery-close-state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-display-derivative" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;미리보기 생성&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Embedder 파생본 · 원본 다운로드&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="1740" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-upload-create-derivative" edge="1" parent="1" source="ia-ai-analysis" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ia-upload-display-derivative" value="FULL 분석">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1595" y="240" />
+              <mxPoint x="1850" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-studio-post-deadline-edit" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;제출 철회 · 재개 관리&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;SELECTING 복귀 · OPEN/마감 별도&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="210" x="1540" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-studio-edit-after-deadline" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-studio-post-deadline-edit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1195" y="400" />
+              <mxPoint x="1520" y="400" />
+              <mxPoint x="1520" y="363" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-retouch-policy" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;보정 처리 범위 확인&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;스튜디오 보정 정책&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="210" x="1540" y="430" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ia-retouch-request-input" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;보정 회차 요청 입력&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;개인 OWNER · 갤러리 멤버&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="210" x="1540" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-policy-to-request" edge="1" parent="1" source="ia-retouch-policy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ia-retouch-request-input">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-ai-preprocess" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;요청 초안 정리&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;텍스트 · 사진별 annotation&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="210" x="1780" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-preprocess" edge="1" parent="1" source="ia-retouch-request-input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-retouch-ai-preprocess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-couple-agree" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;요청 확인 · 제출&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;DRAFTING → REQUESTED&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="210" x="2020" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-review" edge="1" parent="1" source="ia-retouch-ai-preprocess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-retouch-couple-agree">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-photographer-receive" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;보정 요청 접수&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;STUDIO OWNER / MEMBER 처리&lt;/font&gt;" vertex="1">
+          <mxGeometry height="56" width="210" x="2260" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-submit" edge="1" parent="1" source="ia-retouch-couple-agree" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-retouch-photographer-receive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-stack-fix-folder" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;카테고리 생성 · 반영&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;전체/신규 모드 · 수동 배치 보존&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="1160" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-stack-to-folder" edge="1" parent="1" source="n43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-stack-fix-folder">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="775" y="760" />
+              <mxPoint x="1140" y="760" />
+              <mxPoint x="1140" y="723" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-folder-tree" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;카테고리 트리&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;컨셉 → 세부폴더 → 사진&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="1390" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-folder-fixed" edge="1" parent="1" source="ia-stack-fix-folder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-folder-tree">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-folder-edit" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;카테고리 편집&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;폴더 이름 · 사진 이동/미분류&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="210" x="1620" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-folder-open-editor" edge="1" parent="1" source="ia-folder-tree" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-folder-edit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-folder-move-policy" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;사진 이동 정책&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;갤러리 내 전체 세부폴더 간 이동&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="1870" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-folder-edit-policy" edge="1" parent="1" source="ia-folder-edit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-folder-move-policy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-share-revoke" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;공유 링크 폐기&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;공유 관리자 · 만료/해지 접근 차단&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="1180" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-share-revoked" edge="1" parent="1" source="ctdzxgA3xNl83iE8sV56-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-share-revoke">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1085" y="790" />
+              <mxPoint x="1160" y="790" />
+              <mxPoint x="1160" y="833" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ia-ai-select-review-step" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;AI 추천 검토·수정&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;추가 · 해제 · 교체 · 자동 제출 없음&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="200" x="920" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-ai-review-to-final" edge="1" parent="1" source="ia-ai-select-review-step" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ia-final-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-final-review" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;최종 사진·순서 확인&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;목표 미달이어도 제출 가능&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="200" x="920" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-selection-finalize" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;최종 셀렉 제출&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;SUBMITTED · 선택 항목 잠금&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="1160" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-final-submit" edge="1" parent="1" source="ia-final-review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-selection-finalize">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-submitted-readonly" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;제출 결과 다시 열기&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;읽기 전용 · 관리자 철회 가능&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="200" x="1420" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-submit-lock" edge="1" parent="1" source="ia-selection-finalize" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ia-submitted-readonly">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-submit-notify-photographer" edge="1" parent="1" source="ia-submitted-readonly" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XSyHLkIXPoTIPmkRQskf-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-guest-nickname" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;게스트 닉네임 설정&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;GUEST 참여자 · 토큰과 닉네임&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="190" x="1860" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-guest-enter-collaboration" edge="1" parent="1" source="ia-guest-nickname" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="n74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      <mxCell id="ia-workspace-members" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;작업공간 구성원 관리&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;STUDIO 다중 OWNER · MEMBER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="460" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-workspace-invite" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;작업공간 초대&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;STUDIO_MEMBER / PERSONAL_PARTNER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="680" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-owner-protection" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;최종 소유자 보호&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;마지막 OWNER 강등/탈퇴 차단&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="680" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-workspace-members-open" edge="1" parent="1" source="n14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="ia-workspace-members" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-workspace-members-invite" edge="1" parent="1" source="ia-workspace-members" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="ia-workspace-invite" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-workspace-owner-guard" edge="1" parent="1" source="ia-workspace-members" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="ia-owner-protection" value="역할 변경">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="545" y="453" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ia-selection-download" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;선택 원본 다운로드&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Presigned GET&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="170" x="1310" y="416" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-selection-download-open" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="ia-selection-download" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-selection-retouch-start" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;entryX=0.1;entryY=1;" target="ia-retouch-policy" value="보정 요청 준비">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1195" y="500" /><mxPoint x="1561" y="500" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ia-manual-final-review" edge="1" parent="1" source="n60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;jumpStyle=arc;jumpSize=8;" target="ia-final-review" value="선택 완료">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="660" y="988" /><mxPoint x="660" y="1190" /><mxPoint x="880" y="1190" /><mxPoint x="880" y="1243" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ia-retouch-completed" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;보정 결과 업로드 · 완료&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;STUDIO 처리 → DELIVERY&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="210" x="2260" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-delivery-view" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;납품 결과 확인&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;원본/보정본 다운로드&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="210" x="2020" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-result-upload" edge="1" parent="1" source="ia-retouch-photographer-receive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="ia-retouch-completed" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-retouch-delivery-view" edge="1" parent="1" source="ia-retouch-completed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1;endArrow=block;endFill=1;endSize=5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="ia-delivery-view" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-trash-policy" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;삭제 · 복구&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;휴지통 7일 · 이후 DB/S3 영구 정리&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="1410" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-admin-access" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;BackOffice 운영&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Tailnet → 관리자 세션 · 변경 감사&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="1660" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-lifecycle-stages" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;갤러리 진행 단계&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;UPLOAD → SELECTION_IN_PROGRESS&lt;br&gt;SELECTION_COMPLETED → RETOUCH&lt;br&gt;DELIVERY → ARCHIVED&lt;/font&gt;" vertex="1">
+          <mxGeometry height="76" width="250" x="1910" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="ia-current-contract-note" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=11;verticalAlign=middle;align=center;" value="&lt;b&gt;최신 기준 · 2026-09-05&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Server bc8948a · Web 7bd2c65는 새 계약 미연동&lt;br&gt;정책: 개인 OWNER / GALLERY_MEMBER 편집 · STUDIO 구성원 셀렉 열람&lt;br&gt;구현 차이: PERSONAL MEMBER 권한 확대 · 별점 제출 잠금/클라이언트 버전 없음&lt;br&gt;보정 공개 제출 리비전 미고정 · 동의/납품 기록은 관리자 경로&lt;/font&gt;" vertex="1">
+          <mxGeometry height="106" width="1480" x="1110" y="1320" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

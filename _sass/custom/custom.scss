@@ -6,7 +6,18 @@ h1, .fs-9, .fs-8 {
   letter-spacing: -0.01em;
 }
 
-// 아키텍처 다이어그램 이미지 — 흰 배경 위 카드 스타일, 클릭해서 원본 보기 전제
+// 아키텍처 다이어그램 이미지 — 원본 비율과 스타일을 유지하고 클릭해서 전체 크기 확인
+.architecture-preview {
+  margin: 1rem 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+  }
+}
 
 
 // PoC 차트 SVG

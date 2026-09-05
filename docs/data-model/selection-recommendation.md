@@ -81,6 +81,7 @@ erDiagram
 
 - STUDIO 구성원은 셀렉과 별점을 조회하지만 편집하지 않는다.
 - PERSONAL OWNER와 활성 GALLERY_MEMBER만 셀렉·별점을 편집한다.
+- 현재 별점 API는 OPEN·마감과 편집 권한만 검사하며 SUBMITTED 잠금·클라이언트 예상 버전을 검사하지 않는다. `rated_by`는 마지막 쓰기를 기록한다.
 - 상태는 `SELECTING → SUBMITTED`다. 갤러리가 OPEN이고 마감 전인 고객 측 편집자만 추가·삭제·제출한다. 제출 뒤 셀렉 항목은 잠긴다.
 - 제출 철회는 PERSONAL OWNER 또는 STUDIO OWNER/MEMBER인 운영자만 수행하고 `SELECTING`으로 돌린다. 갤러리 CLOSED→OPEN 재오픈은 별도 작업이다.
 

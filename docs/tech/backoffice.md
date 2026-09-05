@@ -12,13 +12,14 @@ BackOffice는 [`16b19e8`](https://github.com/organic-agent/organic-agent-backoff
 
 ```mermaid
 flowchart LR
-    T["Tailnet member / tagged 기기"] -->|HTTPS 443| C[Caddy]
+    T["Tailnet member / tagged 기기"] -->|443| TS[Tailscale Serve]
+    TS -->|TCP 전달| C[Caddy TLS :8443]
     C --> B["BackOffice / 동일 출처 BFF"]
     B -->|"비공개 Docker 네트워크"| A["Admin API /internal/admin/v1"]
     A --> D[PostgreSQL]
 ```
 
-브라우저는 동일 출처 `/api/admin/*`에 요청한다. Next.js BFF(Backend for Frontend)가 `ADMIN_API_BASE_URL`의 관리자 API를 호출하며 브라우저가 내부 API에 직접 접속하지 않는다. 공개 ALB 경로와 관리자 API 실행 프로세스는 분리한다.
+브라우저는 동일 출처 `/api/admin/*`에 요청한다. Next.js BFF(Backend for Frontend)가 `ADMIN_API_BASE_URL`의 관리자 API를 호출하며 브라우저가 내부 API에 직접 접속하지 않는다. 공개 ALB 경로와 관리자 API 실행 프로세스는 분리한다. Tailnet 443은 Tailscale Serve가 localhost Caddy TLS :8443으로 TCP 전달한다. BFF에는 AWS 자격 증명을 제공하지 않으며 `wes-admin-api:8081`은 Docker 내부에서만 호출한다.
 
 ---
 
