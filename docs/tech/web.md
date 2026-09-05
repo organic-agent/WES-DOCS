@@ -6,42 +6,33 @@ nav_order: 2
 
 # 프론트엔드 — Next.js
 
-WES-Web은 로컬 목업이 아니라 현재 `/api/v1` 계약을 사용한다.
+현재 Web은 [`7bd2c65`](https://github.com/organic-agent/organic-agent-web/tree/7bd2c65724433219a062415016e7d710226e6d20)다. 서버 새 계약을 적용한 변경은 철회됐으므로 작업공간·카테고리·통합 협업 전환을 완료한 것으로 쓰지 않는다.
 
-## 스택
+## 현재 소스
 
-| 항목 | 선택 |
-|:---|:---|
-| 프레임워크 | Next.js 16 App Router, React 19, TypeScript 5 |
-| 스타일 | Tailwind CSS 4, style-dictionary 디자인 토큰 |
-| 인증 | OAuth2/JWT 세션 복원과 요청 재시도 |
-| 배포 | Vercel |
+Next.js 16 App Router, React 19, TypeScript 5와 Tailwind CSS 4를 사용하고 Vercel에 배포한다. `/login`, OAuth 콜백, `/invite/[token]`, 온보딩, `/galleries`, 고객 `/gallery`, 게스트 `/guest/[token]` 경로를 가진다.
 
-## 라우트와 컨텍스트
+`src/lib/api`에는 인증·스튜디오·갤러리·초대·사진·폴더·셀렉·별점 클라이언트가 있다. 클라이언트 파일의 존재가 모든 화면의 실연동을 뜻하지 않는다. 고객·게스트 화면에는 로컬 상태와 mock 신원이 남아 있다.
 
-기존 Route Group 이름은 화면 정리를 위해 남아 있지만 권한은 전역 작가·부부 역할로 판단하지 않는다.
+---
 
-| 라우트 | 책임 |
-|:---|:---|
-| `/login`, `/login/oauth2/code/[provider]` | 로그인과 OAuth 콜백 |
-| `/invite/[token]` | 갤러리 초대 수락 |
-| `/onboarding/studio`, `/onboarding/gallery` | STUDIO와 첫 갤러리 생성 |
-| `/galleries`, `/galleries/[galleryId]` | 작업공간별 목록과 갤러리 운영 |
-| `/gallery` | PERSONAL OWNER·GALLERY MEMBER 셀렉과 보정 요청 |
-| `/guest/[token]` | 비로그인 협업 참여 |
+## 서버 계약과의 차이
 
-## 실제 API 연동
+| 영역 | Web main에서 확인한 상태 | 현재 서버 계약 |
+|:---|:---|:---|
+| 작업공간 | `GalleryResponse.studioId`, 생성 요청에 `workspaceId` 없음 | PERSONAL/여러 STUDIO 조회와 명시적 `workspaceId` |
+| 갤러리 단계 | `status` 중심 타입·목록, `stage` 필터 미반영 | 공개 상태와 업무 상태·6단계 `stage` 분리 |
+| 카테고리 | 이전 폴더 클라이언트가 남아 새 분류 계약 미연동 | 컨셉·세부 폴더, 사진 배정과 사진별 분류 결과 |
+| 셀렉·별점 | API 모듈과 로컬 화면 상태가 함께 남음 | 공동 셀렉, 항목 작성자·정렬과 사진별 공동 별점 |
+| 협업 | 게스트 화면 mock 신원과 로컬 반응 | USER/GUEST 참여자, Bearer 우선순위와 권한 검사 |
+| 구성원·보정 | 새 구성원 역할·보정 처리 계약 전환 미반영 | 다중 OWNER 관리, 고객 요청·스튜디오 결과 처리 분리 |
 
-`src/lib/api/`는 `auth`, `workspaces`, `studios`, `galleries`, `invites`, `photos`, `categories`, `selection`, `ratings`, `collab`, `retouch` 모듈로 나눈다.
+삭제된 API를 호출하는 화면은 현재 서버와 일치하지 않는다. 제품·ERD 설명은 서버 계약이며, 실제 Web의 끝까지 동작하는 여정을 보장하지 않는다.
 
-- `/api/v1/workspaces`에서 PERSONAL과 여러 STUDIO를 조회하고 갤러리 생성에 `workspaceId`를 보낸다.
-- 갤러리 목록은 `stage`로 필터링한다.
-- 카테고리는 컨셉·세부 폴더, 미분류 사진과 사진별 작업 상태를 표시한다.
-- 셀렉·별점·좋아요·댓글은 서버 API를 사용한다. localStorage 목업을 사용하지 않는다.
-- 공유 링크는 로그인 시 Bearer 참여자, 비로그인 시 닉네임·게스트 토큰 참여자로 동작한다.
-- STUDIO 구성원 목록과 OWNER 승격·강등·탈퇴를 지원한다.
-- 앨범과 `photo-clusters` 화면, 유사도 레벨 슬라이더는 제거했다.
+---
 
-## 검증 기준
+## 배포와 검증 범위
 
-고정 설치, ESLint, TypeScript 검사와 Next 프로덕션 빌드를 PR CI의 최소 기준으로 둔다. 기준 병합 SHA는 `4438237`이며 PR CI는 통과했고 Vercel 운영 배포를 확인 중이다.
+`main`을 `7bd2c65`로 복구하고 운영 재배포한 이전 기록을 보존한다. `.github/workflows/vercel-production.yml`은 main push 배포 워크플로이며 철회한 PR의 추가 CI를 현재 체크로 인용하지 않는다.
+
+이번 작업은 Web을 수정·배포하지 않았다. 저장소별 배포 근거는 [구현 기준과 확인 상태](../implementation-status.md)에 있다.

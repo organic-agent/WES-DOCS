@@ -40,7 +40,7 @@ erDiagram
     }
     ADMIN_AUDIT_LOGS {
       bigint id PK
-      bigint actor_admin_id FK
+      bigint actor_admin_id
       varchar action
       varchar outcome
       varchar target_type
@@ -81,6 +81,7 @@ erDiagram
 - 세션 원문은 저장하지 않고 해시만 저장한다.
 - 로그인 실패 누적은 계정을 잠그고 기존 세션을 폐기한다.
 - 감사 저장 실패 시 실제 변경도 롤백한다.
+- `admin_audit_logs.actor_admin_id`에는 FK를 두지 않는다. 관리자 삭제와 별개로 영구 기록의 식별 정보·스냅샷을 보존한다.
 - 영구 감사 스냅샷은 PII·secret·presigned URL·원본 콘텐츠를 allowlist로 제거한다.
 - 대리보기 중 모든 쓰기는 UI와 서버에서 차단한다.
 
@@ -88,11 +89,11 @@ erDiagram
 
 - 관리자 계정은 `ACTIVE | SUSPENDED`, 세션은 발급·만료·폐기 상태를 가진다.
 - 대리보기는 최고 관리자 세션에 결속하고 수동 종료·자연 만료를 각각 감사한다.
-- 관리자 API는 공개 ALB에 노출하지 않고 Tailnet 443 경로만 허용한다.
+- Tailnet 443은 BackOffice 진입점이다. 관리자 API는 동일 출처 BFF 뒤의 비공개 네트워크에서만 호출하며 공개 ALB에 노출하지 않는다.
 
-## 구현 SHA
+## 구현 기준
 
-Server `bc8948a`, BackOffice `16b19e8`, Infra `cfbd72e`를 기준으로 한다. 인증·감사·401 경계와 Caddy 경유 검증은 완료했고 실제 Tailnet 관리자 화면의 정책 동일성은 인증 세션 부재로 확인하지 못했다.
+Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
 
 ## 관련 API·ADR
 

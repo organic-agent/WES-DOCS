@@ -6,19 +6,13 @@ has_children: true
 
 # 아키텍처
 
-이 섹션의 draw.io 4종은 2026-08 설계를 보존한 역사적 스냅샷이다. 당시 구조를 이해하는 자료로 사용하고, 현재 제품·데이터 계약은 [데이터 모델](../data-model/index.md)을 기준으로 판단한다.
+현재 Server·BackOffice·Infra 소스를 기준으로 사용자 흐름에서 실행 경계까지 설명한다. Web의 서버 계약 차이는 [구현 기준](../implementation-status.md)에서 구분한다.
 
-{: .warning }
-스냅샷에는 전역 역할, 유사도 클러스터, 앨범과 서버 내 AI 워커가 남아 있다. 이 요소는 현재 구현에서 대체되거나 삭제됐으며 다이어그램을 현행 증거로 사용하지 않는다.
-
-| 줌 | 다이어그램 | 답하는 질문 |
+| 관점 | 문서 | 설명 |
 |:---|:---|:---|
-| 1 | [Information — 사용자 여정](information.md) | 사용자는 어떤 화면을 어떤 순서로 만나는가 |
-| 2 | [Application — 화면과 기능](application.md) | 그 여정을 어떤 UI·모듈·정책이 책임지는가 |
-| 3 | [System — 시스템 구성](system.md) | 논리 서비스가 어떤 실행 인프라 위에서 결합되는가 |
-| 4 | [Infrastructure — AWS 토폴로지](infrastructure.md) | 실제로 무엇이 어디에 배포되어 있는가 |
+| 사용자 | [Information](information.md) | 작업공간·갤러리 관계와 역할별 여정 |
+| 기능 | [Application](application.md) | 공개 API·관리자 API·외부 AI의 책임 |
+| 시스템 | [System](system.md) | Web·API·DB·S3·관리자 경계 |
+| 인프라 | [Infrastructure](infrastructure.md) | AWS 배포 경로와 Tailnet 접근 |
 
-{: .note }
-4장 모두 **draw.io 원본 렌더링을 그대로 임베드한 인터랙티브 다이어그램**이다 — 요소에 마우스를 올리면 연결된 것만 강조되고, 클릭하면 고정되며, 드래그 이동·휠 줌이 된다. 원본(1-3번은 `WES-PM`, 4번은 `WES-Infra` 저장소)을 수정하면 내보내기 두 명령으로 문서가 따라온다. 정적 PNG와 전체 화면 링크는 각 페이지에 있다.
-
-다이어그램 4종은 Cycle 0에 만든 뒤 2026-08까지 갱신했다. 현재 구조는 전체 ERD에서 기능별 ERD로 내려가며, 대체 결정은 [ADR-008~012](../decisions/index.md)에 기록한다.
+Mermaid 그림은 현재 본문과 함께 관리한다. 데이터 관계는 [전체·기능별 ERD](../data-model/index.md)를 따른다.

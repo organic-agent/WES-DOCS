@@ -21,7 +21,7 @@ nav_order: 6
 erDiagram
     STUDIOS ||--o{ STUDIO_RETOUCH_CAPABILITIES : declares
     GALLERIES ||--o{ RETOUCH_ROUNDS : owns
-    PHOTO_SELECTIONS ||--o{ RETOUCH_ROUNDS : bases_on
+    ADMIN_SELECTION_REVISIONS |o--o{ RETOUCH_ROUNDS : bases_on
     RETOUCH_ROUNDS ||--o{ RETOUCH_PHOTOS : contains
     PHOTOS ||--o{ RETOUCH_PHOTOS : requests
 
@@ -65,21 +65,24 @@ erDiagram
 - 회차 번호는 갤러리 안에서 중복되지 않는다.
 - 보정 항목의 갤러리, 회차와 사진은 같은 갤러리에 속해야 한다.
 - S3 객체 바이트는 앱 서버를 통과하지 않는다. 서버는 제한된 presigned URL과 완료 확인을 처리한다.
-- 제출 리비전은 요청 시점의 셀렉 결과에 고정해 이후 셀렉 변경과 분리한다.
+- `selection_revision_id`는 `admin_selection_revisions.id`를 참조하는 nullable FK다. 공개 제출 API는 이 값을 기록하지 않는다. 관리자 셀렉 변경 전 스냅샷과 납품 처리에서 연결하므로 요청 시점 자동 고정은 아직 보장하지 않는다.
 
 ## 권한과 상태 전이
 
 - PERSONAL OWNER와 활성 GALLERY_MEMBER가 사진 추가·삭제, 요청 문구·주석 작성과 제출을 담당한다.
-- STUDIO OWNER/MEMBER와 최고 관리자만 결과 업로드, 완료와 납품을 처리한다.
+- STUDIO OWNER/MEMBER와 최고 관리자가 결과 업로드·회차 완료를 처리한다. 동의·납품 기록은 관리자 경로로 분리된다.
 - PERSONAL OWNER는 스튜디오 결과 처리 권한을 갖지 않는다.
-- 회차는 `DRAFTING → REQUESTED → COMPLETED`로 전이하고 납품 시각을 별도로 기록한다.
+- 회차는 `DRAFTING → REQUESTED → COMPLETED`로 전이한다. 공개 API는 회차 완료까지 제공하며 납품 시각·메모는 관리자 운영 경로에서 기록한다. 갤러리의 `DELIVERY` 단계와 보정 회차 상태는 별개다.
 
-## 구현 SHA
+## 구현 기준
 
-Server `bc8948a`, Web `4438237`, BackOffice `16b19e8`을 기준으로 한다. 고객·처리자 권한 분리와 관리자 산출물 흐름을 검증했으며 Server V6와 BackOffice는 운영 배포했다.
+Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
 
 ## 관련 API·ADR
 
 - API: `/api/v1/galleries/{galleryId}/retouch`, `/photos`, `/rounds/submit`, `/rounds/{roundNo}/results/upload-urls`, `/results/complete`, `/complete`
 - [ADR-001 — presigned 직접 업로드](../decisions/adr-001-presigned-direct-upload.md)
 - [제품 정책](../product/policies.md)
+
+{: .warning }
+PERSONAL 권한은 정책과 구현에 차이가 있다. 현재 서버는 초대된 PERSONAL MEMBER도 관리·고객 편집 권한으로 통과시킨다. 위 OWNER 중심 정책을 실제 접근 제한으로 단정하지 않는다. [확인한 구현 차이](../implementation-status.md)를 따른다.

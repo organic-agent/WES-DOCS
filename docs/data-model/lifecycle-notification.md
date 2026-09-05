@@ -22,7 +22,6 @@ nav_order: 7
 erDiagram
     USERS ||--o| USER_NOTIFICATION_SETTINGS : configures
     USERS ||--o{ USER_NOTIFICATIONS : receives
-    GALLERIES ||--o{ USER_NOTIFICATIONS : scopes
 
     USER_NOTIFICATION_SETTINGS {
       bigint user_id PK,FK
@@ -58,7 +57,8 @@ erDiagram
 
 ## 키와 업무 불변식
 
-- 논리 삭제된 행은 기본 조회에서 제외한다.
+- 논리 삭제된 행은 기본 조회에서 제외한다. 기본 복원 기간은 삭제 시각부터 7일이다. 기간 경과 후(8일 차) purge가 DB 행과 S3 객체를 정리한다. 실행 주기·재시도 때문에 정확히 7일째 완료를 보장하는 SLA는 아니다.
+- `user_notifications.scope_id`는 GLOBAL/STUDIO/GALLERY 다형 참조이며 갤러리 FK가 아니다. GLOBAL이면 NULL이고 나머지는 값을 요구한다.
 - PERSONAL 사용자 탈퇴는 개인 작업공간과 소유 갤러리를 삭제 대상으로 만든다. STUDIO는 소유자를 검증하고 멤버십만 제거한다.
 - 마지막 STUDIO OWNER가 남지 않는 삭제는 관리자 경로에서도 거부한다.
 - 알림 payload와 감사 스냅샷에는 비밀번호·토큰·원본 객체 키를 남기지 않는다.
@@ -70,9 +70,9 @@ erDiagram
 - 관리자 알림은 내부 API와 최고 관리자 세션으로만 접근한다.
 - 삭제는 `ACTIVE → logically deleted → purge eligible → PURGED` 흐름이며, 복원 가능한 항목은 기간 안에만 되돌린다.
 
-## 구현 SHA
+## 구현 기준
 
-Server `bc8948a`, BackOffice `16b19e8`을 기준으로 한다. 수명주기·알림 회귀 테스트와 운영 배포 검증을 통과했다.
+Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
 
 ## 관련 API·ADR
 

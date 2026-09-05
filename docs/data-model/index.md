@@ -9,7 +9,7 @@ has_children: true
 WES 데이터 모델은 `사용자 → 작업공간 → 갤러리`를 소유권의 줄기로 삼고, 갤러리 아래에서 사진·카테고리·셀렉·협업·보정을 분리한다. 이 페이지는 전체를 보여주고, 하위 문서는 기능별 불변식과 권한을 설명한다.
 
 {: .highlight }
-기준 구현은 Server `bc8948a`, Web `4438237`, BackOffice `16b19e8`, Infra `cfbd72e`다. Server V6와 BackOffice는 운영 배포했고 Infra는 병합했다. Web은 병합 후 Vercel 배포를 확인 중이며 DOCS는 최종 검증 단계다.
+2026-09-05 기준 Server `bc8948a`의 V1-V6를 설명한다. BackOffice는 `16b19e8`, Web은 복구된 `7bd2c65`이므로 새 서버 계약의 Web 연동은 미완료다. [구현 기준과 확인 상태](../implementation-status.md)에서 저장소별 근거와 배포 기록을 구분한다.
 
 ## 읽는 순서
 
@@ -20,17 +20,16 @@ WES 데이터 모델은 `사용자 → 작업공간 → 갤러리`를 소유권�
 | 3 | [사진·AI 분석·카테고리](photo-ai-category.md) | 사진을 어떻게 분석하고 분류하는가 |
 | 4 | [셀렉션·추천](selection-recommendation.md) | 선택 결과와 추천 초안을 어떻게 보존하는가 |
 | 5 | [협업 참여자·댓글·좋아요](collaboration.md) | 로그인 사용자와 게스트를 어떻게 통합하는가 |
-| 6 | [앨범 기능 제거](album-removal.md) | 삭제한 앨범 모델과 대체 경계는 무엇인가 |
-| 7 | [보정](retouch.md) | 고객 요청과 스튜디오 결과 처리를 어떻게 분리하는가 |
-| 8 | [수명주기·알림](lifecycle-notification.md) | 삭제·복원·알림을 어떻게 추적하는가 |
-| 9 | [관리자 인증·감사](admin-auth-audit.md) | 최고 관리자 접근과 감사를 어떻게 보호하는가 |
-| 10 | [관리자 운영](admin-operations.md) | 멱등 작업·휴지통·재처리를 어떻게 운영하는가 |
+| 6 | [보정](retouch.md) | 고객 요청과 스튜디오 결과 처리를 어떻게 분리하는가 |
+| 7 | [수명주기·알림](lifecycle-notification.md) | 삭제·복원·알림을 어떻게 추적하는가 |
+| 8 | [관리자 인증·감사](admin-auth-audit.md) | 최고 관리자 접근과 감사를 어떻게 보호하는가 |
+| 9 | [관리자 운영](admin-operations.md) | 멱등 작업·휴지통·재처리를 어떻게 운영하는가 |
 
 ## 전체 ERD
 
 ```mermaid
 erDiagram
-    USERS ||--|| WORKSPACES : owns_personal
+    USERS |o--o| WORKSPACES : owns_personal
     USERS ||--o{ WORKSPACE_MEMBERS : joins
     WORKSPACES ||--o{ WORKSPACE_MEMBERS : has
     WORKSPACES ||--o| STUDIOS : specializes
@@ -60,22 +59,16 @@ erDiagram
 - 카테고리·분류 작업·셀렉 항목은 `gallery_id`를 포함한 복합 FK로 다른 갤러리의 행을 참조하지 못한다.
 - 갤러리를 만들 때 `SELECTING` 셀렉도 하나 만든다.
 - 협업 반응은 `USER | GUEST` 통합 참여자를 참조한다.
-- 앨범 테이블과 API는 의도적으로 삭제했다. `folder`라는 별도 앨범 도메인도 남기지 않는다.
-- 보정 요청 작성자는 고객 측이고, 결과 업로드·완료·납품 처리자는 스튜디오 측이다.
+- 보정 요청 작성자는 고객 측, 결과 업로드·완료 처리자는 스튜디오 측이다. 납품 기록과 리비전 연결은 관리자 경로이며 공개 API와의 차이는 [구현 상태](../implementation-status.md)에 기록한다.
 
 ## 구현 기준과 배포 상태
 
-| 저장소 | 기준 SHA | 확인 상태 |
-|:---|:---|:---|
-| WES-Server | `bc8948a` | Java 21 테스트 537개 통과, Flyway V1→V6·Hibernate·공개/관리자 운영 헬스 통과 |
-| WES-Web | `4438237` | PR #43 병합, lint·TypeScript·Next 빌드 통과, Vercel 배포 확인 중 |
-| WES-BackOffice | `16b19e8` | 테스트 44개·lint·typecheck·Next 빌드와 운영 버전·401·Caddy 검증 통과 |
-| WES-Infra | `cfbd72e` | PR #22 병합, CI 통과, 기능 Terraform 변경 없음 |
-| WES-DOCS | 현재 브랜치 | 문서 빌드·링크·Mermaid 검증 후 커밋 예정 |
+[구현 기준과 확인 상태](../implementation-status.md)에 저장소별 원격 SHA와 배포 기록을 모은다. ERD의 실선은 물리 FK, 점선은 논리 참조로 읽는다. FK가 없는 참조를 DB가 보장한다고 해석하지 않는다.
+
+사용자와 PERSONAL 작업공간의 1:1은 활성 사용자 생성 규칙이다. 물리 테이블은 STUDIO의 소유자 NULL과 탈퇴·삭제 이력을 함께 저장한다.
 
 ## 관련 문서
 
 - [제품 개념](../product/concepts.md)
 - [백엔드 구현](../tech/server.md)
 - [ADR 목록](../decisions/index.md)
-- [현재 아키텍처와 역사적 스냅샷](../architecture/index.md)

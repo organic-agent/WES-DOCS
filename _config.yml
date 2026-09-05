@@ -69,6 +69,7 @@ footer_content: "© 2026 EasySelect — 이 문서는 md 파일 추가만으로 
 
 exclude:
   - README.md
+  - scripts
   - vendor
   - Gemfile
   - Gemfile.lock

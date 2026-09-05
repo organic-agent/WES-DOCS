@@ -20,9 +20,9 @@ nav_order: 4
 ```mermaid
 erDiagram
     GALLERIES ||--o{ COLLAB_SESSIONS : shares
-    CONCEPT_FOLDERS ||--o{ COLLAB_SESSIONS : scopes
+    CONCEPT_FOLDERS ||--o| COLLAB_SESSIONS : scopes
     COLLAB_SESSIONS ||--o{ COLLAB_PARTICIPANTS : admits
-    USERS ||--o{ COLLAB_PARTICIPANTS : authenticates
+    USERS |o--o{ COLLAB_PARTICIPANTS : authenticates
     COLLAB_PARTICIPANTS ||--o{ COLLAB_PHOTO_COMMENTS : writes
     COLLAB_PARTICIPANTS ||--o{ COLLAB_PHOTO_LIKES : likes
     PHOTOS ||--o{ COLLAB_PHOTO_COMMENTS : receives
@@ -61,7 +61,8 @@ erDiagram
 
 - `USER` 참여자는 `user_id`만, `GUEST` 참여자는 `guest_token`만 가진다. CHECK 제약이 두 방식을 상호 배타적으로 만든다.
 - 활성 사용자 참여자는 세션·사용자당 하나다. 게스트 토큰은 전역에서 유일하다.
-- 활성 좋아요는 세션·사진·참여자당 하나다.
+- 컨셉당 세션은 하나다(`concept_folder_id` UK). 재발급은 기존 세션의 토큰을 교체한다.
+- 활성 좋아요는 세션·사진·참여자당 하나다. 참여자·사진·세션의 일치는 서비스에서 검증하며 이 조합 자체에 복합 FK가 있는 것은 아니다.
 - 댓글·좋아요의 `participant_id`는 NOT NULL이다. 레거시 `collab_guests`와 `collab_guest_id`는 V6에서 삭제했다.
 - 세션에 Authorization과 게스트 토큰이 모두 오면 Bearer를 우선한다. 잘못된 Bearer는 게스트로 강등하지 않고 `401`을 반환한다.
 
@@ -71,9 +72,9 @@ erDiagram
 - STUDIO MEMBER는 협업을 조회하지만 댓글·좋아요를 작성하지 않는다.
 - 링크는 발급·폐기·재발급할 수 있다. 댓글과 좋아요는 7일 복구 가능한 휴지통을 사용한다.
 
-## 구현 SHA
+## 구현 기준
 
-Server `bc8948a`, Web `4438237`, BackOffice `16b19e8`을 기준으로 한다. 통합 참여자와 Bearer 우선순위 구현을 완료했으며 Server V6와 BackOffice는 운영 배포했다.
+Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
 
 ## 관련 API·ADR
 

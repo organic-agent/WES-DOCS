@@ -30,7 +30,7 @@ erDiagram
 
     ADMIN_IDEMPOTENCY_KEYS {
       bigint id PK
-      varchar idempotency_key UK
+      varchar idempotency_key "UK with action"
       varchar action
       varchar target_type
       bigint target_id
@@ -67,21 +67,21 @@ erDiagram
 
 ## 키와 업무 불변식
 
-- 멱등 키가 같아도 payload가 다르면 `409`로 거부한다.
+- 멱등 요청의 유일성은 `(action, idempotency_key)` 복합 UK다. 같은 작업·키로 payload가 달라지면 `409`로 거부한다.
 - 관리자 변경은 `expectedVersion`을 검사한다. 오래된 화면의 쓰기를 허용하지 않는다.
 - 휴지통 배치는 삭제 시점의 활성 자식만 묶는다. 다른 배치가 선점한 자식과 충돌하지 않는다.
 - 영구 삭제 실패는 backoff 후 재시도하고 반복 실패는 운영자 조치 상태로 격리한다.
-- 현재 관리자 리소스 유형에는 `ALBUM`이 없고, 자식 휴지통 유형은 댓글·좋아요·보정 항목뿐이다.
 
 ## 권한과 상태 전이
 
 - 최고 관리자만 `/internal/admin/v1` 운영 API를 사용한다.
-- 일반 흐름은 `PENDING → DISPATCHED → COMPLETED | FAILED | UNKNOWN`으로 추적한다.
+- 처리 작업은 `PENDING | DISPATCHING | DISPATCHED | SUCCEEDED | FAILED | CANCELED`를 사용한다.
+- 멱등 요청은 `PENDING | COMPLETED | FAILED | CANCELED`를 사용한다. 서로 다른 테이블의 상태를 하나의 상태 머신으로 섞지 않는다.
 - 휴지통은 `ACTIVE → RESTORED` 또는 `ACTIVE → PURGING → PURGED`로 전이한다.
 
-## 구현 SHA
+## 구현 기준
 
-Server `bc8948a`, BackOffice `16b19e8`, Infra `cfbd72e`를 기준으로 한다. 관리자 API 132개 테스트와 BackOffice 44개 테스트·빌드, 두 애플리케이션의 운영 헬스·버전·401 경계 검증을 통과했다.
+Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
 
 ## 관련 API·ADR
 
