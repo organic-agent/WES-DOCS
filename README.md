@@ -63,4 +63,6 @@ ruby scripts/validate-docs.rb --server ../WES-Server --openapi /tmp/openapi.json
 
 ## 다이어그램
 
-현재 아키텍처와 기능별 데이터 모델을 Mermaid로 관리한다. 변경할 때 본문·컬럼·관계·권한을 함께 대조하고 렌더링을 확인한다. `assets/js/mermaid-hover.js`가 호버 강조를 제공한다.
+상세 아키텍처는 WES-PM에서 승인한 Draw.io 원본과 PNG를 그대로 복사해 관리한다. `assets/diagrams/`에 원본·SHA-256 목록, `assets/img/architecture/`에 검토 이미지를 두고 네 아키텍처 페이지에서 연결한다. 원본의 스타일·배치를 변경할 때는 WES-PM에서 먼저 검수한다.
+
+Mermaid는 아키텍처 요약과 기능별 데이터 모델에 사용한다. 변경할 때 본문·컬럼·관계·권한을 함께 대조하고 렌더링을 확인한다. `assets/js/mermaid-hover.js`가 호버 강조를 제공한다.

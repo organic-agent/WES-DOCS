@@ -67,7 +67,7 @@ erDiagram
 |:---|:---|:---|
 | `photos` | `gallery_id`, `storage_key`, `preview_key`, `status`, EXIF 필드 | 원본과 표시용 파생본의 메타데이터다. |
 | `photo_analysis` | `photo_id`, `embedding`, 품질 신호, `model_version`, `analyzed_at` | AI 분석 결과다. 제품 서버가 모델을 실행하지 않는다. |
-| `ai_analysis_jobs` | `gallery_id`, `mode`, `status`, `stage`, `stage_status`, 시도·heartbeat | 서버가 EMBED/SCORE/CATEGORIZE 실행을 조정한다. |
+| `ai_analysis_jobs` | `gallery_id`, `mode`, `status`, `stage`, `stage_status`, 시도·heartbeat | 서버의 단계 계약이다. 현재 기본값과 AI main은 단계 보고 없이 Score→Categorize를 직접 호출한다. [실행 차이](../tech/ai-pipeline.md)를 따른다. |
 | `ai_concept_assignments` | 분석 작업·사진·컨셉 제안 | 편집 카테고리 생성에 쓰는 분석 결과다. |
 | `concept_folders` | `gallery_id`, `name`, `sort_order`, `created_source` | 상위 컨셉이다. |
 | `detail_folders` | `gallery_id`, `concept_folder_id`, `name`, `sort_order` | 실제 사진을 받는 세부 폴더다. |

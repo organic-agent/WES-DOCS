@@ -14,6 +14,7 @@ nav_order: 9
 | WES-Server | [`bc8948a`](https://github.com/organic-agent/organic-agent-server/tree/bc8948a89d2f2c964753710ab938da3a9af8d15f) | V1-V6, 컨텍스트 권한·공동 셀렉·통합 협업·현재 제품 계약 반영 |
 | WES-BackOffice | [`16b19e8`](https://github.com/organic-agent/organic-agent-backoffice/tree/16b19e8c47e5f958517d478d466cb2a471e127ec) | 현재 관리자 API, 참여자·카테고리 상태·셀렉 메타데이터 반영 |
 | WES-Web | [`7bd2c65`](https://github.com/organic-agent/organic-agent-web/tree/7bd2c65724433219a062415016e7d710226e6d20) | 이전 상태로 복구됨. 작업공간·카테고리·통합 협업의 새 계약 전환은 미반영 |
+| WES-AI | [`d256875`](https://github.com/organic-agent/organic-agent-ai/tree/d256875cf9eb1473481092b8419c58e39f27f332) | Embedder·Score·Categorize Lambda 소스 확인. Score→Categorize 직접 호출, 단계 보고/heartbeat 미구현 |
 | WES-Infra | [`cfbd72e`](https://github.com/organic-agent/organic-agent-infra/tree/cfbd72ebb172b627b7ee6b13a55907f81f1c6837) | 10개 모듈과 Tailnet member/tagged의 관리자 HTTPS 접근 정책 반영 |
 
 ---
@@ -26,17 +27,21 @@ nav_order: 9
 - Infra는 PR [#22](https://github.com/organic-agent/organic-agent-infra/pull/22)와 CI를 완료했다. [실행 33914373424](https://github.com/organic-agent/organic-agent-infra/actions/runs/33914373424)의 apply-app이 성공했고 변경은 추가 0·변경 0·삭제 0이다.
 - 실제 Tailnet 정책은 앞선 작업에서 저장했지만 마지막 배포 점검에서는 인증 세션이 없어 관리자 화면의 동일성을 다시 확인하지 못했다.
 
-이번 문서 감사는 원격 커밋·소스·문서 빌드와 공개 Pages를 확인한다. 기존 배포 기록을 오늘의 운영 DB·Tailnet 실측으로 바꾸어 적지 않는다. 외부 AI 워커의 배포 SHA와 모델 성능은 별도 확인 대상이다.
+이번 문서는 WES-PM에서 승인한 기존 스타일 유지본의 네 아키텍처와 원격 소스를 대조한다. [아키텍처](architecture/index.md)에서 원본·이미지·SHA-256을 제공하며 문서 빌드와 공개 Pages를 검증한다. 기존 배포 기록을 오늘의 운영 DB·Tailnet 실측으로 바꾸어 적지 않는다. 외부 AI 워커의 배포 SHA와 모델 성능은 별도 확인 대상이다.
 
 ---
 
 ## 정책과 현재 구현에 남은 차이
 
-| 항목 | 확정 정책 | 현재 Server V6 소스 |
+| 항목 | 정책·기대 계약 | 확인한 현재 구현 |
 |:---|:---|:---|
 | PERSONAL 권한 | PERSONAL OWNER와 활성 GALLERY_MEMBER가 고객 편집자 | PERSONAL_PARTNER 수락은 workspace MEMBER를 만들고 `requireManager`·`requireSelectionEditor`가 PERSONAL MEMBER까지 허용한다. 업로드·카테고리·셀렉·별점·보정 요청 권한이 정책보다 넓다. 협업 반응은 별도 OWNER/갤러리 멤버 검사이므로 같지 않다. |
+| 별점 편집 | 셀렉 항목 잠금과 구분 필요 | `PhotoRatingService`는 OPEN·마감·편집 권한을 검사하지만 SUBMITTED 잠금과 클라이언트 예상 버전은 검사하지 않는다. 사진별 공동 별점을 덮어쓴다. |
+| AI 단계 보고 | 서버가 단계별 호출·재처리 가능한 계약 | 서버 기본값은 `lambda-reports-stage=false`이고 AI main은 Score→Categorize를 직접 호출한다. 워커의 단계 보고·heartbeat는 미구현이다. |
 | 보정 제출 리비전 | 요청 시점 셀렉 결과에 고정 | 공개 `submitRound`는 `selection_revision_id`를 채우지 않는다. 관리자 셀렉 변경 전 스냅샷·납품 처리에서 nullable 리비전을 연결한다. |
 | 납품 기록 | 스튜디오 결과 처리와 납품 흐름 | 공개 API는 결과 업로드·회차 완료와 갤러리 DELIVERY 단계까지 처리한다. 동의·납품 시각·메모는 관리자 운영 경로에서 기록한다. |
+
+업로드는 서버에서 JPEG·PNG·WebP·HEIC/HEIF Content-Type과 배치 수·파일명 길이를 검사한다. RAW 허용과 형식별 바이트 크기 제한은 현재 업로드 URL 계약으로 보장하지 않는다. 알림은 저장·조회·수신 설정이 구현되어 있으며 이메일·브라우저 실제 발송 정책은 미정이다.
 
 이는 소스에서 확인한 차이이며 정책을 확대하거나 구현 완료로 처리하지 않는다. 이번 범위는 문서 최신화이므로 제품 코드는 변경하지 않았다.
 

@@ -17,7 +17,7 @@ BackOffice는 사용자·갤러리·사진·감사·휴지통을 운영하므로
 
 ## 결정
 
-Tailnet 443으로 관리자 UI와 동일 출처 BFF를 제공한다. 브라우저는 `/api/admin/*`를 호출하고 BFF가 비공개 Docker 네트워크의 `/internal/admin/v1`로 요청한다. 관리자 API 자체는 Tailnet에 직접 공개하지 않는다. `autogroup:member`와 `autogroup:tagged`가 `tag:wes-admin:443`에 접근할 수 있고, 22·8080·8443 직접 접근은 막는다. Funnel을 사용하지 않으며 관리자 보안 그룹의 공개 ingress는 0이다.
+Tailnet 443으로 관리자 UI와 동일 출처 BFF를 제공한다. Tailscale Serve가 TCP를 localhost Caddy TLS :8443으로 전달하며 BFF는 Docker 내부 `wes-admin-api:8081`을 호출한다. 브라우저는 `/api/admin/*`를 호출하고 BFF가 비공개 Docker 네트워크의 `/internal/admin/v1`로 요청한다. 관리자 API 자체는 Tailnet에 직접 공개하지 않는다. `autogroup:member`와 `autogroup:tagged`가 `tag:wes-admin:443`에 접근할 수 있고, 22·8080·8443 직접 접근은 막는다. Funnel을 사용하지 않으며 관리자 보안 그룹의 공개 ingress는 0이다.
 
 ## 결과
 

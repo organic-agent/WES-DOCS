@@ -1,0 +1,55 @@
+{
+  "verified_date": "2026-09-05",
+  "source_project": "WES-PM",
+  "basis": "승인된 기존 스타일 유지본; Draw.io XML 및 독립 시각 검수 통과",
+  "artifacts": [
+    {
+      "view": "information",
+      "source_filename": "WES-Information-Architecture.drawio",
+      "drawio": {
+        "path": "assets/diagrams/wes-information-architecture.drawio",
+        "sha256": "c04585a9849dbeec05d85a458d2783ea9ce402b029c9b78895226135eab1273e"
+      },
+      "png": {
+        "path": "assets/img/architecture/wes-information-architecture.png",
+        "sha256": "973cfcb311abaf4417e721c4e99ddbf4b4c4e2ff20a1d76a77904331467e2f18"
+      }
+    },
+    {
+      "view": "application",
+      "source_filename": "WES-Application-Architecture.drawio",
+      "drawio": {
+        "path": "assets/diagrams/wes-application-architecture.drawio",
+        "sha256": "4a869a116bb077ad5e533a508d22c282667448d764d25809cd37613c0efe8520"
+      },
+      "png": {
+        "path": "assets/img/architecture/wes-application-architecture.png",
+        "sha256": "ab72d160b6a29004d61ee0725a1bac0f17f71d40944c606e80506089b9811884"
+      }
+    },
+    {
+      "view": "system",
+      "source_filename": "WES-System-Architecture.drawio",
+      "drawio": {
+        "path": "assets/diagrams/wes-system-architecture.drawio",
+        "sha256": "d43e1f18ab7e4bd142bbc5de6383f7bf8e06842487965009d0b584dd916b1506"
+      },
+      "png": {
+        "path": "assets/img/architecture/wes-system-architecture.png",
+        "sha256": "522c1b67aa1f65c78010426321d688a3a74ab9dbc02eb8856dcd319cd91b1b2a"
+      }
+    },
+    {
+      "view": "infrastructure",
+      "source_filename": "WES-Infastructure- Architecture.drawio",
+      "drawio": {
+        "path": "assets/diagrams/wes-infrastructure-architecture.drawio",
+        "sha256": "55e681d2e1ee14c99c9d41365bad7335230dd7b30e19cf812fed6532a4f64cdf"
+      },
+      "png": {
+        "path": "assets/img/architecture/wes-infrastructure-architecture.png",
+        "sha256": "f7b01694018fe3627cefda6f8f946a666b0618cc026835365e182995a5ccd482"
+      }
+    }
+  ]
+}
