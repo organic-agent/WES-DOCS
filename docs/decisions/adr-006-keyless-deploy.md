@@ -17,7 +17,7 @@ GitHub Actions에서 AWS로 배포하는 가장 흔한 방법은 액세스 키�
 
 ## 결정
 
-배포 경로에서 장기 자격증명을 **0개**로 만든다.
+GitHub Actions의 AWS 인증과 서버 원격 실행에서 장기 AWS 액세스 키·SSH 키를 사용하지 않는다. 애플리케이션 비밀번호·OAuth 시크릿까지 없다는 뜻은 아니다.
 
 - GitHub Actions → AWS는 **OIDC 토큰 교환**으로 단기 자격증명만 쓴다 (저장된 액세스 키 없음)
 - 서버 명령 실행은 SSH 대신 **SSM Run Command** — 22번 포트 자체를 열지 않는다
@@ -32,4 +32,3 @@ GitHub Actions에서 AWS로 배포하는 가장 흔한 방법은 액세스 키�
 
 - 배포는 main 머지만으로 동작한다 : Actions 빌드 → GHCR 푸시 → OIDC 롤 → SSM Run Command → EC2에서 compose 갱신.
 - 비상 접근도 SSM 터널 위로 열도록 런북화해서 SSH 상시 개방이 없다.
-- 같은 철학을 DB 접속까지 확장한 것이 embedder의 RDS IAM 인증 설계인데, 이쪽은 조직 SCP에 막혀 임시 우회 중이다. → 전말은 [인프라와 배포](../tech/infra.md)의 사건 기록 참고.

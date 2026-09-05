@@ -38,7 +38,6 @@ nav_order: 1
 | `admin` | 별도 관리자 인증·감사·멱등 작업·휴지통·재처리 |
 | `global`, `security` | 공통 예외·페이징과 공개 JWT 필터 체인 |
 
-`cluster`, `embedding`, 앨범 `folder` 도메인은 현재 서버 계약에 없다. 모델 실행은 외부 AI 워커가 담당한다. → [ADR-009](../decisions/adr-009-gallery-category-model.md), [ADR-010](../decisions/adr-010-external-ai-worker.md)
 
 ## 도메인 의존 개요
 
@@ -65,12 +64,11 @@ flowchart LR
 ## 마이그레이션과 계약
 
 - `V1`은 운영 기준선이다. 수정하거나 초기화하지 않는다.
-- `V2`는 앨범 폴더·템플릿을 제거했다.
 - `V3`과 `V4`는 분석 결과와 작업 단계를 분리했다.
 - `V5`는 작업공간 소유권, 카테고리·셀렉 메타데이터와 통합 협업 참여자를 확장했다.
-- `V6`는 복합 FK와 NOT NULL을 확정하고 레거시 협업·앨범 계약을 제거했다.
+- `V6`는 카테고리·셀렉의 복합 FK와 NOT NULL, 통합 참여자 참조를 확정한다.
 
-Flyway가 스키마를 소유하고 Hibernate `validate`가 코드와 스키마의 차이를 배포 전에 막는다. 현재 전체 ERD는 [데이터 모델](../data-model/index.md)에 있다.
+Flyway가 스키마를 소유하고 Hibernate `validate`가 코드와 스키마의 차이를 배포 전에 막는다. 현재 전체 ERD는 [데이터 모델](../data-model/index.md)에 있다. [구현 기준과 확인 상태](../implementation-status.md)의 원격 SHA와 배포 기록을 기준으로 한다.
 
 ## 공개 API와 관리자 API
 

@@ -23,7 +23,13 @@ nav_order: 6
 ---
 ```
 
-3. commit & push. 끝. 사이드바 내비게이션에 자동으로 나타난다.
+3. 검증 후 PR을 생성하고 CI를 확인해 병합한다. 사이드바 내비게이션에 자동으로 나타난다.
+
+## 최신 기준과 로컬 동기화
+
+[구현 기준과 확인 상태](docs/implementation-status.md)의 원격 main을 확인하고 본문을 갱신한다. 과거 배포 기록·현재 소스·Web 미연동을 구분한다.
+
+로컬 문서가 사이트보다 오래됐다면 `git status --short`로 미커밋 변경을 먼저 확인한다. 깨끗한 main에서 `git fetch origin`과 `git merge --ff-only origin/main`으로 동기화한다. 변경이 있거나 fast-forward가 불가능하면 덮어쓰지 말고 따로 정리한다.
 
 ## 검증
 
@@ -34,7 +40,7 @@ ruby scripts/validate-docs.rb
 bundle exec jekyll build --trace
 ```
 
-WES-Server 체크아웃과 함께 실행하면 기능별 ERD의 테이블이 Flyway V1→최신 마이그레이션 결과에 존재하는지, 제거한 앨범·게스트 테이블이 남지 않았는지 대조한다.
+WES-Server 체크아웃과 함께 실행하면 기능별 ERD의 테이블이 Flyway V1→최신 마이그레이션의 텍스트상 최종 목록에 존재하는지, 삭제 대상 테이블이 남지 않았는지 대조한다. 이 검사는 실제 DB 적용·컬럼·FK·카디널리티 검증을 대신하지 않으므로 변경한 관계는 마이그레이션과 서비스를 직접 확인한다.
 
 ```bash
 ruby scripts/validate-docs.rb --server ../WES-Server
@@ -55,30 +61,6 @@ ruby scripts/validate-docs.rb --server ../WES-Server --openapi /tmp/openapi.json
 - **`.nojekyll` 파일 생성 금지**: 빌드 자체가 꺼진다.
 - **공개 저장소**: 운영 실값(시크릿 경로, DB 계정, 버킷명 등)은 적지 않는다. "무엇을 왜"만 기록한다.
 
-## 인터랙티브 다이어그램
+## 다이어그램
 
-아키텍처 4장(Information · Application · System · Infrastructure)은 **draw.io가 렌더한 SVG를 그대로 임베드**하고 호버/클릭 강조 + 팬/줌만 얹는다. 원본 모습이 100% 유지된다.
-
-drawio 원본을 수정했다면 두 명령으로 재생성한다:
-
-```bash
-/Applications/draw.io.app/Contents/MacOS/draw.io --export --format svg \
-  --embed-svg-fonts false --theme light --border 8 \
-  --output assets/diagrams/interactive/<이름>.svg <원본>.drawio
-python3 scripts/drawio-map.py <원본>.drawio assets/diagrams/interactive/<이름>.map.json
-```
-
-- 뷰어: `assets/js/drawio-view.js` (`.drawio-arch[data-svg][data-map]`를 자동 초기화)
-- 맵 스크립트가 호버 단위를 계산한다 — 컨테이너 안 불릿은 컨테이너로 상속, 보이지 않는 경유점(12px 이하 무라벨 점)은 병합, 아이콘 옆 텍스트 라벨은 근접 페어링(20px 이내)으로 아이콘에 붙이고, 제목·범례는 장식 취급
-- 문서 페이지 임베드는 `<div class="drawio-arch" data-svg=... data-map=...>`, 전체 화면 페이지는 `diagrams/<이름>.html`
-
-mermaid 플로우차트에는 `assets/js/mermaid-hover.js`가 같은 호버 강조를 자동 적용한다 (`code.language-mermaid` 감지).
-
-## 다이어그램 원본
-
-아키텍처 다이어그램 원본(.drawio)은 `WES-PM`과 `WES-Infra` 저장소에 있다. 수정 후 재내보내기:
-
-```bash
-/Applications/draw.io.app/Contents/MacOS/draw.io --export --format png --scale 2 --border 16 \
-  --output assets/img/architecture/<이름>.png <원본>.drawio
-```
+현재 아키텍처와 기능별 데이터 모델을 Mermaid로 관리한다. 변경할 때 본문·컬럼·관계·권한을 함께 대조하고 렌더링을 확인한다. `assets/js/mermaid-hover.js`가 호버 강조를 제공한다.
