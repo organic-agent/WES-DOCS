@@ -28,12 +28,14 @@ flowchart LR
   P --> G[임베딩 그룹<br/>embed_group]
   G -->|컨셉 배정<br/>concept_assignment| N["컨셉 이름 › 세부 이름"]
   N -->|물질화<br/>같은 이름끼리 합침| D[세부 폴더<br/>detail_folder]
+  P -.->|세부 폴더 배정<br/>detail_folder_assignment| D
   D --> C[컨셉 폴더<br/>concept_folder]
   C --> S[폴더 세트<br/>analysis_job_id]
 ```
 
 - 연사와 임베딩 그룹은 **따로 계산한다.** 포함 관계가 아니다.
 - 임베딩 그룹과 세부 폴더는 **N:1**이다. VLM이 이름을 붙이지 않은 그룹은 가장 가까운 그룹의 이름을 물려받고(`nearest`), 이름이 같은 그룹은 한 세부 폴더로 합쳐진다.
+- 사진은 **세부 폴더에만** 배정된다(세부 폴더 배정). 컨셉 폴더에 직접 든 사진은 없다.
 - 임베딩 그룹은 **AI가 계산한 단위**, 세부 폴더는 **제품이 저장하고 사용자가 고치는 단위**다. 둘을 잇는 것이 컨셉 배정이다.
 
 ## 사진 한 장의 분석
@@ -62,7 +64,7 @@ flowchart LR
 
 | 한국어 | 목표 이름 | 정의 | 옛 이름 |
 |:---|:---|:---|:---|
-| **컨셉 배정** | `concept_assignments` · `ConceptAssignment` | 임베딩 그룹 하나에 붙은 "컨셉 › 세부" 이름표 | 테이블 `ai_concept_assignments`, 서버 `AiConceptAssignment`·`GroupAssignmentDto` |
+| **컨셉 배정** | `concept_assignments` · `ConceptAssignment` | 임베딩 그룹 하나에 붙은 "컨셉 › 세부" 이름표. 폴더가 아니라 **임베딩 그룹에 붙는 이름표**다(컨셉 폴더에 배정한다는 뜻이 아니다) | 테이블 `ai_concept_assignments`, 서버 `AiConceptAssignment`·`GroupAssignmentDto` |
 | 컨셉 이름 | `concept_name` | 1층 이름 | DB `parent_name`, 서버 `VirtualFolder.parentName`, 추천 breakdown `parent`, score `PARENTS`·`ParentTagger`, Bedrock `parent` |
 | 세부 이름 | `detail_name` | 2층 이름 | **DB `concept_name`**, Bedrock `concept`, 프롬프트 "촬영 세트" |
 | 제안 컨셉 이름 | `proposed_concept_name` | 컨셉이 기타일 때 VLM이 제안한 이름 | DB `proposed_parent`, AI `proposed_concept` |
@@ -73,7 +75,7 @@ flowchart LR
 | **기타** | `ETC` = "기타" | 이름표가 없거나 고정 목록 밖인 컨셉·세부 이름 | — |
 | **컨셉 폴더** | `concept_folders` · `ConceptFolder` | 1층 폴더 | — |
 | **세부 폴더** | `detail_folders` · `DetailFolder` | 2층 폴더 | — |
-| **폴더 배정** | `photo_folder_assignments` · `PhotoFolderAssignment` | 사진 한 장이 든 세부 폴더 | DB `photo_category_assignments`, API `/category-assignments/move`, admin `PHOTO_CATEGORY_ASSIGNMENT` |
+| **세부 폴더 배정** | `detail_folder_assignments` · `DetailFolderAssignment` | 사진 한 장이 든 세부 폴더. 사진은 **세부 폴더에만** 배정되고, 컨셉 폴더는 세부 폴더를 거쳐서만 사진을 가진다. 사진 하나에 배정은 최대 하나 | DB `photo_category_assignments`, 서버 `PhotoFolderAssignment`, API `/category-assignments/move`, admin `PHOTO_CATEGORY_ASSIGNMENT`·스냅샷 키 `categoryAssignments` |
 | **컷 종류** | `cut_type` · `CutType` | 세부 폴더 사진의 피사체 다수결(과반일 때만). 라벨: 신부 · 신랑 · 두 분 · 단체 | DB `detail_folders.category`, API 응답 `category`, 추천 라벨 "신부 단독"·"신랑 단독" |
 | **폴더 세트** | 키 `analysis_job_id` | 분석 잡 하나가 만든 폴더 전체 | DB `ai_selection_jobs.folder_set_job_id`, API 응답 `folderSetJobId`, 문서 "AI 카테고리 세트" |
 | **물질화** | `materialize` | 최신 컨셉 배정으로 폴더 세트를 만드는 일 | "실체화" |
@@ -109,7 +111,7 @@ flowchart LR
 |:---|:---|:---|
 | `cluster` (명사) | `burst`, `embed_group` | 알고리즘 설명("계층 군집"), 라이브러리 API |
 | `parent` (폴더 층의 뜻) | `concept` | admin 휴지통 `parent_type`, `path.parent` 같은 표준 API |
-| `category` (명사) | `cut_type`, `folder`, `concept` | 단계 이름 `categorize`와 상태 `CATEGORIZING` |
+| `category` (명사) | `cut_type`, `detail_folder`, `concept` | 단계 이름 `categorize`와 상태 `CATEGORIZING` |
 | `set` · 세트 (그룹의 뜻) | `embed_group` | 폴더 세트 |
 | `group` · `gid` (단독) | `embed_group` | 피사체 값 `group`(단체) — AI가 쓰는 데이터 값 |
 | 실체화, 카테고리화, 컨셉 그룹, 클러스터(그룹의 뜻) | 물질화, categorize, 임베딩 그룹 | — |
@@ -126,3 +128,4 @@ flowchart LR
 | D6 | 용어집 정본은 이 페이지 하나다. 각 저장소에 사본을 두지 않는다 | 두 벌은 어긋난다 |
 | D7 | `confidence`는 컬럼을 나누지 않고 정의만 적는다 | 아직 이 값을 쓰는 곳이 없다 |
 | D8 | `/folders/from-clusters` → `/folders/confirm` | `cluster`가 금지어이고, 하는 일은 확정이다 |
+| D9 | 사진의 폴더 배정은 `detail_folder_assignments` · `DetailFolderAssignment`(세부 폴더 배정). API `/detail-folder-assignments/move`, admin `DETAIL_FOLDER_ASSIGNMENT` | 사진은 세부 폴더에만 배정된다. 배정 이름은 배정되는 것을 담는다(컨셉 배정 = 그룹에 컨셉 이름, 세부 폴더 배정 = 사진에 세부 폴더) |
