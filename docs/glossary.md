@@ -76,7 +76,6 @@ flowchart LR
 | **컨셉 폴더** | `concept_folders` · `ConceptFolder` | 1층 폴더 | — |
 | **세부 폴더** | `detail_folders` · `DetailFolder` | 2층 폴더 | — |
 | **세부 폴더 배정** | `detail_folder_assignments` · `DetailFolderAssignment` | 사진 한 장이 든 세부 폴더. 사진은 **세부 폴더에만** 배정되고, 컨셉 폴더는 세부 폴더를 거쳐서만 사진을 가진다. 사진 하나에 배정은 최대 하나 | DB `photo_category_assignments`, 서버 `PhotoFolderAssignment`, API `/category-assignments/move`, admin `PHOTO_CATEGORY_ASSIGNMENT`·스냅샷 키 `categoryAssignments` |
-| **컷 종류** | `cut_type` · `CutType` | 세부 폴더 사진의 피사체 다수결(과반일 때만). 라벨: 신부 · 신랑 · 두 분 · 단체 | DB `detail_folders.category`, API 응답 `category`, 추천 라벨 "신부 단독"·"신랑 단독" |
 | **폴더 세트** | 키 `analysis_job_id` | 분석 잡 하나가 만든 폴더 전체 | DB `ai_selection_jobs.folder_set_job_id`, API 응답 `folderSetJobId`, 문서 "AI 카테고리 세트" |
 | **물질화** | `materialize` | 최신 컨셉 배정으로 폴더 세트를 만드는 일 | "실체화" |
 | **폴더 확정** | `confirm` | 부부가 폴더 구조를 확정하고 사진 셀렉으로 넘어가는 한 번의 전이 | API `/folders/from-clusters` → `/folders/confirm` |
@@ -110,7 +109,7 @@ flowchart LR
 |:---|:---|:---|
 | `cluster` (명사) | `burst`, `embed_group` | 알고리즘 설명("계층 군집"), 라이브러리 API |
 | `parent` (폴더 층의 뜻) | `concept` | admin 휴지통 `parent_type`, `path.parent` 같은 표준 API |
-| `category` (명사) | `cut_type`, `detail_folder`, `concept` | 단계 이름 `categorize`와 상태 `CATEGORIZING` |
+| `category` (명사) | `detail_folder`, `concept` | 단계 이름 `categorize`와 상태 `CATEGORIZING` |
 | `set` · 세트 (그룹의 뜻) | `embed_group` | 폴더 세트 |
 | `group` · `gid` (단독) | `embed_group` | 피사체 값 `group`(단체) — AI가 쓰는 데이터 값 |
 | 실체화, 카테고리화, 컨셉 그룹, 클러스터(그룹의 뜻) | 물질화, categorize, 임베딩 그룹 | — |
@@ -123,7 +122,7 @@ flowchart LR
 | D2 | 단계 이름 `categorize`와 상태 `CATEGORIZING`은 유지한다. 명사 `category`만 금지한다 | Lambda 함수·인프라·웹 계약까지 번지는 비용에 비해 얻는 것이 작다 |
 | D3 | `model_version` → `pipeline_version` (`photo_analysis`, `preference_models` 둘 다) | 모델 id로 오해된다. 선호 모델의 값도 선호 모델 자신의 버전이 아니라 학습 데이터의 파이프라인 버전이다 |
 | D4 | `Ai` 접두사를 뺀다: `ConceptAssignment`·`concept_assignments`, `AnalysisJob`·`analysis_jobs` | 출처 표시는 개념이 아니다 |
-| D5 | 컷 종류 라벨은 신부 · 신랑 · 두 분 · 단체 | 한국어 하나 |
+| D5 | **폐기(2026-09-28)** — ~~컷 종류 라벨은 신부 · 신랑 · 두 분 · 단체~~ | 세부 폴더의 컷 종류(`cut_type`)는 읽는 곳이 없어 서버에서 지웠다(organic-agent-server #197). 사진별 피사체는 `subjects`가 말한다 |
 | D6 | 용어집 정본은 이 페이지 하나다. 각 저장소에 사본을 두지 않는다 | 두 벌은 어긋난다 |
 | D7 | `confidence`는 컬럼을 나누지 않고 정의만 적는다 | 아직 이 값을 쓰는 곳이 없다 |
 | D8 | `/folders/from-clusters` → `/folders/confirm` | `cluster`가 금지어이고, 하는 일은 확정이다 |
