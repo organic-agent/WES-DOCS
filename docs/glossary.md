@@ -46,7 +46,7 @@ flowchart LR
 | 임베딩 | `embedding` | DINOv3 벡터(768차원) | — |
 | CLIP 임베딩 | `clip_embedding` | CLIP 벡터(768차원) | — |
 | 임베딩 모델 | `embedding_model` | 임베딩을 만든 모델 id | AI embedder 설정 `model_id` |
-| 파이프라인 버전 | `pipeline_version` | score·categorize 계산 방식의 버전 문자열. 모델 id가 아니다 | `photo_analysis.model_version`, `modelVersion` |
+| 파이프라인 버전 | `pipeline_version` · `PIPELINE_VERSION` | score·categorize 계산 방식의 버전 문자열. 모델 id가 아니다. 선호 모델도 학습 데이터의 이 값을 기록한다 | `photo_analysis.model_version`, `preference_models.model_version`, 상수 `MODEL_VERSION` |
 | 피사체 | `subjects` | 사진의 인물 구성. 값은 `bride`·`groom`·`couple`·`group`·`unknown` | — |
 | 백분위 | `technical_pct` · `aesthetic_pct` · `sharpness_pct` | 갤러리 안에서의 순위(0~1) | — |
 | 세부 점수 | `sub_scores` | 점수 계산 재료를 담은 jsonb | 키 `clip_parent` → `clip_concept_name` |
@@ -58,7 +58,7 @@ flowchart LR
 | **연사** | `burst_id` · `burst_rank` · `burstId` | 같은 카메라에서 거의 같은 순간 연속으로 찍힌 사진 묶음 | DB `cluster_id`·`cluster_rank`, AI 결과 키 `clusters`, preference `cluster_size_rel`·`recall_cluster`, 서버 `clusterId`·`byCluster`·`bestPerCluster` |
 | 연사 대표 | `burst_rank = 0` | 연사에서 먼저 보여 주는 한 장 | "대표"(그룹 대표 사진과 혼용) |
 | **임베딩 그룹** (줄여서 그룹) | `embed_group_id` · `embedGroupId` | 같은 배경·같은 컨셉으로 AI가 묶은 사진 덩어리. 컨셉 배정이 붙는 단위 | AI `gid`·`_Group`·Bedrock `group_id`·결과 `groups`, preference "컨셉 그룹", 서버 KDoc "클러스터", 학습 문서 "세트" |
-| 그룹 대표 사진 | `embed_group_sample` | naming이 VLM에 보여 주는 그룹의 사진 | AI `rep_row`·`far_row` |
+| 그룹 대표 사진 | `sample` (`sample_row`·`far_sample_row`) | naming이 VLM에 보여 주는 그룹의 사진. 연사 대표와 구분하려고 "대표(rep)"라 부르지 않는다 | AI `rep_row`·`far_row` |
 
 ## 이름표와 폴더
 
@@ -100,7 +100,6 @@ flowchart LR
 | 한국어 | 목표 이름 | 정의 | 옛 이름 |
 |:---|:---|:---|:---|
 | 선호 모델 | `preference_models` · `PreferenceModel` | 마감된 갤러리의 셀렉으로 학습한 선호 가중치 | — |
-| 선호 모델 버전 | `model_version` (선호 모델 안에서만) | 선호 모델 자신의 버전 | — |
 | 특징 명세 | `feature_spec` | 선호 모델 입력 특징의 이름·순서 버전 | — |
 
 ## 금지어
@@ -122,7 +121,7 @@ flowchart LR
 |:---|:---|:---|
 | D1 | 웹 API 계약까지 바꾼다. 마지막 단계에서 웹 PR과 함께, 옛 경로는 한 릴리스 동안 별칭으로 둔다 | 규칙 1 |
 | D2 | 단계 이름 `categorize`와 상태 `CATEGORIZING`은 유지한다. 명사 `category`만 금지한다 | Lambda 함수·인프라·웹 계약까지 번지는 비용에 비해 얻는 것이 작다 |
-| D3 | `photo_analysis.model_version` → `pipeline_version` | 모델 id로 오해된다. 선호 모델의 `model_version`은 그대로 |
+| D3 | `model_version` → `pipeline_version` (`photo_analysis`, `preference_models` 둘 다) | 모델 id로 오해된다. 선호 모델의 값도 선호 모델 자신의 버전이 아니라 학습 데이터의 파이프라인 버전이다 |
 | D4 | `Ai` 접두사를 뺀다: `ConceptAssignment`·`concept_assignments`, `AnalysisJob`·`analysis_jobs` | 출처 표시는 개념이 아니다 |
 | D5 | 컷 종류 라벨은 신부 · 신랑 · 두 분 · 단체 | 한국어 하나 |
 | D6 | 용어집 정본은 이 페이지 하나다. 각 저장소에 사본을 두지 않는다 | 두 벌은 어긋난다 |
