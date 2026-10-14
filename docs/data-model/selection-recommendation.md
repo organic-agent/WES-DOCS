@@ -13,7 +13,7 @@ nav_order: 3
 - `PHOTO_SELECTIONS`는 갤러리의 현재 셀렉 상태를 저장한다.
 - `PHOTO_SELECTION_ITEMS`는 사진, 작성자와 정렬 순서를 저장한다.
 - `PHOTO_RATINGS`는 사진별 공동 별점을 저장한다.
-- `AI_SELECTION_JOBS`, `AI_RECOMMENDATIONS`, `AI_PAIR_VERDICTS`는 추천 생성과 설명 근거를 저장한다.
+- `AI_SELECTION_JOBS`, `AI_RECOMMENDATIONS`는 추천 생성 작업과 결과를 저장한다.
 - 관리자용 `ADMIN_AI_SELECTION_JOBS`, `ADMIN_SELECTION_REVISIONS`는 운영 재시도와 변경 이력을 저장한다.
 
 ## Mermaid ERD
@@ -29,7 +29,6 @@ erDiagram
     PHOTO_SELECTIONS ||--o{ AI_SELECTION_JOBS : drafts
     PHOTO_SELECTIONS ||--o{ AI_RECOMMENDATIONS : proposes
     PHOTOS ||..o{ AI_RECOMMENDATIONS : candidate
-    PHOTO_SELECTIONS ||--o{ AI_PAIR_VERDICTS : explains
     PHOTO_SELECTIONS ||--o{ ADMIN_SELECTION_REVISIONS : audits
 
     PHOTO_SELECTIONS {
@@ -64,7 +63,6 @@ erDiagram
 | `photo_ratings` | `photo_id`, `score`, `rated_by` | 사진별 현재 별점과 마지막 편집 사용자다. |
 | `ai_selection_jobs` | `selection_id`, `mode`, `status`, `folder_set_job_id`, `round`, `result` | 사용자 요청 추천 작업이다. |
 | `ai_recommendations` | 셀렉·사진·추천 회차·점수·순위 | 추천 후보와 순위를 저장한다. |
-| `ai_pair_verdicts` | 비교 사진과 판정 근거 | 유사 후보 중 선택 근거를 저장한다. |
 | `admin_selection_revisions` | `selection_id`, `revision_number`, `photo_items` | 관리자 변경과 제출 기준을 보존한다. |
 
 ## 키와 업무 불변식

@@ -80,7 +80,11 @@ if options[:mermaid]
 end
 
 if options[:server]
-  migration_dir = Pathname(options[:server]).join("src/main/resources/db/migration")
+  # 서버는 멀티모듈(organic-agent-server #309)부터 wes-api 가 마이그레이션을 가진다. 그 전 체크아웃은 루트 src/ 에 있다.
+  server_dir = Pathname(options[:server])
+  migration_dir = ["wes-api/src/main/resources/db/migration", "src/main/resources/db/migration"]
+    .map { |relative| server_dir.join(relative) }
+    .find(&:directory?) || server_dir.join("wes-api/src/main/resources/db/migration")
   unless migration_dir.directory?
     errors << "Server migration 경로가 없다: #{migration_dir}"
   else
