@@ -15,7 +15,6 @@ nav_order: 2
 - `AI_ANALYSIS_JOBS`는 외부 워커 실행 상태를 저장한다.
 - `CONCEPT_FOLDERS`, `DETAIL_FOLDERS`, `PHOTO_CATEGORY_ASSIGNMENTS`는 편집 가능한 카테고리 트리를 저장한다.
 - `AI_CONCEPT_ASSIGNMENTS`는 외부 분석이 제안한 컨셉 결과다. 제품 서버가 이를 읽어 편집 가능한 카테고리를 만든다.
-- `CATEGORIZATION_JOBS`, `CATEGORIZATION_JOB_PHOTOS`는 서버의 카테고리 생성 작업과 사진별 결과를 저장한다.
 
 ## Mermaid ERD
 
@@ -28,9 +27,6 @@ erDiagram
     CONCEPT_FOLDERS ||--o{ DETAIL_FOLDERS : contains
     DETAIL_FOLDERS ||--o{ PHOTO_CATEGORY_ASSIGNMENTS : receives
     PHOTOS ||--o| PHOTO_CATEGORY_ASSIGNMENTS : assigned
-    GALLERIES ||--o{ CATEGORIZATION_JOBS : runs
-    CATEGORIZATION_JOBS ||--o{ CATEGORIZATION_JOB_PHOTOS : tracks
-    PHOTOS ||--o{ CATEGORIZATION_JOB_PHOTOS : processed
 
     PHOTOS {
       bigint id PK
@@ -51,14 +47,6 @@ erDiagram
       bigint detail_folder_id FK
       varchar assigned_source
     }
-    CATEGORIZATION_JOB_PHOTOS {
-      bigint job_id PK,FK
-      bigint photo_id PK,FK
-      bigint gallery_id FK
-      varchar status
-      varchar failure_code
-      timestamptz processed_at
-    }
 ```
 
 ## 테이블과 주요 컬럼
@@ -72,14 +60,12 @@ erDiagram
 | `concept_folders` | `gallery_id`, `name`, `sort_order`, `created_source` | 상위 컨셉이다. |
 | `detail_folders` | `gallery_id`, `concept_folder_id`, `name`, `sort_order` | 실제 사진을 받는 세부 폴더다. |
 | `photo_category_assignments` | `gallery_id`, `photo_id`, `detail_folder_id`, `assigned_source`, `confidence` | 사진의 현재 단일 배정이다. |
-| `categorization_jobs` | `gallery_id`, `mode`, `status`, `failure_code` | `INITIAL | INCREMENTAL` 분류 작업이다. |
-| `categorization_job_photos` | `gallery_id`, `job_id`, `photo_id`, `status`, `failure_code`, `processed_at` | 사진별 `PENDING | ASSIGNED | UNCLASSIFIED | FAILED` 결과다. |
 
 ## 키와 업무 불변식
 
 - `photos(gallery_id, id)`와 각 도메인 `(gallery_id, id)` 복합 키를 FK 대상으로 사용한다.
 - `detail_folders(gallery_id, concept_folder_id)`는 같은 갤러리의 컨셉만 참조한다.
-- `photo_category_assignments`와 `categorization_job_photos`는 같은 갤러리의 사진·폴더·작업만 연결한다.
+- `photo_category_assignments`는 같은 갤러리의 사진·폴더만 연결한다.
 - 사진당 활성 카테고리 배정은 하나다. 세부 폴더를 제거하면 해당 사진은 미분류가 된다.
 - 앱 서버는 외부 분석 단계를 호출하고 상태를 관측한다. 분석 결과에서 Concept/Detail/배정을 생성하는 작업은 서버가 실행한다. 모델 실행만 외부 AI 워커 저장소의 책임이다.
 - `photo_analysis`는 SCORE 완료와 CATEGORIZE 결과의 전체 채움을 별도 CHECK로 검사한다. `model_version`만 있다고 전체 분석 완료는 아니다.
