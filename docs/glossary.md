@@ -48,6 +48,7 @@ flowchart LR
 | 임베딩 모델 | `embedding_model` | 임베딩을 만든 모델 id | AI embedder 설정 `model_id` |
 | 파이프라인 버전 | `pipeline_version` · `PIPELINE_VERSION` | score·categorize 계산 방식의 버전 문자열. 모델 id가 아니다. 선호 모델도 학습 데이터의 이 값을 기록한다 | `photo_analysis.model_version`, `preference_models.model_version`, 상수 `MODEL_VERSION` |
 | 피사체 | `subjects` | 사진의 인물 구성. 값은 `bride`·`groom`·`couple`·`group`·`unknown` | — |
+| 사진 라벨 | `photo_labels` · `AgentLabel` | 사진 한 장의 **속성**. 닫힌 어휘(코드 상수)에서 여러 개가 붙고, 라벨마다 점수(0~1)·출처(`source`: CLIP·PROBE·VLM·FACE)를 남긴다. "붙었다" = 점수 ≥ 라벨별 임계값. 폴더가 아니다 — 폴더는 분할(한 장에 하나), 라벨은 속성(한 장에 여러 개). 피사체(`subjects`)도 뜻은 라벨이다 | — |
 | 백분위 | `technical_pct` · `aesthetic_pct` · `sharpness_pct` | 갤러리 안에서의 순위(0~1) | — |
 | 세부 점수 | `sub_scores` | 점수 계산 재료를 담은 jsonb | 키 `clip_parent` → `clip_concept_name` |
 
@@ -127,3 +128,4 @@ flowchart LR
 | D7 | `confidence`는 컬럼을 나누지 않고 정의만 적는다 | 아직 이 값을 쓰는 곳이 없다 |
 | D8 | `/folders/from-clusters` → `/folders/confirm` | `cluster`가 금지어이고, 하는 일은 확정이다 |
 | D9 | 사진의 폴더 배정은 `detail_folder_assignments` · `DetailFolderAssignment`(세부 폴더 배정). API `/detail-folder-assignments/move`, admin `DETAIL_FOLDER_ASSIGNMENT` | 사진은 세부 폴더에만 배정된다. 배정 이름은 배정되는 것을 담는다(컨셉 배정 = 그룹에 컨셉 이름, 세부 폴더 배정 = 사진에 세부 폴더) |
+| D10 | **라벨과 폴더는 따로 둔다(2026-10-27)**. 라벨 = 사진 속성(여러 개·닫힌 어휘·점수, `photo_labels`), 폴더 = 분할(한 장에 하나). 폴더는 임베딩 묶음과 라벨에서 만든다(라벨 → 폴더 한 방향). 새 닫힌 어휘 속성은 `photo_labels`로 간다 | 분할과 속성은 다른 물건이다 — 폴더를 라벨로 바꾸면 "한 장에 폴더 하나"가 깨지고, 라벨을 폴더로 바꾸면 조합만큼 폴더가 는다. `subjects`는 뜻이 라벨인데 `photo_analysis` 컬럼에서 세부 폴더 재료로 쓰인다 — 자리가 잘못된 빚이고, categorize를 건드릴 때 `photo_labels`(`BRIDE`·`GROOM`·`COUPLE`·`GROUP`)로 옮긴다(organic-agent-server #348) |
