@@ -71,12 +71,12 @@ erDiagram
 
 - PERSONAL OWNER와 활성 GALLERY_MEMBER가 사진 추가·삭제, 요청 문구·주석 작성과 제출을 담당한다.
 - STUDIO OWNER/MEMBER와 최고 관리자가 결과 업로드·회차 완료를 처리한다. 동의·납품 기록은 관리자 경로로 분리된다.
-- PERSONAL OWNER는 스튜디오 결과 처리 권한을 갖지 않는다.
+- 개인 갤러리도 개인 참여자의 결과 업로드 경로를 제공한다. 스튜디오 갤러리의 처리 권한과 구분한다.
 - 회차는 `DRAFTING → REQUESTED → COMPLETED`로 전이한다. 공개 API는 회차 완료까지 제공하며 납품 시각·메모는 관리자 운영 경로에서 기록한다. 갤러리의 `DELIVERY` 단계와 보정 회차 상태는 별개다.
 
 ## 구현 기준
 
-Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
+서버 main의 V1-V45를 기준으로 한다. develop의 V46-V49와 실제 배포 확인 범위는 [구현 상태](../implementation-status.md)에서 구분한다.
 
 ## 관련 API·ADR
 
@@ -84,5 +84,3 @@ Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다.
 - [ADR-001 — presigned 직접 업로드](../decisions/adr-001-presigned-direct-upload.md)
 - [제품 정책](../product/policies.md)
 
-{: .warning }
-PERSONAL 권한은 정책과 구현에 차이가 있다. 현재 서버는 초대된 PERSONAL MEMBER도 관리·고객 편집 권한으로 통과시킨다. 위 OWNER 중심 정책을 실제 접근 제한으로 단정하지 않는다. [확인한 구현 차이](../implementation-status.md)를 따른다.

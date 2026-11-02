@@ -103,7 +103,7 @@ erDiagram
 
 ## 구현 기준
 
-Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
+서버 main의 V1-V45를 기준으로 한다. develop의 V46-V49와 실제 배포 확인 범위는 [구현 상태](../implementation-status.md)에서 구분한다.
 
 ## 관련 API·ADR
 
@@ -111,5 +111,5 @@ Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다.
 - [ADR-008 — 컨텍스트 역할과 다중 작업공간](../decisions/adr-008-contextual-roles-workspaces.md)
 - [제품 정책](../product/policies.md)
 
-{: .warning }
-PERSONAL 권한은 정책과 구현에 차이가 있다. 현재 서버는 초대된 PERSONAL MEMBER도 관리·고객 편집 권한으로 통과시킨다. 위 OWNER 중심 정책을 실제 접근 제한으로 단정하지 않는다. [확인한 구현 차이](../implementation-status.md)를 따른다.
+
+현재 PERSONAL 파트너의 편집 권한은 서버의 `GalleryAccessPolicy`에서 계산한다. 세부 동작은 [제품 정책](../product/policies.md)을 따른다.

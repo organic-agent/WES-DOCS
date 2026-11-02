@@ -81,7 +81,7 @@ erDiagram
 
 ## 구현 기준
 
-Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
+서버 main의 V1-V45를 기준으로 한다. develop의 V46-V49와 실제 배포 확인 범위는 [구현 상태](../implementation-status.md)에서 구분한다.
 
 ## 관련 API·ADR
 
