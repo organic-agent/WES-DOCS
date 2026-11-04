@@ -63,6 +63,18 @@ ruby scripts/validate-docs.rb --server ../WES-Server --openapi /tmp/openapi.json
 
 ## 다이어그램
 
-상세 아키텍처는 WES-PM에서 승인한 Draw.io 원본과 PNG를 그대로 복사해 관리한다. `assets/diagrams/`에 원본·SHA-256 목록, `assets/img/architecture/`에 검토 이미지를 두고 네 아키텍처 페이지에서 연결한다. 원본의 스타일·배치를 변경할 때는 WES-PM에서 먼저 검수한다.
+최신 그림은 `stack-diagram`으로 만든 자체 포함 HTML을 원본으로 관리한다.
 
-Mermaid는 아키텍처 요약과 기능별 데이터 모델에 사용한다. 변경할 때 본문·컬럼·관계·권한을 함께 대조하고 렌더링을 확인한다. `assets/js/mermaid-hover.js`가 호버 강조를 제공한다.
+| 그림 | HTML 원본 | 검토 이미지 |
+|---|---|---|
+| 사용자 흐름 | `assets/diagrams/wes-product-current.html` | `assets/img/architecture/wes-product-current{,-dark}.png` |
+| 시스템 | `assets/diagrams/wes-system-current.html` | `assets/img/architecture/wes-system-current{,-dark}.png` |
+| AI 처리 | `assets/diagrams/wes-ai-current.html` | `assets/img/architecture/wes-ai-current{,-dark}.png` |
+
+HTML은 로고·폰트를 포함하고 오프라인으로 열린다. 수정 후 Chromium으로 밝은·어두운 PNG를 다시 만들고 선·글자·경계가 겹치지 않는지 확인한다. 사용한 아이콘 출처는 HTML 바닥글에 남긴다. 클라우드 공식 아이콘 패키지와 낱개 로고 파일은 저장소에 추가하지 않는다.
+
+9월 Draw.io·PNG와 기존 SHA-256 목록은 당시 승인 스냅샷으로 보존한다. 현재 구조의 근거로 표시하지 않는다. ERD는 Mermaid로 유지하며 Flyway의 생성·삭제·테이블 이름 변경을 검증한다.
+
+## 최신화 기록
+
+현재 기준과 main/develop 차이는 [구현 상태](docs/implementation-status.md), 회의·Linear·이슈·PR의 핵심 근거는 [변경 기록](docs/updates.md)에 모은다. 과거 날짜로 정리한 커밋은 실제 소급 작성일을 커밋 본문에 남긴다.
