@@ -6,6 +6,8 @@ nav_order: 9
 
 # 관리자 운영
 
+현재 main V1-V45 기준이다. 감사·outbox·관리자 셀렉 이력 제거는 develop V47-V49이며 [백오피스의 브랜치 차이](../tech/backoffice.md)를 함께 확인한다.
+
 관리자 운영 모델은 제품 행을 직접 임의 수정하지 않는다. 멱등 작업, 낙관적 잠금, 휴지통, 리비전과 산출물 업로드 절차로 변경을 통제한다.
 
 ## 기능과 책임
@@ -81,7 +83,7 @@ erDiagram
 
 ## 구현 기준
 
-Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
+서버 main의 V1-V45를 기준으로 한다. develop의 V46-V49와 실제 배포 확인 범위는 [구현 상태](../implementation-status.md)에서 구분한다.
 
 ## 관련 API·ADR
 

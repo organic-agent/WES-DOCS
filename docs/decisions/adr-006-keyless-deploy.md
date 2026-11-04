@@ -1,34 +1,19 @@
 ---
 title: "ADR-006 — 키 없는 배포"
-parent: 기술 결정 (ADR)
+parent: "기술 결정 (ADR)"
 nav_order: 6
 ---
 
-# ADR-006 — 장기 자격증명 없는 배포 파이프라인
+# ADR-006 — 키 없는 배포와 순차 교체
 
-| | |
-|:---|:---|
-| 상태 | 채택 |
-| 시기 | 2026-07 (Cycle 1, CI/CD 구축) |
-
-## 맥락
-
-GitHub Actions에서 AWS로 배포하는 가장 흔한 방법은 액세스 키를 저장소 시크릿에 넣는 것이다. 장기 자격증명은 유출되면 피해 범위가 크고 회전 관리가 계속 따라온다. 서버 접근용 SSH 키·포트 개방도 같은 종류의 상시 노출면이다.
+상태 : 채택 · 롤링 배포 반영 2026-10
 
 ## 결정
 
-GitHub Actions의 AWS 인증과 서버 원격 실행에서 장기 AWS 액세스 키·SSH 키를 사용하지 않는다. 애플리케이션 비밀번호·OAuth 시크릿까지 없다는 뜻은 아니다.
+GitHub Actions는 OIDC로 AWS 역할을 얻고 SSM으로 배포한다. 공개 API는 EC2 ASG의 서버를 한 대씩 ALB 대상에서 빼고 교체한다. 릴리스 묶음을 보존해 실패한 서버를 직전 버전으로 돌린다. AI와 관리자 앱은 각각 별도 배포 경로를 사용한다.
 
-- GitHub Actions → AWS는 **OIDC 토큰 교환**으로 단기 자격증명만 쓴다 (저장된 액세스 키 없음)
-- 서버 명령 실행은 SSH 대신 **SSM Run Command** — 22번 포트 자체를 열지 않는다
-- 애플리케이션 시크릿은 전부 **Parameter Store**, EC2가 IAM 인스턴스 프로파일로 부팅 시 로드
-- DB 비밀번호는 Terraform에 write-only 인자로 전달해 **state 파일에도 남기지 않는다**
+## 이유와 결과
 
-## 근거
+장기 AWS 키·SSH 키를 저장하지 않으며, 한 대를 교체하는 동안 나머지 서버가 요청을 받는다. 다중 서버의 주기 작업은 PostgreSQL 임대로 한 대만 실행한다. 관리 포트의 liveness로 과부하 시 헬스체크가 사용자 요청 뒤에 서는 일을 줄인다.
 
-훔칠 키가 없으면 키 유출 시나리오 자체가 사라진다. OIDC·SSM·인스턴스 프로파일 모두 AWS가 발급·회전하는 단기 자격증명이므로 회전 관리도 필요 없다. 폐기·재구축을 반복하는 테스트 환경에서는 "재구축할 때 등록할 시크릿 목록"이 짧을수록 좋다는 실용적 이유도 있다.
-
-## 결과
-
-- 배포는 main 머지만으로 동작한다 : Actions 빌드 → GHCR 푸시 → OIDC 롤 → SSM Run Command → EC2에서 compose 갱신.
-- 비상 접근도 SSM 터널 위로 열도록 런북화해서 SSH 상시 개방이 없다.
+근거 : [서버 #328](https://github.com/organic-agent/organic-agent-server/pull/328), [인프라 #125](https://github.com/organic-agent/organic-agent-infra/pull/125), [리더 #344](https://github.com/organic-agent/organic-agent-server/pull/344). [배포 상세](../tech/infra.md)

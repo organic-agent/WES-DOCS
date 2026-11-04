@@ -6,6 +6,8 @@ nav_order: 8
 
 # 관리자 인증·감사
 
+현재 main V1-V45 기준이다. 감사·outbox·관리자 셀렉 이력 제거는 develop V47-V49이며 [백오피스의 브랜치 차이](../tech/backoffice.md)를 함께 확인한다.
+
 최고 관리자 인증은 사용자 JWT와 분리한다. 모든 민감 조회와 변경은 관리자 세션, 사유, 상관 ID와 감사 로그로 추적한다.
 
 ## 기능과 책임
@@ -93,7 +95,7 @@ erDiagram
 
 ## 구현 기준
 
-Server `bc8948a`의 V1-V6와 BackOffice `16b19e8` 소스를 기준으로 한다. Web `7bd2c65`의 소비 계약 차이와 배포 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
+서버 main의 V1-V45를 기준으로 한다. develop의 V46-V49와 실제 배포 확인 범위는 [구현 상태](../implementation-status.md)에서 구분한다.
 
 ## 관련 API·ADR
 

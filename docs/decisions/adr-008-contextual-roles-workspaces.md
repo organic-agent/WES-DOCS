@@ -24,5 +24,5 @@ nav_order: 8
 - 갤러리는 `studio_id`가 아니라 `workspace_id`를 참조한다.
 - 갤러리 생성자는 `created_by_user_id`로 별도 기록한다.
 - 회원 탈퇴는 PERSONAL 자산을 삭제 대상으로 전환하지만 STUDIO는 삭제하지 않는다.
-- 서버는 `/api/v1/workspaces`를 제공한다. 현재 Web의 작업공간 전환은 미반영이며 [프론트엔드](../tech/web.md)에 차이를 기록한다.
+- 서버는 `/api/v1/workspaces`를 제공한다. 현재 Web의 개인·스튜디오 진입은 [프론트엔드](../tech/web.md)와 [사용자 흐름](../product/flows.md)에 정리한다.
 - [사용자·작업공간·갤러리 ERD](../data-model/user-workspace-gallery.md)가 키와 권한을 정의한다.

@@ -1,87 +1,44 @@
 ---
-title: AI 파이프라인
-parent: 기술 구현
+title: "AI 파이프라인"
+parent: "기술 구현"
 nav_order: 3
 ---
 
-# AI 파이프라인 — 서버 조정과 외부 모델 실행
+# AI 파이프라인
 
-서버가 분석 요청과 DB 계약을 관리하고 WES-AI의 Lambda 3개가 모델을 실행한다. 현재 Score → Categorize 직접 호출 방식과, 서버에 준비된 단계 보고 방식을 구분한다.
+서버가 실행 순서·작업 상태·재시도를 관리하고, AI 저장소는 사진 모델 추론과 분류 결과를 만든다. 이전의 Score → Categorize 직접 호출 방식은 폐기됐다.
 
-## 현재 원격 소스의 처리 흐름
+## 업로드부터 폴더까지
 
-기준은 Server `bc8948a`, AI `d256875`이며 서버의 `lambda-reports-stage` 기본값은 `false`다.
+1. 브라우저가 사진을 S3에 직접 올리고 완료 API를 호출한다. 현재 웹은 큰 JPEG를 긴 변 2,048px로 줄일 수 있으므로 업로드 파일을 촬영 원본 보관으로 설명하지 않는다.
+2. 서버가 사진을 배정하고 Embedder Lambda를 호출한다. Embedder는 미리보기 JPEG를 먼저 저장한 뒤 그 바이트로 DINOv3 임베딩과 EXIF를 만든다.
+3. 임베딩 결과는 SQS 결과 큐로 보낸다. VPC 안의 `embedwriter`가 여러 결과를 묶어 PostgreSQL에 기록한다. 배치 Embedder는 DB에 직접 연결하지 않는다.
+4. EC2 GPU 워커가 CLIP·피사체 신호를 먼저 채운다. ARNIQA 등 화질 점수는 두 번째 단계에서 계산한다. GPU를 사용할 수 없는 경로에는 Lambda 폴백이 있다.
+5. 서버는 폴더용 신호가 준비되면 Categorize를 호출한다. 촬영 시각 구간·임베딩 그룹과 대표 사진을 사용해 컨셉·세부 이름을 만들고, 서버가 편집 가능한 폴더로 반영한다.
+6. 화질 점수가 준비되면 `rank` 모드로 백분위·연사 대표 순위를 채운다. **폴더 완료와 추천 재료 준비 완료는 구분한다.**
 
-```mermaid
-sequenceDiagram
-    participant B as API Consumer
-    participant API as WES-Server
-    participant S3 as S3
-    participant E as Embedder Lambda
-    participant S as Score Lambda
-    participant C as Categorize Lambda
-    participant DB as PostgreSQL
-    B->>API: 업로드 URL 발급
-    B->>S3: 원본 직접 PUT
-    B->>API: 업로드 완료 통지
-    API->>DB: 사진 확정 / 누락된 photo_analysis 생성
-    B->>API: FULL 분석 요청
-    API->>DB: ai_analysis_jobs 생성·커밋
-    API->>E: EMBED 호출
-    E->>S3: 원본 GET / preview PUT
-    E->>DB: 임베딩·분석 메타데이터
-    API->>DB: EMBED 완료 관측
-    API->>S: SCORE EVENT 호출
-    S->>S3: preview 읽기
-    S->>DB: 품질 신호 저장
-    S->>C: 직접 EVENT 호출
-    C->>DB: 그룹·이름 결과 / job 종료
-    B->>API: 카테고리 생성 요청
-    API->>DB: Concept / Detail / 사진 배정·분류 상태
-```
-
-업로드 완료는 전체 분석을 실행하지 않는다. `completeUpload`는 누락된 `PhotoAnalysis` 행만 만들고 기존 AI 결과·임베딩을 보존한다. `AnalysisService`의 명시적 요청이 작업을 만들며 `AnalysisOrchestrator`가 커밋 뒤 실행기를 호출한다. `NAMING`은 기존 분석을 사용해 Categorize만 직접 호출한다.
+[시스템 그림](../architecture/system.md)에서 전체 연결을 볼 수 있다.
 
 ---
 
 ## 실행기별 책임
 
-| 실행기 | 현재 소스의 책임 |
-|:---|:---|
-| Embedder | 원본 읽기, EXIF·preview 생성, DINOv3 임베딩 |
-| Score | preview에서 CLIP·ARNIQA·LAION 품질 신호 생성, Categorize 직접 EVENT 호출 |
-| Categorize | NumPy 기반 그룹화, Bedrock 컨셉 이름·배정 결과, 작업 종료 |
-| 서버 | 분석 요청·EMBED 관측, DB 계약, 카테고리 반영, Kotlin 추천·비교와 Bedrock 호출 |
-
-임베딩·품질·분류 출력은 공유 PostgreSQL에 저장한다. preview는 S3에 기록하며 스키마 변경은 Server Flyway가 소유한다. 추천 후보는 사용자가 수락·수정하며 분석 Lambda가 셀렉을 자동 제출하지 않는다.
-
----
-
-## 단계 계약과 현재 한계
-
-| 구분 | `false` — 현재 기본 계약 | `true` — 서버에 준비된 계약 |
+| 실행기 | 위치 | 책임 |
 |:---|:---|:---|
-| SCORE 이후 호출 | 서버가 한 번 보내고 Score가 Categorize를 호출 | 서버가 SCORE·CATEGORIZE를 각각 호출 |
-| 완료 기록 | 외부 실행기가 job `DONE/FAILED`를 기록 | 단계 보고를 바탕으로 서버가 전이·종료 |
-| 단계 상태·heartbeat | AI main은 `stage_status`·heartbeat를 쓰지 않음 | 워커가 단계 점유·완료·heartbeat를 기록해야 함 |
-| 재전송·정체 감지 | SCORE/CATEGORIZE 전달 후 단계 재전송·heartbeat 정체 감지 없음 | 단계 보고와 시간·시도 횟수로 재처리 |
+| Embedder | VPC 밖 Lambda(배치 경로) | 미리보기·DINOv3·EXIF, SQS 결과 전송 |
+| Embedwriter | VPC 안 Lambda | 결과를 모아 DB 적재, 메시지별 실패 재시도 |
+| Score | EC2 GPU / Lambda 폴백 | CLIP·피사체 우선 처리, 화질 점수 후속 처리 |
+| Categorize | Lambda | 연사·촬영 구간·그룹·Bedrock 이름, 후속 순위 계산 |
+| 제품 서버 | Kotlin/Spring | 작업 상태·대상 배정·타임아웃·복구·폴더 반영, 추천·비교·보정 문장 정리 |
 
-`status`는 전체 작업의 `PENDING/RUNNING/DONE/FAILED`, `stage`는 분석 단계이며 갤러리 화면의 진행 단계와 다른 필드다. 호출 자체의 실패 처리와 EMBED 진행 관측은 서버에 구현되어 있다. 이를 현재 워커의 SCORE/CATEGORIZE 단계 보고까지 완료됐다는 뜻으로 확대하지 않는다.
-
----
-
-## 카테고리와 셀렉
-
-`AiCategoryFolderService`는 분석 결과에서 `ConceptFolder → DetailFolder → PhotoCategoryAssignment`를 만든다. INITIAL은 전체, INCREMENTAL은 미처리 사진을 대상으로 하며 수동 이동·수동 미분류를 보존한다. 분류 작업 전체 상태는 `RUNNING/SUCCEEDED/FAILED`, 사진별 상태는 `PENDING/ASSIGNED/UNCLASSIFIED/FAILED`다.
-
-`photo_analysis.cluster_id`, `cluster_rank`, `embed_group_id`는 AI 내부 출력이며 제품 카테고리 식별자가 아니다. 폐기된 cluster API를 복원하지 않는다. 카테고리·사진별 작업·셀렉 항목의 교차 갤러리 연결은 V6 복합 FK가 거부한다. 추천·비교 판정의 모든 사진 참조까지 복합 FK로 보호되는 것은 아니다.
+스키마는 서버 Flyway가 소유한다. AI 실행기는 허용된 결과 컬럼만 쓰고 분석 잡의 상태 전이를 소유하지 않는다. 사용자 별점은 현재 분석 모델 입력으로 사용하지 않는다. 추천은 사용자가 검토할 후보이며 자동 제출하지 않는다.
 
 ---
 
-## 근거와 검증 범위
+## 실패와 복구
 
-- [서버 분석 설정](https://github.com/organic-agent/organic-agent-server/blob/bc8948a89d2f2c964753710ab938da3a9af8d15f/src/main/kotlin/com/soma/wes/analysis/config/AnalysisProperties.kt)
-- [서버 단계 조정](https://github.com/organic-agent/organic-agent-server/blob/bc8948a89d2f2c964753710ab938da3a9af8d15f/src/main/kotlin/com/soma/wes/analysis/service/AnalysisOrchestrator.kt)
-- [Score → Categorize 호출](https://github.com/organic-agent/organic-agent-ai/blob/d256875cf9eb1473481092b8419c58e39f27f332/score/score/chain.py)
+SQS 결과 큐와 Lambda 실패 큐는 용도가 다르다. 전자는 정상 결과를 모아 쓰고, 후자는 실패한 비동기 호출을 서버가 빨리 확인하는 데 사용한다. 서버는 배정 시각과 진행 상태를 관측해 재시도·정체 처리를 수행한다. GPU 워커는 유휴 시 정지한다.
 
-원격 소스를 확인한 것이며 운영 워커의 배포 SHA·모델 성능·운영 설정값을 실측한 것은 아니다. [사진·AI·카테고리](../data-model/photo-ai-category.md) · [셀렉션·추천](../data-model/selection-recommendation.md) · [프론트엔드](web.md)
+라벨·셀렉 도우미는 별도 작업이다. `photo_labels` 스키마는 개발 브랜치에 있고 AI 라벨 PR은 미병합 종료·기본 비활성 상태다. 선호 학습 코드의 존재도 추천 적용 완료를 뜻하지 않는다. [현재 상태](../implementation-status.md)를 따른다.
+
+근거 : [AI README](https://github.com/organic-agent/organic-agent-ai/blob/74a6cdf/README.md), [운영 결과 큐 #108](https://github.com/organic-agent/organic-agent-infra/pull/108), [점수 단계 분리 #152](https://github.com/organic-agent/organic-agent-ai/pull/152), [후속 rank #150](https://github.com/organic-agent/organic-agent-ai/pull/150).

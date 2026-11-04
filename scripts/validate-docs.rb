@@ -90,9 +90,28 @@ if options[:server]
   else
     tables = []
     migration_dir.glob("V*.sql").sort_by { |path| path.basename.to_s[/\AV(\d+)/, 1].to_i }.each do |path|
-      sql = path.read
-      sql.scan(/CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?\s+(?:public\.)?([a-z0-9_]+)/i) { |name| tables << name.first.downcase }
-      sql.scan(/DROP\s+TABLE(?:\s+IF\s+EXISTS)?\s+(?:public\.)?([a-z0-9_]+)/i) { |name| tables.delete(name.first.downcase) }
+      # 테이블 이름은 V23 등에서 바뀐다. CREATE/DROP/RENAME을 SQL 순서대로 적용한다.
+      # 실행 DB를 대체하는 파서는 아니며, 주석의 예시를 스키마로 읽지 않는다.
+      sql = path.read.gsub(/--[^\n]*/, "").gsub(%r{/\*.*?\*/}m, "")
+      operations = []
+      patterns = {
+        create: /CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?\s+(?:public\.)?([a-z0-9_]+)/i,
+        drop: /DROP\s+TABLE(?:\s+IF\s+EXISTS)?\s+(?:public\.)?([a-z0-9_]+)/i,
+        rename: /ALTER\s+TABLE\s+(?:public\.)?([a-z0-9_]+)\s+RENAME\s+TO\s+([a-z0-9_]+)/i
+      }
+      patterns.each do |operation, pattern|
+        sql.to_enum(:scan, pattern).each do
+          match = Regexp.last_match
+          operations << [match.begin(0), operation, match.captures.map(&:downcase)]
+        end
+      end
+      operations.sort_by(&:first).each do |_, operation, names|
+        case operation
+        when :create then tables << names.first
+        when :drop then tables.delete(names.first)
+        when :rename then tables.map! { |name| name == names.first ? names.last : name }
+        end
+      end
     end
     tables.uniq!
 

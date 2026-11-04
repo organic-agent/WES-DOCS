@@ -1,42 +1,37 @@
 ---
-title: 백오피스 — 최고 관리자 운영
-parent: 기술 구현
-nav_order: 6
+title: "백오피스"
+parent: "기술 구현"
+nav_order: 5
 ---
 
-# 백오피스 — 최고 관리자 운영
+# 백오피스
 
-BackOffice는 [`16b19e8`](https://github.com/organic-agent/organic-agent-backoffice/tree/16b19e8c47e5f958517d478d466cb2a471e127ec) 기준의 Next.js 관리자 UI다. 최고 관리자는 조회·변경·복원·재처리를 수행하고 읽기 전용 대리보기 중에는 쓰기를 차단한다.
+최고 관리자가 계정·갤러리·처리 실패·Pro 쿠폰을 운영하는 내부 웹이다. Tailnet과 별도 관리자 세션을 거친다.
 
-## 요청 경계
+## 현재 main
 
-```mermaid
-flowchart LR
-    T["Tailnet member / tagged 기기"] -->|443| TS[Tailscale Serve]
-    TS -->|TCP 전달| C[Caddy TLS :8443]
-    C --> B["BackOffice / 동일 출처 BFF"]
-    B -->|"비공개 Docker 네트워크"| A["Admin API /internal/admin/v1"]
-    A --> D[PostgreSQL]
-```
+Next.js BFF가 브라우저의 동일 출처 요청을 비공개 관리자 API로 전달한다. 사용자 JWT와 관리자 세션은 분리하며 공개 ALB에 관리자 API를 노출하지 않는다.
 
-브라우저는 동일 출처 `/api/admin/*`에 요청한다. Next.js BFF(Backend for Frontend)가 `ADMIN_API_BASE_URL`의 관리자 API를 호출하며 브라우저가 내부 API에 직접 접속하지 않는다. 공개 ALB 경로와 관리자 API 실행 프로세스는 분리한다. Tailnet 443은 Tailscale Serve가 localhost Caddy TLS :8443으로 TCP 전달한다. BFF에는 AWS 자격 증명을 제공하지 않으며 `wes-admin-api:8081`은 Docker 내부에서만 호출한다.
+| 기능 | 현재 제공 |
+|:---|:---|
+| 제품 데이터 | 사용자·작업공간·갤러리·사진·폴더·셀렉·협업·보정 조회·운영 |
+| 파일·분석 | 사진 교체·처리 실패 확인·재처리·휴지통 |
+| Pro 쿠폰 | 1회용·공유 정책, 지정 코드, KST 사용 마감, 계정별 사용 이력·횟수 |
+| 안전한 쓰기 | 예상 버전·멱등 키, 사유·감사·변경 스냅샷(현재 main) |
 
----
-
-## 현재 운영 범위
-
-- 개별 관리자 로그인·최초 비밀번호 변경·계정 잠금과 세션 폐기
-- 사용자·작업공간·스튜디오·갤러리·사진·카테고리·분류 작업·별점·셀렉·협업·보정 운영
-- 통합 참여자의 `participantId`, USER/GUEST 유형·사용자 ID, 사진별 분류 상태, 셀렉 작성자·정렬 조회
-- 사유·멱등 키·예상 버전을 확인한 변경, 7일 연쇄 휴지통과 관계별 복원
-- 감사·리비전 비교·복원·원본 교체·처리 재시도·관리자 알림
-- 읽기 전용 대리보기와 시스템 설정·기능 플래그 조회
-
+BackOffice main은 10월 26일 쿠폰 관리 변경까지 확인했다. [서버 쿠폰 #327](https://github.com/organic-agent/organic-agent-server/pull/327)과 함께 사용하며, 쿠폰 등록일·사용 마감·갤러리 이용 만료를 구분한다.
 
 ---
 
-## 배포와 검증
+## develop에만 반영된 관리자 단순화
 
-서버 공개 API의 Flyway·health 확인 → 관리자 API → BackOffice 순서로 반영한다. BackOffice는 전용 OIDC 역할과 SSM으로 컨테이너를 교체하고 버전·health·미인증 관리자 세션 `401`·Caddy 경유 경로를 검사한다.
+11월 2일 서버 #354-#360과 BackOffice #24-#29가 develop에 반영됐다. 현재 main의 보장을 이 변경으로 덮어쓰지 않는다.
 
-현재 병합 SHA와 당시 테스트·배포 기록은 [구현 기준과 확인 상태](../implementation-status.md)에 있다. Tailnet 네트워크 접근 허용과 관리자 로그인 권한은 별도다.
+- 변경 스냅샷 복원·영구 감사·작업 사유·운영 데이터 마스킹을 제거한다.
+- V47은 구 감사 저장소, V48은 미사용 외부 알림 outbox를 제거한다.
+- V49는 관리자 출처 셀렉 이력과 보정 회차의 이력 참조를 제거한다. AI 초안과 현재 셀렉은 유지한다.
+- 관리자 인증·Tailnet 경계·멱등 처리·예상 버전·처리 작업은 유지한다.
+
+근거 : [감사 제거 #355](https://github.com/organic-agent/organic-agent-server/pull/355), [스키마 정리 #358](https://github.com/organic-agent/organic-agent-server/pull/358), [셀렉 이력 #360](https://github.com/organic-agent/organic-agent-server/pull/360).
+
+[확인한 브랜치·SHA](../implementation-status.md) · [관리자 데이터](../data-model/admin-auth-audit.md) · [네트워크 경계](../decisions/adr-011-private-admin-network.md)

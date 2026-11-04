@@ -1,6 +1,6 @@
 ---
 title: 용어집
-nav_order: 10
+nav_order: 11
 ---
 
 # 용어집
@@ -9,8 +9,7 @@ AI 저장소(`organic-agent-ai`)와 서버(`organic-agent-server/wes`)가 **같�
 두 저장소의 코드·DB·Lambda 페이로드·웹 API·문서는 이 페이지의 이름을 따른다. 새 개념은 코드보다 이 페이지에 먼저 추가한다.
 
 {: .highlight }
-2026-09-27 확정. 아래 표의 **목표 이름**이 기준이다. **옛 이름** 열은 아직 코드·DB에 남아 있는 이름으로, 이관이 끝나면 지운다.
-이관 순서는 코드 이름 → DB 컬럼(분석을 멈추고 두 저장소를 한 번에 배포) → 페이로드·Bedrock 프롬프트 → 웹 API다.
+2026-09-27 용어 확정 · 2026-11-04 상태 보완. 아래 표의 **목표 이름**이 기준이다. **옛 이름**은 이관 전 문서를 읽기 위한 이력이며 현재 DB 이름을 뜻하지 않는다. 테이블·컬럼 이름 이관은 V23에 반영됐다. `photo_labels`와 라벨 기반 도우미는 개발 중이다.
 
 ## 규칙
 
@@ -46,7 +45,7 @@ flowchart LR
 | 임베딩 | `embedding` | DINOv3 벡터(768차원) | — |
 | CLIP 임베딩 | `clip_embedding` | CLIP 벡터(768차원) | — |
 | 임베딩 모델 | `embedding_model` | 임베딩을 만든 모델 id | AI embedder 설정 `model_id` |
-| 파이프라인 버전 | `pipeline_version` · `PIPELINE_VERSION` | score·categorize 계산 방식의 버전 문자열. 모델 id가 아니다. 선호 모델도 학습 데이터의 이 값을 기록한다 | `photo_analysis.model_version`, `preference_models.model_version`, 상수 `MODEL_VERSION` |
+| 파이프라인 버전 | `pipeline_version` · `PIPELINE_VERSION` | score·categorize 계산 방식의 버전 문자열. 모델 id가 아니다. 현재 저장 컬럼 이름이다 | `photo_analysis.model_version`, 상수 `MODEL_VERSION` |
 | 피사체 | `subjects` | 사진의 인물 구성. 값은 `bride`·`groom`·`couple`·`group`·`unknown` | — |
 | 사진 라벨 | `photo_labels` · `AgentLabel` | 사진 한 장의 **속성**. 닫힌 어휘(코드 상수)에서 여러 개가 붙고, 라벨마다 점수(0~1)·출처(`source`: CLIP·PROBE·VLM·FACE)를 남긴다. "붙었다" = 점수 ≥ 라벨별 임계값. 폴더가 아니다 — 폴더는 분할(한 장에 하나), 라벨은 속성(한 장에 여러 개). 피사체(`subjects`)도 뜻은 라벨이다 | — |
 | 백분위 | `technical_pct` · `aesthetic_pct` · `sharpness_pct` | 갤러리 안에서의 순위(0~1) | — |
@@ -73,7 +72,7 @@ flowchart LR
 | 배정 방법 | `assigned_by` = `vlm` \| `nearest` | VLM이 이름을 붙였나, 가장 가까운 그룹에서 물려받았나 | — |
 | 배정 확신도 | `confidence` | `vlm`이면 VLM의 자기 평가, `nearest`면 `1 - 그룹 중심 거리`. 두 값을 섞어 비교하지 않는다 | — |
 | 검토 필요 | `needs_review` | AI가 자신 없다고 표시한 배정 | — |
-| **기타** | `ETC` = "기타" | 이름표가 없거나 고정 목록 밖인 컨셉·세부 이름 | — |
+| **기타** | `ETC` = "기타" | 예전 고정 목록 기반 분류의 이름. 현재 컨셉은 촬영 구간·이미지를 바탕으로 자유 이름을 생성한다. 미분류와 구분한다 | — |
 | **컨셉 폴더** | `concept_folders` · `ConceptFolder` | 1층 폴더 | — |
 | **세부 폴더** | `detail_folders` · `DetailFolder` | 2층 폴더 | — |
 | **세부 폴더 배정** | `detail_folder_assignments` · `DetailFolderAssignment` | 사진 한 장이 든 세부 폴더. 사진은 **세부 폴더에만** 배정되고, 컨셉 폴더는 세부 폴더를 거쳐서만 사진을 가진다. 사진 하나에 배정은 최대 하나 | DB `photo_category_assignments`, 서버 `PhotoFolderAssignment`, API `/category-assignments/move`, admin `PHOTO_CATEGORY_ASSIGNMENT`·스냅샷 키 `categoryAssignments` |
@@ -99,7 +98,7 @@ flowchart LR
 
 | 한국어 | 목표 이름 | 정의 | 옛 이름 |
 |:---|:---|:---|:---|
-| 선호 모델 | `preference_models` · `PreferenceModel` | 마감된 갤러리의 셀렉으로 학습한 선호 가중치 | — |
+| 선호 모델 | `preference_models` · `PreferenceModel` | 학습 실험의 선호 가중치. 현재 서버 테이블은 V33에서 제거했으며 추천 적용 완료가 아니다 | — |
 | 특징 명세 | `feature_spec` | 선호 모델 입력 특징의 이름·순서 버전 | — |
 
 ## 금지어

@@ -1,99 +1,50 @@
 ---
-title: 백엔드 — Kotlin/Spring
-parent: 기술 구현
+title: "백엔드 — Kotlin/Spring"
+parent: "기술 구현"
 nav_order: 1
 ---
 
-# 백엔드 — Kotlin / Spring Boot
+# 백엔드 — Kotlin / Spring
 
-## 스택
+서버는 제품 정책과 데이터 스키마를 소유하고, 공개 API·관리자 API·AI 실행기의 책임을 나눈다.
 
-| 항목 | 선택 |
+## 모듈과 소유권
+
+| 모듈 | 책임 | 실행 |
+|:---|:---|:---|
+| `wes-domain` | 공통 엔티티·정책·서비스·외부 어댑터, 공용 테스트 픽스처 | 라이브러리 |
+| `wes-api` | 공개 컨트롤러·보안, Flyway 마이그레이션 | 공개 API |
+| `wes-admin-api` | 관리자 인증과 운영 API | 비공개 API |
+
+10월 모듈 분리 이후 소스는 각 모듈의 `src/`에 둔다. **Flyway는 `wes-api`만 실행한다.** 관리자 테스트는 공개 API의 마이그레이션 리소스를 사용하며, 관리자 운영 JAR에는 Flyway를 넣지 않는다.
+
+근거 : [서버 #309](https://github.com/organic-agent/organic-agent-server/pull/309).
+
+---
+
+## 기술과 도메인
+
+Kotlin 2.3·JVM 21, Spring Boot 4.1 Servlet MVC, JPA·PostgreSQL 16·pgvector를 사용한다. 스키마는 Flyway가 변경하고 Hibernate는 `validate`로 대조한다. 인증은 Google·Kakao·Naver OAuth와 JWT, 통합 테스트는 JUnit·Testcontainers를 사용한다.
+
+| 영역 | 주요 책임 |
 |:---|:---|
-| 언어 · 런타임 | Kotlin 2.3.21 · JVM 21 |
-| 프레임워크 | Spring Boot 4.1.0 — Servlet MVC (WebFlux 아님) |
-| 영속성 | JPA + PostgreSQL. **스키마는 Flyway 소유** (`ddl-auto=validate`) |
-| 벡터 | pgvector — 로컬·테스트도 동일한 `pgvector/pgvector:pg16` 이미지 |
-| 인증 | Spring Security + OAuth2 (구글·카카오·네이버) + JWT |
-| API 문서 | springdoc-openapi — 애노테이션은 `controller/docs`의 별도 인터페이스로 분리 |
-| 테스트 | JUnit 5 + Testcontainers (실제 PostgreSQL로 통합 테스트) |
-| 설정 | 시크릿과 인프라 파생 값은 시작 시 AWS Parameter Store에서 로드 |
+| 계정·작업공간 | 로그인, PERSONAL/STUDIO 관계와 접근 권한 |
+| 갤러리·사진·폴더 | 업로드 계약, 처리 상태, 컨셉·세부 폴더 |
+| 분석 | 대상 배정, 실행기 호출, 진행 관측·실패 복구·폴더 반영 |
+| 셀렉·협업·보정 | 공동 선택, 추천 초안, 공유 반응, 요청서와 결과 |
+| 이용권·운영 | 무료·Pro 쿠폰, 휴지통, 알림, 관리자 작업 |
+
+패키지는 도메인별로 묶고 `Controller → Service → Repository/외부 어댑터`로 읽는다. AI 모델 추론은 [외부 실행기](ai-pipeline.md)가 맡는다.
 
 ---
 
-## 도메인 단위 수직 슬라이스
+## 운영에서 달라진 점
 
-패키지는 기술 레이어가 아니라 도메인으로 나눈다. 현재 최상위 패키지는 다음 책임을 가진다.
+- 공개 API는 여러 EC2에서 실행하며 주기 작업은 PostgreSQL 행 임대(lease)를 얻은 리더 한 대가 수행한다. Redis 의존성은 제거했다.
+- 이미지 미리보기는 CloudFront 고정 주소와 서명 쿠키를 사용한다. 원본·업로드 URL 계약은 별도로 유지한다.
+- 헬스체크를 사용자 요청과 다른 관리 포트에서 처리하고, 서버를 한 대씩 교체한다.
+- 분석 조정과 실패 복구를 서버가 관리한다. 10월 20일의 추가 DB 연결 점유 개선(#347)은 develop 변경으로 구분한다.
 
-| 도메인 | 책임 |
-|:---|:---|
-| `auth`, `user` | OAuth2/JWT 인증과 전역 역할 없는 사용자 계정 |
-| `workspace`, `studio` | PERSONAL/STUDIO 작업공간, 다중 구성원과 OWNER 수명주기 |
-| `gallery`, `photo` | 작업공간 소유 갤러리, 초대, 상태와 presigned 사진 업로드 |
-| `analysis`, `category` | 외부 AI 작업 계약과 컨셉·세부·사진 배정 |
-| `selection`, `recommendation` | 갤러리 생성 시 생기는 셀렉, 별점과 추천 초안 |
-| `collab` | 사용자·게스트 통합 참여자, 댓글과 좋아요 |
-| `retouch` | 고객 요청과 스튜디오 결과 처리 |
-| `notification`, `trash` | 사용자 알림, 논리 삭제·복원·purge |
-| `admin` | 별도 관리자 인증·감사·멱등 작업·휴지통·재처리 |
-| `global`, `security` | 공통 예외·페이징과 공개 JWT 필터 체인 |
+근거 : [리더 임대 #344](https://github.com/organic-agent/organic-agent-server/pull/344), [미리보기 #337](https://github.com/organic-agent/organic-agent-server/pull/337).
 
-
-## 도메인 의존 개요
-
-```mermaid
-flowchart LR
-    U[user] --> W[workspace]
-    W --> S[studio]
-    W --> G[gallery]
-    G --> P[photo]
-    P --> A[analysis]
-    G --> C[category]
-    G --> SEL[selection]
-    SEL --> REC[recommendation]
-    G --> COL[collab]
-    G --> R[retouch]
-    G --> N[notification]
-    ADM[admin] --> G
-    ADM --> P
-    ADM --> SEL
-    ADM --> COL
-    ADM --> R
-```
-
-## 마이그레이션과 계약
-
-- `V1`은 운영 기준선이다. 수정하거나 초기화하지 않는다.
-- `V3`과 `V4`는 분석 결과와 작업 단계를 분리했다.
-- `V5`는 작업공간 소유권, 카테고리·셀렉 메타데이터와 통합 협업 참여자를 확장했다.
-- `V6`는 카테고리·셀렉의 복합 FK와 NOT NULL, 통합 참여자 참조를 확정한다.
-
-Flyway가 스키마를 소유하고 Hibernate `validate`가 코드와 스키마의 차이를 배포 전에 막는다. 현재 전체 ERD는 [데이터 모델](../data-model/index.md)에 있다. [구현 기준과 확인 상태](../implementation-status.md)의 원격 SHA와 배포 기록을 기준으로 한다.
-
-## 공개 API와 관리자 API
-
-공개 제품 API는 `/api/v1` 아래에 둔다. 관리자 API는 `/internal/admin/v1` 아래에서 별도 관리자 세션·감사 정책을 적용하고 공개 ALB에 노출하지 않는다. BackOffice 최고 관리자는 조회 전용이 아니라 허용된 변경·복원·재처리를 수행한다.
-
----
-
-## 레이어 흐름
-
-모든 도메인이 같은 레이어 흐름을 따른다.
-
-```mermaid
-flowchart LR
-    Controller --> Service
-    Service --> Support["Support 협력자"]
-    Service --> Port["Port 인터페이스"]
-    Adapter["Infrastructure 어댑터"] -.구현.-> Port
-    Service --> Repository
-    Repository --> Domain["Domain 엔티티"]
-```
-
----
-
-## 컨벤션을 코드로 관리한다
-
-레이어별 컨벤션(컨트롤러·서비스·도메인·리포지토리·DTO·테스트 등)은 저장소의 `.claude/rules/` 아래 12개 규칙 문서로 관리한다. 파일 경로 매칭으로 해당 파일 작업 시 자동 적용되는 구조라서 사람과 AI 도구가 같은 규칙을 본다.
-
-세부 테이블·키·권한과 상태 전이는 [기능별 데이터 모델](../data-model/index.md)을 기준으로 관리한다. 소스 클래스 수처럼 쉽게 변하는 수치는 문서 계약으로 고정하지 않는다.
+[현재 소스와 개발 브랜치 차이](../implementation-status.md) · [데이터 모델](../data-model/index.md) · [배포](infra.md)

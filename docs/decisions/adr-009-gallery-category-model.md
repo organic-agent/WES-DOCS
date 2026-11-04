@@ -4,26 +4,18 @@ parent: 기술 결정 (ADR)
 nav_order: 9
 ---
 
-# ADR-009 — 갤러리 귀속 카테고리
+# ADR-009 — 갤러리 귀속 폴더
 
-| | |
-|:---|:---|
-| 상태 | 채택 |
-| 시기 | 2026-09 |
-
-## 맥락
-
-사진 분류는 사용자가 편집할 수 있어야 하며 다른 갤러리의 사진·폴더·작업을 연결하지 못하게 해야 한다.
+상태 : 채택 · 이름·공유 계약 갱신 2026-10
 
 ## 결정
 
-현재 분류 구조는 `CONCEPT_FOLDERS → DETAIL_FOLDERS → PHOTO_CATEGORY_ASSIGNMENTS`다. 분류 작업은 `CATEGORIZATION_JOBS`와 사진별 결과로 나누고, 사진 상태를 `PENDING | ASSIGNED | UNCLASSIFIED | FAILED`로 기록한다. 관련 테이블에 `gallery_id`를 넣고 복합 FK로 교차 갤러리 참조를 거부한다.
+현재 구조는 `concept_folders → detail_folders → detail_folder_assignments`다. 사진은 세부 폴더 하나에 배정되거나 미분류로 남는다. 관련 관계는 갤러리 ID를 포함한 복합 FK로 경계를 지킨다.
 
-AI가 만든 결과는 편집 가능한 초안이다. 모델 실행은 [외부 AI 워커](adr-010-external-ai-worker.md)가 담당하고 제품 서버는 작업과 결과 계약을 소유한다.
+AI 실행 결과의 이름표(`concept_assignments`)와 편집 가능한 폴더를 구분한다. V23에서 이름을 정리했고 V17에서 구 분류 작업 테이블을 제거했다. 작업 조정은 서버의 `analysis_jobs`가 담당한다.
 
 ## 결과
 
-- 내부 `photo_analysis.cluster_id` 등 분석 메타데이터는 유지한다.
-- 실패한 사진을 작업 전체 상태 뒤에 숨기지 않는다.
-- 컨셉 공유 링크의 사진은 현재 카테고리 배정에서 동적으로 계산한다.
-- [사진·AI 분석·카테고리 ERD](../data-model/photo-ai-category.md)가 제약을 정의한다.
+연사(`burst_id`)와 임베딩 그룹은 AI 내부 신호다. 공유폴더는 별도 `collab_session_photos`를 사용하고 원래 폴더 이동과 독립적이다(V36-V37). 사진 라벨은 속성이므로 단일 소속 폴더와 합치지 않는다.
+
+[폴더 데이터 모델](../data-model/photo-ai-category.md) · [공유폴더](../data-model/collaboration.md) · [용어집](../glossary.md)

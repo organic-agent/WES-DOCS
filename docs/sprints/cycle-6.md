@@ -24,7 +24,7 @@ nav_order: 6
 
 ### Web·BackOffice·Infra
 
-- Web 전환 변경은 이후 명시적으로 철회했다. 현재 main은 `7bd2c65`이고 새 작업공간·카테고리·협업 계약은 미반영이다. 당시 전환 작업을 현재 완료 기능에 포함하지 않는다.
+- Web 전환 변경은 이후 명시적으로 철회했다. 당시 main은 `7bd2c65`였고 그 시점의 새 작업공간·카테고리·협업 계약은 미반영이었다. 당시 전환 작업을 현재 완료 기능에 포함하지 않는다.
 - BackOffice를 통합 참여자, 분류 사진 상태, 셀렉 메타데이터와 현재 관리자 리소스 계약에 맞췄다.
 - Infra의 Tailnet 정책 문구를 `autogroup:member + autogroup:tagged → tag:wes-admin:443`으로 통일했다.
 
@@ -39,4 +39,6 @@ nav_order: 6
 - BackOffice: 테스트 44개, ESLint, TypeScript, Next 프로덕션 빌드 통과
 
 {: .note }
-Server `bc8948a`와 BackOffice `16b19e8`의 배포가 성공했고 Infra `cfbd72e` apply는 추가·변경·삭제 모두 0이었다. 실행 링크와 이번 확인 범위는 [구현 기준과 확인 상태](../implementation-status.md)에 기록한다.
+Server `bc8948a`와 BackOffice `16b19e8`의 배포가 성공했고 Infra `cfbd72e` apply는 추가·변경·삭제 모두 0이었다. 당시 배포 기록은 [Server](https://github.com/organic-agent/organic-agent-server/actions/runs/33916690086)·[BackOffice](https://github.com/organic-agent/organic-agent-backoffice/actions/runs/33917787207)에서 확인한다. 현재 기준은 [구현 상태](../implementation-status.md)로 분리한다.
+
+이 페이지는 9월 당시 기록이다. 이후 변경은 [변경 기록](../updates.md)과 [현재 구현 기준](../implementation-status.md)을 따른다.
