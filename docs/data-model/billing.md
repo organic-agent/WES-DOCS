@@ -10,8 +10,8 @@ nav_order: 5
 
 ```mermaid
 erDiagram
-    USERS ||--o{ FREE_GALLERY_CLAIMS : claims
-    GALLERIES ||--o| FREE_GALLERY_CLAIMS : consumes
+    USERS ||--o| FREE_GALLERY_CLAIMS : claims
+    GALLERIES |o--o{ FREE_GALLERY_CLAIMS : consumes
     PRO_COUPONS ||--o{ PRO_COUPON_REGISTRATIONS : registers
     USERS ||--o{ PRO_COUPON_REGISTRATIONS : holds
     PRO_COUPONS ||--o{ PRO_COUPON_USES : records

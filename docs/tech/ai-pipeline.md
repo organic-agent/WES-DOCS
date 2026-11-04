@@ -39,6 +39,6 @@ nav_order: 3
 
 SQS 결과 큐와 Lambda 실패 큐는 용도가 다르다. 전자는 정상 결과를 모아 쓰고, 후자는 실패한 비동기 호출을 서버가 빨리 확인하는 데 사용한다. 서버는 배정 시각과 진행 상태를 관측해 재시도·정체 처리를 수행한다. GPU 워커는 유휴 시 정지한다.
 
-라벨·셀렉 도우미는 별도 작업이다. `photo_labels` 스키마는 개발 브랜치에 있고 AI 라벨 PR은 미병합·기본 비활성 상태다. 선호 학습 코드의 존재도 추천 적용 완료를 뜻하지 않는다. [현재 상태](../implementation-status.md)를 따른다.
+라벨·셀렉 도우미는 별도 작업이다. `photo_labels` 스키마는 개발 브랜치에 있고 AI 라벨 PR은 미병합 종료·기본 비활성 상태다. 선호 학습 코드의 존재도 추천 적용 완료를 뜻하지 않는다. [현재 상태](../implementation-status.md)를 따른다.
 
 근거 : [AI README](https://github.com/organic-agent/organic-agent-ai/blob/74a6cdf/README.md), [운영 결과 큐 #108](https://github.com/organic-agent/organic-agent-infra/pull/108), [점수 단계 분리 #152](https://github.com/organic-agent/organic-agent-ai/pull/152), [후속 rank #150](https://github.com/organic-agent/organic-agent-ai/pull/150).

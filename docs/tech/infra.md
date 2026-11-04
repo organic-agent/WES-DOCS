@@ -19,7 +19,7 @@ nav_order: 4
 | AI | 배치 Embedder는 VPC 밖, 결과 Writer·DB 접근 실행기는 VPC 안. Score는 EC2 GPU를 우선 사용한다. |
 | 큐 | 임베딩 결과 SQS·Writer, 실패 호출 SQS와 DLQ를 용도별로 구분한다. |
 | 관리자 | 전용 EC2의 BackOffice/BFF·관리자 API. Tailnet으로만 진입한다. |
-| 관측 | Alloy → Loki·Grafana, CloudWatch 로그·지표. |
+| 관측 | Alloy → Loki·Grafana, CloudWatch 로그·지표. Grafana CloudWatch 조회 권한도 추가됐다. |
 
 앱 ASG와 GPU는 현재 Terraform에서 public subnet을 사용한다. 이를 private 앱 subnet으로 그리지 않는다. **서브넷 위치와 접근 허용은 별개**이며 공개 API는 ALB를 통해 노출하고 DB는 private subnet에 둔다.
 

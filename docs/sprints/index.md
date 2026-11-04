@@ -6,6 +6,8 @@ has_children: true
 
 # 스프린트
 
+이 섹션은 당시 사이클 기록이다. 10-11월 변경은 [변경 기록](../updates.md), 현재 구현은 [확인 상태](../implementation-status.md)를 따른다.
+
 ## 운영 방식
 
 3인 팀의 개발을 Linear로 운영한다. 구조는 개발 시작 전에 문서("MVP 작업 분해 및 Cycle 운영안")로 확정했다.

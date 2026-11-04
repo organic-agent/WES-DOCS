@@ -43,8 +43,8 @@ Kotlin 2.3·JVM 21, Spring Boot 4.1 Servlet MVC, JPA·PostgreSQL 16·pgvector를
 - 공개 API는 여러 EC2에서 실행하며 주기 작업은 PostgreSQL 행 임대(lease)를 얻은 리더 한 대가 수행한다. Redis 의존성은 제거했다.
 - 이미지 미리보기는 CloudFront 고정 주소와 서명 쿠키를 사용한다. 원본·업로드 URL 계약은 별도로 유지한다.
 - 헬스체크를 사용자 요청과 다른 관리 포트에서 처리하고, 서버를 한 대씩 교체한다.
-- 분석 요청·재시도는 사용자 요청의 DB 연결을 오래 점유하지 않도록 분리한다.
+- 분석 조정과 실패 복구를 서버가 관리한다. 10월 20일의 추가 DB 연결 점유 개선(#347)은 develop 변경으로 구분한다.
 
-근거 : [리더 임대 #344](https://github.com/organic-agent/organic-agent-server/pull/344), [미리보기 #337](https://github.com/organic-agent/organic-agent-server/pull/337), [DB 연결 #347](https://github.com/organic-agent/organic-agent-server/pull/347).
+근거 : [리더 임대 #344](https://github.com/organic-agent/organic-agent-server/pull/344), [미리보기 #337](https://github.com/organic-agent/organic-agent-server/pull/337).
 
 [현재 소스와 개발 브랜치 차이](../implementation-status.md) · [데이터 모델](../data-model/index.md) · [배포](infra.md)
